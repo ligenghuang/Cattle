@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="login_tab_1">请输入您的手机号</string>
+    <string name="login_tab_2">请输入验证码</string>
+    <string name="login_tab_3">获取验证码</string>
+    <string name="login_tab_4">%0$s秒</string>
+    <string name="login_tab_5">注册/登录</string>
+    <string name="login_tab_6">我已阅读并接受《用户协议》</string>
+    <string name="login_tab_7">第三方登录</string>
+    <string name="login_tab_8">手机号码格式不正确</string>
+    <string name="login_tab_9">请阅读并勾选用户协议</string>
+    <string name="login_tab_10">用户协议</string>
+
+
+</resources>
