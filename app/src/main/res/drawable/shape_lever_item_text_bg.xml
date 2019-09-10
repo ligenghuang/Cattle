@@ -9,7 +9,7 @@
 
     <!--这个是按钮边框设置为四周 并且宽度为1-->
     <item
-        android:right="0.8dp"
+        android:right="0.7dp"
         android:top="0.7dp">
         <shape>
             <!--这个是背景颜色-->

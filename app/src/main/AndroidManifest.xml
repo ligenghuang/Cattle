@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".utils.config.MyApp"
@@ -20,13 +21,15 @@
         <activity android:name=".ui.shoppingcart.ShoppingCartActivity"></activity>
         <activity android:name=".ui.login.AgreementActivity" />
         <activity android:name=".ui.login.LoginActivity">
+
+        </activity>
+        <activity android:name=".ui.StartPageActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.StartPageActivity" />
         <activity android:name=".ui.MainActivity" />
     </application>
 

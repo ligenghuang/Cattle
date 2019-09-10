@@ -20,4 +20,22 @@
         <item name="android:background">#7D7D7D</item>
     </style>
 
+    <style name="line_3">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#E6E6E6</item>
+    </style>
+
+    <style name="line_4">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#E6E6E6</item>
+    </style>
+
+    <style name="line_order">
+        <item name="android:layout_width">0.3dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#4B2D10</item>
+    </style>
+
 </resources>

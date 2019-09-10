@@ -81,7 +81,7 @@ public class MainActivity extends UserBaseActivity {
         binding();
 
 //        //导航栏 @ 底部
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B//
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B//
 
     }
 

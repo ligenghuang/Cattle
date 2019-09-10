@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cart_tab_1">购物车空空如也~</string>
+    <string name="cart_tab_2">去逛逛~</string>
+    <string name="cart_tab_3">全选</string>
+    <string name="cart_tab_4">删除</string>
+    <string name="cart_tab_5">总计： ￥%0$s</string>
+    <string name="cart_tab_6">结算</string>
+    <string name="cart_tab_7">商品数量不能小于0！</string>
+    <string name="cart_tab_8">商品数量不能超过库存！</string>
+    <string name="cart_tab_9">购物车(%0$s)</string>
+    <string name="cart_tab_10">请选择需要删除的商品</string>
+
+</resources>

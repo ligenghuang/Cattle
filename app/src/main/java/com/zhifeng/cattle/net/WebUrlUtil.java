@@ -31,4 +31,24 @@ public class WebUrlUtil {
      */
     public static final String POST_USER_CONSULT = "user/consult";
 
+    /**
+     * 商品分类列表
+     */
+    public static final String POST_CATEGORY_LIST = "goods/categoryList";
+
+    /**
+     * 购物车列表
+     */
+    public static final String POST_CART_list = "Cart/cartlist";
+
+    /**
+     * 删除购物车商品
+     */
+    public static final String POST_DELETE_CART_LIST = "cart/delCart";
+
+    /**
+     * 我的信息
+     */
+    public static final String POST_MY_INFO = "user/user_info";
+
 }
