@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "msg": "成功！",
+  "data": [
+    {
+      "goods_id": 40,
+      "goods_name": "礼品商品",
+      "price": "500.00",
+      "img": "http://local.ldp2.com/upload/images/goods/2019071015627391512588.png"
+    },{
+      "goods_id": 41,
+      "goods_name": "礼品商品",
+      "price": "500.00",
+      "img": "http://local.ldp2.com/upload/images/goods/2019071015627391512588.png"
+    },{
+      "goods_id": 42,
+      "goods_name": "礼品商品",
+      "price": "500.00",
+      "img": "http://local.ldp2.com/upload/images/goods/2019071015627391512588.png"
+    }
+  ]
+}

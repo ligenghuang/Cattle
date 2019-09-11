@@ -51,4 +51,29 @@ public class WebUrlUtil {
      */
     public static final String POST_MY_INFO = "user/user_info";
 
+    /**
+     * 我的余额
+     */
+    public static final String POST_REMAINDER = "user/user_remainder";
+
+    /**
+     * 关注列表
+     */
+    public static final String POST_COLLECTION_LIST = "Collection/collection_list";
+
+    /**
+     * 取消关注
+     */
+    public static final String POST_DELETE_COLLECTION = "Collection/collection";
+
+    /**
+     * 订单列表
+     */
+    public static final String POST_ORDER_LIST = "order/order_list";
+
+    /**
+     * 订单详情
+     */
+    public static final String POST_ORDER_DETAIL = "order/order_detail";
+
 }

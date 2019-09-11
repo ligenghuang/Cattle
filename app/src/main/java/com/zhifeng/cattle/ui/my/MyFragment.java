@@ -1,12 +1,14 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.config.GlideUtil;
@@ -15,8 +17,13 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.actions.MyAction;
 import com.zhifeng.cattle.modules.UserInfoDto;
+import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.MyView;
+import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
+import com.zhifeng.cattle.utils.data.MySp;
+
+import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,9 +125,11 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         GlideUtil.setImageCircle(mContext,dataBean.getAvatar(),ivMyAvatar,R.mipmap.logo);//头像
         tvMyName.setText(dataBean.getRealname());//昵称
         tvMyLevel.setText(dataBean.getLevelname());//等级
-        tvMyId.setText(dataBean.getId()+"");//id
+        tvMyId.setText("ID:"+dataBean.getId()+"");//id
 
-        tvMyRemainderMoney.setText(dataBean.getRemainder_money());//提现余额
+        double money = Double.parseDouble(dataBean.getRemainder_money());
+        DecimalFormat df = new DecimalFormat("#0.00");
+        tvMyRemainderMoney.setText(df.format(money));//提现余额
         tvMyCollection.setText(dataBean.getCollection()+"");//关注
 
         tvBonusDay.setText(dataBean.getDay()+"");//当日奖金
@@ -130,6 +139,18 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         tvHeadcount.setText(dataBean.getTeam_count()+"");//总人数
         tvRecommended.setText(dataBean.getToday_rec()+"");//今日推荐
 
+    }
+
+    /**
+     * token过期
+     */
+    @Override
+    public void onLoginNo() {
+        loadDialog();
+        Toast.makeText(mContext, "登录过期，请重新登录！", Toast.LENGTH_SHORT).show();
+        MainActivity.Position = 0;
+        MySp.clearAllSP(mContext);
+        jumpActivityNotFinish(mContext, LoginActivity.class);
     }
 
     /**
@@ -163,20 +184,36 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_my_remainder_money:
+                //todo 提现余额
+                jumpActivityNotFinish(mContext,BalanceActivity.class);
                 break;
             case R.id.ll_my_collection:
+                //todo 关注
+                jumpActivityNotFinish(mContext,CollectionActivity.class);
                 break;
             case R.id.ll_my_order:
+                //todo 我的订单
+                jumpOrderActivity(0);
                 break;
             case R.id.tv_wait_pay:
+                //todo 待付款
+                jumpOrderActivity(1);
                 break;
             case R.id.tv_wait_order:
+                //todo 待发货
+                jumpOrderActivity(2);
                 break;
             case R.id.tv_wait_receive:
+                //todo 待收货
+                jumpOrderActivity(3);
                 break;
             case R.id.tv_wait_evaluation:
+                //todo 待评价
+                jumpOrderActivity(4);
                 break;
             case R.id.tv_sales_return:
+                //todo 退货
+                jumpActivityNotFinish(mContext,SalesReturnActivity.class);
                 break;
             case R.id.ll_my_team:
                 break;
@@ -195,6 +232,16 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             case R.id.tv_security:
                 break;
         }
+    }
+
+    /**
+     * 跳转至订单页面
+     * @param i
+     */
+    private void jumpOrderActivity(int i) {
+        Intent intent = new Intent(mContext,OrderActivity.class);
+        intent.putExtra("type",i);
+        startActivity(intent);
     }
 
 

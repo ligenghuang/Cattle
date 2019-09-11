@@ -24,4 +24,47 @@
     <string name="my_tab_21">安全中心</string>
 
 
+    <string name="balance_tab_1">账号余额</string>
+    <string name="balance_tab_2">我的金额</string>
+    <string name="balance_tab_3">充值金额</string>
+    <string name="balance_tab_4">提现</string>
+    <string name="balance_tab_5">提现明细</string>
+    <string name="balance_tab_6">充值明细</string>
+    <string name="balance_tab_7">账单明细</string>
+
+
+    <string name="collection_tab_1">暂无数据</string>
+    <string name="collection_tab_2">删除</string>
+    <string name="collection_tab_3">完成</string>
+    <string name="collection_tab_4">管理</string>
+
+    <string name="order_tab_1">全部</string>
+    <string name="order_tab_2">删除订单</string>
+    <string name="order_tab_3">查看物流</string>
+    <string name="order_tab_4">取消订单</string>
+    <string name="order_tab_5">去付款</string>
+    <string name="order_tab_6">退款</string>
+    <string name="order_tab_7">确定收货</string>
+    <string name="order_tab_8">去评价</string>
+    <string name="order_tab_9">共%0$s件商品    合计：</string>
+    <string name="order_tab_10">交易完成</string>
+    <string name="order_tab_11">已退款</string>
+    <string name="order_tab_13">已取消</string>
+    <string name="order_tab_14">基本信息</string>
+    <string name="order_tab_15">订单编号：</string>
+    <string name="order_tab_16">下单时间：</string>
+    <string name="order_tab_17">收货地址：</string>
+    <string name="order_tab_18">收货人：</string>
+    <string name="order_tab_19">支付方式：</string>
+    <string name="order_tab_20">配送方式：</string>
+    <string name="order_tab_21">买家留言：</string>
+    <string name="order_tab_22">快递配送</string>
+    <string name="order_tab_23">价格信息</string>
+    <string name="order_tab_24">商品总价：</string>
+    <string name="order_tab_25">运费：</string>
+    <string name="order_tab_26">积分：</string>
+    <string name="order_tab_27">订单总额</string>
+    <string name="order_tab_28">订单详情</string>
+
+
 </resources>

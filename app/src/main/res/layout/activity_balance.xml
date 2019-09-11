@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.my.BalanceActivity">
+
+    <include layout="@layout/layout_title_black_bar" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/RefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="145dp"
+                    android:background="@drawable/icon_balance_bg"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:text="@string/balance_tab_2"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size13"
+                        android:textStyle="bold" />
+
+                    <!--todo 我的余额-->
+                    <TextView
+                        android:id="@+id/tv_balance_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size20"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <!--todo 充值金额-->
+                <TextView
+                    android:id="@+id/tv_balance_recharge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/shape_login_btn_bg"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/balance_tab_3"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold" />
+
+                <!--todo 提现-->
+                <TextView
+                    android:id="@+id/tv_balance_withdrawal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_withdrawal_btn_bg"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/balance_tab_4"
+                    android:textColor="@color/color_fd69a5"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold" />
+
+                <!--todo 提现明细-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_balance_withdrawal_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="1dp"
+                    app:contentPadding="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:drawableRight="@drawable/icon_more"
+                        android:gravity="center_vertical"
+                        android:text="@string/balance_tab_5"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size13" />
+
+                </androidx.cardview.widget.CardView>
+
+                <!--todo 充值明细-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_balance_recharge_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="1dp"
+                    app:contentPadding="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:drawableRight="@drawable/icon_more"
+                        android:gravity="center_vertical"
+                        android:text="@string/balance_tab_6"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size13" />
+
+                </androidx.cardview.widget.CardView>
+
+                <!--todo 账单明细-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_balance_bill_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="1dp"
+                    app:contentPadding="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:drawableRight="@drawable/icon_more"
+                        android:gravity="center_vertical"
+                        android:text="@string/balance_tab_6"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size13" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

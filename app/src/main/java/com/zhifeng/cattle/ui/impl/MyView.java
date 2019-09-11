@@ -19,4 +19,6 @@ public interface MyView extends BaseView {
      */
     void getUserInfo();
     void getUserInfoSuccess(UserInfoDto userInfoDto);
+
+    void onLoginNo();
 }

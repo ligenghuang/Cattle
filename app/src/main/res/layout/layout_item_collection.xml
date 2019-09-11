@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_item_cart_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_10"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/iv_item_goods"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/shape_hollow_circle"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:src="@drawable/selector_circle" />
+
+    <ImageView
+        android:id="@+id/iv_item_goods_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="12dp"
+        android:layout_toRightOf="@id/iv_item_goods"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_good_img" />
+
+    <TextView
+        android:id="@+id/tv_item_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_item_goods_img"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/item_height50"
+        android:layout_toRightOf="@id/iv_item_goods_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="卡布奇诺卡布奇诺卡布奇诺卡布奇诺卡布奇诺卡布奇诺手机第三季度等级分级......"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size12"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_item_goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_item_goods_name"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/iv_item_goods_img"
+        android:text="￥888.00"
+        android:textColor="@color/color_fd69a5"
+        android:textSize="@dimen/text_size15" />
+
+</RelativeLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.my.OrderActivity">
+
+    <include layout="@layout/layout_title_black_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_order_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_order_text_bg"
+                android:gravity="center"
+                android:text="@string/order_tab_1"
+                android:textColor="@color/order_text_selector"
+                android:textSize="@dimen/text_size15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_order_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_order_text_bg"
+                android:gravity="center"
+                android:text="@string/my_tab_5"
+                android:textColor="@color/order_text_selector"
+                android:textSize="@dimen/text_size15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_order_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_order_text_bg"
+                android:gravity="center"
+                android:text="@string/my_tab_6"
+                android:textColor="@color/order_text_selector"
+                android:textSize="@dimen/text_size15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_order_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_order_text_bg"
+                android:gravity="center"
+                android:text="@string/my_tab_7"
+                android:textColor="@color/order_text_selector"
+                android:textSize="@dimen/text_size15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_order_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_order_text_bg"
+                android:gravity="center"
+                android:text="@string/my_tab_8"
+                android:textColor="@color/order_text_selector"
+                android:textSize="@dimen/text_size15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.lgh.huanglib.util.cusview.CustomViewPager
+        android:id="@+id/my_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+
+</LinearLayout>
