@@ -18,7 +18,13 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.my.SalesReturnActivity"></activity>
+        <activity android:name=".ui.my.AddAddressActivity"></activity>
+        <activity android:name=".ui.my.AddressListActivity" />
+        <activity android:name=".ui.my.InvitationActivity" />
+        <activity android:name=".ui.my.MyTeamActivity" />
+        <activity android:name=".ui.my.BonusMonActivity" />
+        <activity android:name=".ui.my.BonusDayActivity" />
+        <activity android:name=".ui.my.SalesReturnActivity" />
         <activity android:name=".ui.my.OrderDetailActivity" />
         <activity android:name=".ui.my.OrderActivity" />
         <activity android:name=".ui.my.CollectionActivity" />

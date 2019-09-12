@@ -76,4 +76,34 @@ public class WebUrlUtil {
      */
     public static final String POST_ORDER_DETAIL = "order/order_detail";
 
+    /**
+     * 当日累计奖金
+     */
+    public static final String POST_TODAY_BONUS = "user/today_bonus";
+
+    /**
+     * 当月累计奖金
+     */
+    public static final String POST_MON_BONUS = "user/mon_bonus";
+
+    /**
+     * 我的团队
+     */
+    public static final String POST_USER_TEAM = "user/team";
+
+    /**
+     * 地址管理
+     */
+    public static final String POST_ADDRESS_LIST ="Address/addressList";
+
+    /**
+     * 删除地址
+     */
+    public static final String POST_DEL_ADDRESS ="Address/delAddress";
+
+    /**
+     * 设为默认地址
+     */
+    public static final String POST_SET_DEFAULT_ADDRESS = "Address/set_default_address";
+
 }

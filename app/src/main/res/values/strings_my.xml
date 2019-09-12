@@ -67,4 +67,35 @@
     <string name="order_tab_28">订单详情</string>
 
 
+    <string name="sales_return_tab_1">正在退货</string>
+    <string name="sales_return_tab_2">退货成功</string>
+    <string name="sales_return_tab_3">退货失败</string>
+
+    <string name="bonus_day_tab_1">今日奖金池累计</string>
+    <string name="bonus_day_tab_2">名人榜</string>
+    <string name="bonus_day_tab_3">恭喜%1$s完成任务推荐%2$s人得到瓜分奖励</string>
+    <string name="bonus_day_tab_4">开奖时间%0$s</string>
+    <string name="bonus_day_tab_5">今月奖金池累计</string>
+
+    <string name="my_team_tab_1">总业绩</string>
+    <string name="my_team_tab_2">累计奖励</string>
+    <string name="my_team_tab_3">团队总人数</string>
+    <string name="my_team_tab_4">明细记录</string>
+    <string name="my_team_tab_5">团队列表</string>
+    <string name="my_team_tab_6">上级ID:%0$s</string>
+    <string name="my_team_tab_7">我的ID:%0$s</string>
+    <string name="my_team_tab_8">上级名称:%0$s</string>
+
+    <string name="invitation_tab_1">您的邀请码为</string>
+    <string name="invitation_tab_2">分享好友</string>
+    <string name="invitation_tab_3">保存接口</string>
+
+    <string name="address_tab_1">默认</string>
+    <string name="address_tab_2">编辑</string>
+    <string name="address_tab_3">删除</string>
+    <string name="address_tab_4">新建收货地址</string>
+    <string name="address_tab_5">删除地址成功</string>
+    <string name="address_tab_6">设置默认地址成功</string>
+
+
 </resources>

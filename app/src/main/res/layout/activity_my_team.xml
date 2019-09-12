@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.MyTeamActivity">
+
+    <include layout="@layout/layout_title_black_bar"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f2">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/icon_total_results"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_team_tab_1"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"
+                        android:layout_marginBottom="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_total_results"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="￥0.00"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/icon_cumulative_rewards"
+                    android:orientation="vertical"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_team_tab_2"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"
+                        android:layout_marginBottom="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_cumulative_rewards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="￥0.00"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/icon_team_num_bg"
+                    android:orientation="vertical"
+                    android:layout_marginTop="13dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_team_tab_3"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"
+                        android:layout_marginBottom="8dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_team_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="￥0.00"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"/>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_bonus_day_rv_bg"
+                    android:padding="15dp"
+                    android:layout_marginTop="30dp">
+
+
+                    <TextView
+                        android:id="@+id/tv_first_leader_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上级ID：0"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size15"
+                        android:layout_marginBottom="15dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_first_leader_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上级ID：0"
+                        android:layout_below="@id/tv_first_leader_id"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size15"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上级ID：0"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size15"
+                        android:layout_marginBottom="15dp"
+                        android:textStyle="bold"/>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_detail_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height45"
+                    android:background="@drawable/shape_bonus_day_rv_bg"
+                    android:drawableRight="@drawable/icon_more_black"
+                    android:gravity="center_vertical"
+                    android:text="@string/my_team_tab_4"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_team_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height45"
+                    android:background="@drawable/shape_bonus_day_rv_bg"
+                    android:drawableRight="@drawable/icon_more_black"
+                    android:gravity="center_vertical"
+                    android:text="@string/my_team_tab_5"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    />
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

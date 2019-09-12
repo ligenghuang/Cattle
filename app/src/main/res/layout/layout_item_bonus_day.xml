@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height50"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/item_height50"
+        android:paddingRight="@dimen/item_height50"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/tv_item_bonus_day_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_3"
+            android:textSize="@dimen/text_size15"
+            android:textStyle="bold"
+            android:layout_marginRight="18dp"
+            android:text="NO.1"/>
+
+        <TextView
+            android:id="@+id/tv_item_bonus_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="恭喜陈小姐138****1388完成任务推荐10人得到瓜分奖励"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+
+    </LinearLayout>
+
+    <View style="@style/line_4"/>
+
+</LinearLayout>

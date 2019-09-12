@@ -18,5 +18,11 @@
     <color name="color_2f">#2F2F2F</color>
     <color name="color_6f">#6f6f6f</color>
     <color name="color_8">#888888</color>
+    <color name="color_01">#010101</color>
+    <color name="color_3">#333333</color>
+    <color name="color_F4B00E">#F4B00E</color>
+    <color name="color_A8ACAC">#A8ACAC</color>
+    <color name="color_B06A31">#B06A31</color>
+    <color name="color_9">#999999</color>
 
 </resources>

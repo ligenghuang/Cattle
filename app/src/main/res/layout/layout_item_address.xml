@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_item_address"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/shape_hollow_circle"
+        android:padding="5dp"
+        android:src="@drawable/selector_circle" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_consignee"
+            android:layout_width="wrap_content"
+            android:text="陈晓晓"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_item_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size10"
+            android:textColor="@color/color_fd69a5"
+            android:text="@string/address_tab_1"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/shape_address_default"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_address_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="13800138000"
+            android:layout_marginBottom="7dp"
+            android:textSize="@dimen/text_size12"
+            android:textColor="@color/color_9"/>
+
+        <TextView
+            android:id="@+id/tv_item_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12"
+            android:layout_marginRight="20dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="广东省广州市白云区嘉禾望岗嘉禾望家属及沙发上司国嘉禾望岗"
+            />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_address_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_tab_2"
+                    android:textSize="@dimen/text_size12"
+                    android:textColor="@color/color_9"
+                    android:layout_marginRight="13dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_address_detele"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_tab_3"
+                    android:textSize="@dimen/text_size12"
+                    android:textColor="@color/color_9"
+                    android:layout_marginRight="20dp"
+                    />
+
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -315,6 +315,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll_bonus_day"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -354,6 +355,7 @@
                         android:textSize="@dimen/text_size12" />
 
                     <LinearLayout
+                        android:id="@+id/ll_bonus_month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -180,7 +180,8 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             R.id.tv_wait_pay, R.id.tv_wait_order, R.id.tv_wait_receive,
             R.id.tv_wait_evaluation, R.id.tv_sales_return, R.id.ll_my_team,
             R.id.ll_total_results, R.id.ll_headcount, R.id.ll_recommended,
-            R.id.tv_invitation, R.id.tv_address, R.id.tv_supplier, R.id.tv_security})
+            R.id.tv_invitation, R.id.tv_address, R.id.tv_supplier, R.id.tv_security,
+            R.id.ll_bonus_day,R.id.ll_bonus_month,R.id.tv_ranking_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_my_remainder_money:
@@ -215,17 +216,31 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 //todo 退货
                 jumpActivityNotFinish(mContext,SalesReturnActivity.class);
                 break;
+            case R.id.ll_bonus_day:
+                //todo 当日累计奖金
+                jumpActivityNotFinish(mContext,BonusDayActivity.class);
+                break;
+            case R.id.tv_ranking_list:
+                //todo 排行榜
+                break;
+            case R.id.ll_bonus_month:
+                //todo 当月累计奖金
+                jumpActivityNotFinish(mContext,BonusMonActivity.class);
+                break;
             case R.id.ll_my_team:
-                break;
             case R.id.ll_total_results:
-                break;
             case R.id.ll_headcount:
-                break;
             case R.id.ll_recommended:
+                //todo 我的团队
+                jumpActivityNotFinish(mContext,MyTeamActivity.class);
                 break;
             case R.id.tv_invitation:
+                //todo 邀请分享
+                jumpActivityNotFinish(mContext,InvitationActivity.class);
                 break;
             case R.id.tv_address:
+                //todo 地址管理
+                jumpActivityNotFinish(mContext,AddressListActivity.class);
                 break;
             case R.id.tv_supplier:
                 break;

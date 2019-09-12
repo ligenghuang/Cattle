@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.my.AddressListActivity">
+
+    <include layout="@layout/layout_title_grey_bar"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_10"
+            tools:itemCount="3"
+            tools:listitem="@layout/layout_item_address"/>
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <View style="@style/line_4"/>
+    <LinearLayout
+        android:id="@+id/ll_add_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height45"
+        android:gravity="center">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/icon_add"
+            android:drawablePadding="8dp"
+            android:text="@string/address_tab_4"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.my.InvitationActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="254dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_invitation_bg" />
+
+                <include layout="@layout/layout_title_white_bar" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_qc_code"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="-75dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/erweima" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/invitation_tab_1"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size12" />
+
+            <TextView
+                android:id="@+id/tv_invitation_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="@dimen/item_height60"
+                android:background="@drawable/shape_invitation_text_bg"
+                android:gravity="center"
+                android:paddingLeft="33dp"
+                android:paddingTop="9dp"
+                android:paddingRight="33dp"
+                android:paddingBottom="9dp"
+                android:text="088852"
+                android:textColor="@color/color_6"
+                android:textSize="@dimen/text_size24" />
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_login_btn_bg"
+                android:text="@string/invitation_tab_2"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/icon_share"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:paddingLeft="33dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingRight="33dp"
+                android:paddingBottom="@dimen/dp_10"/>
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_login_btn_bg"
+                android:text="@string/invitation_tab_3"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/icon_save"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:paddingLeft="33dp"
+                android:paddingTop="@dimen/dp_10"
+                android:layout_marginTop="15dp"
+                android:paddingRight="33dp"
+                android:paddingBottom="@dimen/dp_10"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
