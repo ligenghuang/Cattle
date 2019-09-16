@@ -18,7 +18,12 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.my.AddAddressActivity"></activity>
+        <activity android:name=".ui.my.PayPwdActivity"></activity>
+        <activity android:name=".ui.my.ModifyMobileCodeActivity" />
+        <activity android:name=".ui.my.ModifyMobileActivity" />
+        <activity android:name=".ui.my.SecurityActivity" />
+        <activity android:name=".ui.my.SupplierActivity" />
+        <activity android:name=".ui.my.AddAddressActivity" />
         <activity android:name=".ui.my.AddressListActivity" />
         <activity android:name=".ui.my.InvitationActivity" />
         <activity android:name=".ui.my.MyTeamActivity" />

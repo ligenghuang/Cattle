@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.net;
 
 import com.zhifeng.cattle.BuildConfig;
+import com.zhifeng.cattle.modules.SafeInfoDto;
 
 public class WebUrlUtil {
 
@@ -105,5 +106,35 @@ public class WebUrlUtil {
      * 设为默认地址
      */
     public static final String POST_SET_DEFAULT_ADDRESS = "Address/set_default_address";
+
+    /**
+     * 编辑添加地址
+     */
+    public static final String POST_ADD_ADDRESS = "Address/addAddress";
+
+    /**
+     * 获取收货地址详情
+     */
+    public static final String POST_ADDRESS_DETAIL = "Address/my_address";
+
+    /**
+     * 获取下级地址
+     */
+    public static final String POST_ADDRESS_GET_REGION = "Address/get_region";
+
+    /**
+     * 安全中心信息
+     */
+    public static final String POST_SAFE_INDEX = "safe/index";
+
+    /**
+     * 修改手机号码  验证手机号
+     */
+    public static final String POST_SAFE_CHECK_NEW_PHONE = "safe/check_new_phone";
+
+    /**
+     * 换绑手机
+     */
+    public static final String POST_SAFE_CHANGE_PHONE = "safe/change_phone";
 
 }

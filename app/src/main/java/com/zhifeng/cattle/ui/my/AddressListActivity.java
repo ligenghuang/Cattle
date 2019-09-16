@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -111,6 +112,28 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
                 getAddressList();
             }
         });
+
+        addressListAdapter.setOnClickListener(new AddressListAdapter.OnClickListener() {
+            @Override
+            public void edit(int id) {
+                //编辑
+                Intent intent = new Intent(mContext,AddAddressActivity.class);
+                intent.putExtra("address_id",id);
+                startActivity(intent);
+            }
+
+            @Override
+            public void Detele(int id) {
+                //删除
+                deteleAddress(id);
+            }
+
+            @Override
+            public void Is_default(int id) {
+                //设置为默认地址
+                setDefaultAddress(id);
+            }
+        });
     }
 
     /**
@@ -141,6 +164,14 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             //todo 2019/09/12 添加空布局
             recyclerview.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void getAddressListNull(){
+        loadDiss();
+        refreshLayout.finishRefresh();
+        //todo 2019/09/12 添加空布局
+        recyclerview.setVisibility(View.GONE);
     }
 
     /**
@@ -209,7 +240,11 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
     @Override
     protected void onResume() {
         super.onResume();
-        baseAction.toRegister();
+
+        if (baseAction != null){
+            baseAction.toRegister();
+            getAddressList();
+        }
     }
 
     @OnClick(R.id.ll_add_address)

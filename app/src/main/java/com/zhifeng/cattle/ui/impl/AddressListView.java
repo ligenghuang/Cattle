@@ -20,6 +20,7 @@ public interface AddressListView extends BaseView {
      */
     void getAddressList();
     void getAddressListSuccess(AddressListDto addressListDto);
+    void getAddressListNull();
 
     /**
      * 删除地址

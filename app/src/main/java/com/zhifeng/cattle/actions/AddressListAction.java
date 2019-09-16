@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
@@ -91,14 +92,20 @@ public class AddressListAction extends BaseAction<AddressListView> {
 //                        //todo 获取地址列表
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            AddressListDto addressListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AddressListDto>() {
-                            }.getType());
-                            if (addressListDto.getStatus() == 200){
-                                //todo 获取地址列表成功
-                                view.getAddressListSuccess(addressListDto);
-                                return;
-                            }
-                            view.onError(addressListDto.getMsg(),action.getErrorType());
+                          try{
+                              AddressListDto addressListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AddressListDto>() {
+                              }.getType());
+                              if (addressListDto.getStatus() == 200){
+                                  //todo 获取地址列表成功
+                                  view.getAddressListSuccess(addressListDto);
+                                  return;
+                              }
+                              view.onError(addressListDto.getMsg(),action.getErrorType());
+                          }catch (JsonSyntaxException e){
+                              GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                              }.getType());
+                              view.getAddressListNull();
+                          }
                             return;
                         }
                         view.onError(msg,action.getErrorType());

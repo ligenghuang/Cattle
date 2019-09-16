@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.lgh.huanglib.util.cusview.CustomViewPager;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
@@ -77,6 +78,23 @@ public class OrderActivity extends UserBaseActivity {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+    }
+
+    /**
+     * 初始化标题栏
+     */
+    @Override
+    protected void initTitlebar() {
+        super.initTitlebar();
+        mImmersionBar
+                .statusBarView(R.id.top_view)
+                .keyboardEnable(true)
+                .statusBarDarkFont(true, 0.2f)
+                .addTag("OrderActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .navigationBarWithKitkatEnable(false)
+                .init();
+        toolbar.setNavigationOnClickListener(view -> finish());
+        fTitleTv.setText(ResUtil.getString(R.string.my_tab_3));
     }
 
     @Override

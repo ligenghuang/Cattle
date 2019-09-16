@@ -1,5 +1,6 @@
 package com.zhifeng.cattle.adapters;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,12 @@ import com.zhifeng.cattle.modules.AddressListDto;
  */
 
 public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataBean> {
+    OnClickListener onClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
     public AddressListAdapter() {
         super(R.layout.layout_item_address);
     }
@@ -32,5 +39,34 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         tvDefault.setVisibility(model.getIs_default()==1? View.VISIBLE:View.GONE);
         ImageView img = holder.itemView.findViewById(R.id.iv_item_address);
         img.setSelected(model.getIs_default() == 1);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (model.getIs_default() != 1){
+                    onClickListener.Is_default(model.getAddress_id());
+                }
+            }
+        });
+
+        holder.itemView.findViewById(R.id.tv_address_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.edit(model.getAddress_id());
+            }
+        });
+        holder.itemView.findViewById(R.id.tv_address_detele).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.Detele(model.getAddress_id());
+            }
+        });
+
+    }
+
+    public interface OnClickListener{
+        void edit(int id);
+        void Detele(int id);
+        void Is_default(int id);
     }
 }

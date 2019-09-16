@@ -243,8 +243,12 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 jumpActivityNotFinish(mContext,AddressListActivity.class);
                 break;
             case R.id.tv_supplier:
+                //todo 供应商
+                jumpActivityNotFinish(mContext,SupplierActivity.class);
                 break;
             case R.id.tv_security:
+                //todo 安全中心
+                jumpActivityNotFinish(mContext,SecurityActivity.class);
                 break;
         }
     }

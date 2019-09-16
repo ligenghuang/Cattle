@@ -52,13 +52,13 @@ public interface HttpPostService {
     Observable<BaseResultEntity> GetData(@Url String url);
 
     /**
-     * 带id的get请求
+     * 带code的get请求
      * @param id
      * @param url
      * @return
      */
     @GET
-    Observable<BaseResultEntity> GetData(@Url String url, @Query("token") String id);
+    Observable<BaseResultEntity> GetData(@Url String url, @Query("code") int id);
 
 
 
