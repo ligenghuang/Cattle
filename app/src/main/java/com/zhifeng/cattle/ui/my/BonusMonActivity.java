@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -47,8 +48,7 @@ public class BonusMonActivity extends UserBaseActivity<BonusMonAction> implement
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_bonus_time)
-    TextView tvBonusTime;
+
     @BindView(R.id.tv_bonus_day)
     TextView tvBonusDay;
     @BindView(R.id.recyclerview)
@@ -84,11 +84,11 @@ public class BonusMonActivity extends UserBaseActivity<BonusMonAction> implement
                 .statusBarView(R.id.top_view)
                 .keyboardEnable(true)
                 .statusBarDarkFont(true, 0.2f)
-                .addTag("BonusDayActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .addTag("BonusMonActivity")  //给上面参数打标记，以后可以通过标记恢复
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-        fTitleTv.setText(ResUtil.getString(R.string.my_tab_10));
+        fTitleTv.setText(ResUtil.getString(R.string.my_tab_12));
     }
 
     @Override
@@ -140,7 +140,7 @@ public class BonusMonActivity extends UserBaseActivity<BonusMonAction> implement
         loadDiss();
         refreshLayout.finishRefresh();
         tvBonusDay.setText(bonusMonDto.getTotal());
-
+        L.e("lgh_total","Total   = "+bonusMonDto.getTotal());
         bonusMonListAdapter.refresh(bonusMonDto.getData());
 
     }

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.my.WithdrawalActivity">
+
+    <include layout="@layout/layout_title_black_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:background="@drawable/icon_balance_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/balance_tab_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size13"
+                    android:textStyle="bold" />
+
+                <!--todo 我的余额-->
+                <TextView
+                    android:id="@+id/tv_balance_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size20"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/withdrawal_tab_1"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size13" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/icon_withdrawal_wexin" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_withdrawal_alipay" />
+
+            </LinearLayout>
+
+            <!--支付宝账号-->
+            <TextView
+                android:id="@+id/tv_alipay_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawableRight="@drawable/icon_more"
+                android:hint="@string/withdrawal_tab_2"
+                android:textColor="@color/color_15"
+                android:textColorHint="@color/color_71"
+                android:textSize="@dimen/text_size12" />
+
+
+            <View
+                style="@style/line_4"
+                android:layout_marginBottom="@dimen/dp_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@string/withdrawal_tab_3"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size13" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <!--提现金额-->
+                <EditText
+                    android:id="@+id/et_withdrawal_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="@string/withdrawal_tab_4"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_15"
+                    android:textColorHint="@color/color_71"
+                    android:textSize="@dimen/text_size12" />
+
+                <!--全部提现-->
+                <TextView
+                    android:id="@+id/tv_withdrawal_money_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/withdrawal_tab_5"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+            <View style="@style/line_4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <!--手续费-->
+                <TextView
+                    android:id="@+id/tv_withdrawal_taxfee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:textColor="@color/color_15"
+                    android:text="@string/withdrawal_tab_6"
+                    android:textSize="@dimen/text_size12" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/withdrawal_tab_8"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+            <View style="@style/line_4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <!--实际到账-->
+                <TextView
+                    android:id="@+id/tv_withdrawal_actual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_15"
+                    android:text="@string/withdrawal_tab_7"
+                    android:textSize="@dimen/text_size12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/withdrawal_tab_8"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+            <View style="@style/line_4" />
+
+
+
+            <TextView
+                android:id="@+id/tv_withdrawal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_login_btn_bg"
+                android:text="@string/withdrawal_tab_9"
+                android:gravity="center"
+                android:padding="13dp"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="25dp"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

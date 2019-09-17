@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.cardview.widget.CardView;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.CategoryListDto;
+import com.zhifeng.cattle.ui.home.GoodsDetailActivity;
 
 /**
   *
@@ -39,5 +41,6 @@ public class CategoryAdapter extends BaseRecyclerAdapter<CategoryListDto.DataBea
         categoryListGoodsAdapter.refresh(model.getGoods());
         CardView cardView = holder.itemView.findViewById(R.id.cardView);
         cardView.setVisibility(model.getGoods().size() == 0? View.GONE:View.VISIBLE);
+
     }
 }

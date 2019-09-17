@@ -95,12 +95,12 @@ public class WebUrlUtil {
     /**
      * 地址管理
      */
-    public static final String POST_ADDRESS_LIST ="Address/addressList";
+    public static final String POST_ADDRESS_LIST = "Address/addressList";
 
     /**
      * 删除地址
      */
-    public static final String POST_DEL_ADDRESS ="Address/delAddress";
+    public static final String POST_DEL_ADDRESS = "Address/delAddress";
 
     /**
      * 设为默认地址
@@ -140,21 +140,31 @@ public class WebUrlUtil {
     /**
      * 修改支付密码
      */
-    public static final  String POST_EDIT_PAY_PWD = "user/edit_pay_password";
+    public static final String POST_EDIT_PAY_PWD = "user/edit_pay_password";
 
     /**
      * 忘记支付密码
      */
-    public static final  String POST_RESET_PAY_PWD = "user/paypwd_reset";
+    public static final String POST_RESET_PAY_PWD = "user/paypwd_reset";
 
     /**
      * 设置支付密码
      */
-    public static final  String POST_SET_PAY_PWD = "user/set_pay_password";
+    public static final String POST_SET_PAY_PWD = "user/set_pay_password";
 
     /**
      * 提现明细
      */
     public static final String POST_WITHDRAWAL_LIST = "user/withdrawal_list";
+
+    /**
+     * 提现
+     */
+    public static final String POST_WITHDRAWAL = "user/withdrawal";
+
+    /**
+     * 填写支付宝账号
+     */
+    public static final String POST_EDIT_ALIPAY = "user/zfb_edit";
 
 }

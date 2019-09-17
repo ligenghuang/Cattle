@@ -142,7 +142,7 @@
                         android:layout_height="35dp"
                         android:drawableRight="@drawable/icon_more"
                         android:gravity="center_vertical"
-                        android:text="@string/balance_tab_6"
+                        android:text="@string/balance_tab_7"
                         android:textColor="@color/color_15"
                         android:textSize="@dimen/text_size13" />
                 </androidx.cardview.widget.CardView>

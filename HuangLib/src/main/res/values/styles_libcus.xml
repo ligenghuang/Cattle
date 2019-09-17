@@ -95,6 +95,6 @@
         <item name="qmui_borderColor">?attr/qmui_round_btn_border_color</item>
         <item name="android:textColor">?attr/qmui_round_btn_text_color</item>
     </style>
-
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

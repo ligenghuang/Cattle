@@ -164,4 +164,24 @@
     <string name="withdrawal_detail_tab_6">审核失败</string>
     <string name="withdrawal_detail_tab_7">待审核</string>
 
+
+    <string name="withdrawal_tab_1">提现方式</string>
+    <string name="withdrawal_tab_2">请输入支付宝账号</string>
+    <string name="withdrawal_tab_3">提现金额</string>
+    <string name="withdrawal_tab_4">请输入提现金额</string>
+    <string name="withdrawal_tab_5">全部提现</string>
+    <string name="withdrawal_tab_6">手续费：%0$s</string>
+    <string name="withdrawal_tab_7">实际到账：%0$s</string>
+    <string name="withdrawal_tab_8">元</string>
+    <string name="withdrawal_tab_9">申请提现</string>
+    <string name="withdrawal_tab_10">提现金额不能小于1</string>
+    <string name="withdrawal_tab_11">提现金额不能大于余额</string>
+
+    <string name="edit_alipay_tab_1">支付宝提现</string>
+    <string name="edit_alipay_tab_2">支付宝账号</string>
+    <string name="edit_alipay_tab_3">请输入支付宝账号</string>
+    <string name="edit_alipay_tab_4">真实姓名</string>
+    <string name="edit_alipay_tab_5">请输入真实姓名</string>
+    <string name="edit_alipay_tab_6">确认</string>
+
 </resources>

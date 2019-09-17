@@ -1,7 +1,9 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,6 +48,12 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
     TextView tvBalanceMoney;
     @BindView(R.id.RefreshLayout)
     SmartRefreshLayout refreshLayout;
+
+    /**
+     * 判断是否绑定支付宝
+     */
+    boolean isAlipay = false;
+
 
     @Override
     public int intiLayout() {
@@ -127,8 +135,10 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         loadDiss();
         refreshLayout.finishRefresh();
         double money = Double.parseDouble(balanceDto.getData().getRemainder_money());
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#0.00000");
         tvBalanceMoney.setText("￥"+df.format(money));
+        //获取用户是否绑定支付宝
+        isAlipay = !TextUtils.isEmpty(balanceDto.getData().getAlipay());
     }
 
     @Override
@@ -148,7 +158,10 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
     @Override
     protected void onResume() {
         super.onResume();
-        baseAction.toRegister();
+       if (baseAction != null){
+           baseAction.toRegister();
+           getBalance();
+       }
     }
 
     @OnClick({R.id.tv_balance_recharge, R.id.tv_balance_withdrawal, R.id.cv_balance_withdrawal_detail, R.id.cv_balance_recharge_detail, R.id.cv_balance_bill_detail})
@@ -159,6 +172,15 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
                 break;
             case R.id.tv_balance_withdrawal:
                 //todo 提现
+                if (isAlipay){
+                    //todo 提现页面
+                    jumpActivityNotFinish(mContext,WithdrawalActivity.class);
+                }else {
+                    //绑定支付宝页面
+                    Intent intent = new Intent(mContext,EditAliPayActivity.class);
+                    intent.putExtra("type",1);
+                    startActivity(intent);
+                }
                 break;
             case R.id.cv_balance_withdrawal_detail:
                 //todo 提现明细
