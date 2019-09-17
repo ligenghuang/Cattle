@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
     TextView tvSecurityPhone;
 
     int isPwd = 0;
+    String Mobile;
 
     @Override
     public int intiLayout() {
@@ -109,6 +111,7 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
         SafeInfoDto.DataBean dataBean = safeInfoDto.getData();
         tvSecurityName.setText(dataBean.getRealname());
         String phone = dataBean.getMobile();
+        Mobile = dataBean.getMobile();
         tvSecurityPhone.setText(phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
         isPwd = dataBean.getPwd();
     }
@@ -149,6 +152,11 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 break;
             case R.id.ll_security_pay_pwd:
                 //支付密码
+                if (isPwd == 1){
+                    jumpPwdActivity(PayPwdActivity.class,0);
+                }else {
+                    jumpPwdActivity(ForgetPwdActivity.class,1);
+                }
                 break;
             case R.id.ll_security_user:
                 //切换用户
@@ -157,5 +165,17 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 //退出
                 break;
         }
+    }
+
+    /**
+     * 跳转至支付密码页面或者设置支付密码页面
+     * @param payPwdActivityClass
+     * @param i
+     */
+    private void jumpPwdActivity(Class payPwdActivityClass,int i) {
+        Intent intent = new Intent(mContext,payPwdActivityClass);
+        intent.putExtra("phone",Mobile);
+        intent.putExtra("type",i);
+        startActivity(intent);
     }
 }

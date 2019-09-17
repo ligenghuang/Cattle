@@ -137,4 +137,24 @@ public class WebUrlUtil {
      */
     public static final String POST_SAFE_CHANGE_PHONE = "safe/change_phone";
 
+    /**
+     * 修改支付密码
+     */
+    public static final  String POST_EDIT_PAY_PWD = "user/edit_pay_password";
+
+    /**
+     * 忘记支付密码
+     */
+    public static final  String POST_RESET_PAY_PWD = "user/paypwd_reset";
+
+    /**
+     * 设置支付密码
+     */
+    public static final  String POST_SET_PAY_PWD = "user/set_pay_password";
+
+    /**
+     * 提现明细
+     */
+    public static final String POST_WITHDRAWAL_LIST = "user/withdrawal_list";
+
 }

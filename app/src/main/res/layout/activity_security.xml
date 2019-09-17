@@ -147,7 +147,7 @@
                     android:textSize="@dimen/text_size15"
                     android:textColor="@color/color_15"
                     android:textStyle="bold"
-                    android:text="@string/security_tab_1"/>
+                    android:text="@string/security_tab_4"/>
 
                 <TextView
                     android:layout_width="match_parent"

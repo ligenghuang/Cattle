@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="7dp"
+    android:paddingBottom="8dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size12"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_item_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size12"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_item_taxfee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size12"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_item_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size12"
+        android:gravity="center"/>
+
+</LinearLayout>

@@ -140,5 +140,28 @@
     <string name="modify_mobile_tab_15">修改手机号码成功</string>
     <string name="modify_mobile_tab_16">请输入短信验证码</string>
 
+    <string name="pay_pwd_tab_1">修改支付密码</string>
+    <string name="pay_pwd_tab_2">忘记支付密码</string>
+    <string name="pay_pwd_tab_3">设置支付密码</string>
+    <string name="pay_pwd_tab_4">输入原密码</string>
+    <string name="pay_pwd_tab_5">输入新密码</string>
+    <string name="pay_pwd_tab_6">提交</string>
+    <string name="pay_pwd_tab_7">请输入原密码</string>
+    <string name="pay_pwd_tab_8">请输入新密码</string>
+    <string name="pay_pwd_tab_9">绑定手机号   %0$s</string>
+    <string name="pay_pwd_tab_10">请输入验证码</string>
+    <string name="pay_pwd_tab_11">输入密码</string>
+    <string name="pay_pwd_tab_12">确认密码</string>
+    <string name="pay_pwd_tab_13">请输入密码</string>
+    <string name="pay_pwd_tab_14">请再次输入密码</string>
+    <string name="pay_pwd_tab_15">两次密码不一致</string>
+
+    <string name="withdrawal_detail_tab_1">申请日期</string>
+    <string name="withdrawal_detail_tab_2">金额</string>
+    <string name="withdrawal_detail_tab_3">手续费</string>
+    <string name="withdrawal_detail_tab_4">审核状态</string>
+    <string name="withdrawal_detail_tab_5">审核成功</string>
+    <string name="withdrawal_detail_tab_6">审核失败</string>
+    <string name="withdrawal_detail_tab_7">待审核</string>
 
 </resources>

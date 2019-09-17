@@ -162,6 +162,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
                 break;
             case R.id.cv_balance_withdrawal_detail:
                 //todo 提现明细
+                jumpActivityNotFinish(mContext,WithdrawalDetailActivity.class);
                 break;
             case R.id.cv_balance_recharge_detail:
                 //todo 充值明细

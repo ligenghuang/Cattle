@@ -18,7 +18,10 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.my.PayPwdActivity"></activity>
+        <activity android:name=".ui.my.WithdrawalDetailActivity"></activity>
+        <activity android:name=".ui.my.ForgetPwdActivity" />
+        <activity android:name=".ui.my.ModifyPayPwdActivity" />
+        <activity android:name=".ui.my.PayPwdActivity" />
         <activity android:name=".ui.my.ModifyMobileCodeActivity" />
         <activity android:name=".ui.my.ModifyMobileActivity" />
         <activity android:name=".ui.my.SecurityActivity" />
