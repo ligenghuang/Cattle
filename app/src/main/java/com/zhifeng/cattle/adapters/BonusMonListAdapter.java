@@ -4,7 +4,6 @@ import android.widget.TextView;
 
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.modules.BonusDayDto;
 import com.zhifeng.cattle.modules.BonusMonDto;
 
 /**
@@ -16,13 +15,13 @@ import com.zhifeng.cattle.modules.BonusMonDto;
   * @Version:        1.0
  */
 
-public class BonusMonListAdapter extends BaseRecyclerAdapter<BonusMonDto.DataBean> {
+public class BonusMonListAdapter extends BaseRecyclerAdapter<BonusMonDto.DataBean.ListBean> {
     public BonusMonListAdapter() {
         super(R.layout.layout_item_bonus_day);
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, BonusMonDto.DataBean model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder, BonusMonDto.DataBean.ListBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_bonus_day, ResUtil.getFormatString(R.string.bonus_day_tab_3,model.getRealname(),model.getNum()+""));
         int res = R.color.color_3;

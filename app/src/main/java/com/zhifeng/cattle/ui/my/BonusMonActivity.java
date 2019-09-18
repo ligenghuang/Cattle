@@ -18,13 +18,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.BonusDayAction;
 import com.zhifeng.cattle.actions.BonusMonAction;
-import com.zhifeng.cattle.adapters.BonusDayListAdapter;
 import com.zhifeng.cattle.adapters.BonusMonListAdapter;
-import com.zhifeng.cattle.modules.BonusDayDto;
 import com.zhifeng.cattle.modules.BonusMonDto;
-import com.zhifeng.cattle.ui.impl.BonusDayView;
 import com.zhifeng.cattle.ui.impl.BonusMonView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 
@@ -139,9 +135,9 @@ public class BonusMonActivity extends UserBaseActivity<BonusMonAction> implement
     public void getBonusMonSuccess(BonusMonDto bonusMonDto) {
         loadDiss();
         refreshLayout.finishRefresh();
-        tvBonusDay.setText(bonusMonDto.getTotal());
-        L.e("lgh_total","Total   = "+bonusMonDto.getTotal());
-        bonusMonListAdapter.refresh(bonusMonDto.getData());
+        tvBonusDay.setText(bonusMonDto.getData().getTotal());
+        L.e("lgh_total","Total   = "+bonusMonDto.getData().getTotal());
+        bonusMonListAdapter.refresh(bonusMonDto.getData().getList());
 
     }
 

@@ -15,13 +15,13 @@ import com.zhifeng.cattle.modules.BonusDayDto;
   * @Version:        1.0
  */
 
-public class BonusDayListAdapter extends BaseRecyclerAdapter<BonusDayDto.DataBean> {
+public class BonusDayListAdapter extends BaseRecyclerAdapter<BonusDayDto.DataBean.ListBean> {
     public BonusDayListAdapter() {
         super(R.layout.layout_item_bonus_day);
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, BonusDayDto.DataBean model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder, BonusDayDto.DataBean.ListBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_bonus_day, ResUtil.getFormatString(R.string.bonus_day_tab_3,model.getRealname(),model.getNum()+""));
         int res = R.color.color_3;

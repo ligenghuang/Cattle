@@ -14,12 +14,13 @@ import com.lgh.huanglib.util.CheckNetwork;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.actions.OrderAction;
 import com.zhifeng.cattle.adapters.OrderListAdapter;
 import com.zhifeng.cattle.modules.OrderListDto;
 import com.zhifeng.cattle.ui.impl.OrderView;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,6 +134,11 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Confirm(int id) {
                 //todo 确定收货
+            }
+
+            @Override
+            public void evaluation(int orderId, List<OrderListDto.DataBean.GoodsBean> goodsBeans) {
+                //todo 去评价
             }
         });
     }

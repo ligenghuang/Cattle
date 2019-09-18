@@ -71,6 +71,9 @@ public class OrderAction extends BaseAction<OrderView> {
         return Type;
     }
 
+
+
+
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
      *

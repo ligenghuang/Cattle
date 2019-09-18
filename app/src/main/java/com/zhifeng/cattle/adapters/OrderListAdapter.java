@@ -12,6 +12,8 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.OrderListDto;
 
+import java.util.List;
+
 /**
   *
   * @ClassName:     我的订单列表适配器
@@ -134,6 +136,13 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
                 onClickListener.Confirm(model.getOrder_id());
             }
         });
+        //去评价
+        holder.itemView.findViewById(R.id.tv_item_order_evaluation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickListener.evaluation(model.getOrder_id(),model.getGoods());
+            }
+        });
     }
 
     /**
@@ -199,5 +208,6 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
         void Pay(int id);//付款
         void Refund(int id);//退款
         void Confirm(int id);//确定收货
+        void evaluation(int orderId, List<OrderListDto.DataBean.GoodsBean> goodsBeans);//去评价
     }
 }

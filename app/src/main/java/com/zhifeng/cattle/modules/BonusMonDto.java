@@ -18,14 +18,12 @@ public class BonusMonDto {
     /**
      * status : 200
      * msg : 获取成功
-     * data : [{"first_leader":27875,"realname":"默认昵称","mobile":"18665679407","num":6,"No":1},{"first_leader":27894,"realname":"默认昵称","mobile":"13642684991","num":3,"No":2},{"first_leader":27864,"realname":"默认昵称","mobile":"15024070309","num":1,"No":3},{"first_leader":27873,"realname":"默认昵称","mobile":"13763004669","num":1,"No":4},{"first_leader":27760,"realname":"默认昵称","mobile":"17779516112","num":1,"No":5},{"first_leader":27871,"realname":"默认昵称","mobile":"15181112455","num":1,"No":6},{"first_leader":27869,"realname":"默认昵称","mobile":"13286971460","num":1,"No":7},{"first_leader":27867,"realname":"默认昵称","mobile":"17875592622","num":1,"No":8},{"first_leader":27874,"realname":"默认昵称","mobile":"18688677754","num":1,"No":9},{"first_leader":27761,"realname":"默认昵称","mobile":"15089607528","num":1,"No":10}]
-     * total : 5599.9.00
+     * data : {"total":"5599.9.00","list":[{"first_leader":27875,"realname":"默认昵称","mobile":"18665679407","num":6,"No":1},{"first_leader":27894,"realname":"默认昵称","mobile":"13642684991","num":3,"No":2},{"first_leader":27869,"realname":"默认昵称","mobile":"13286971460","num":1,"No":3},{"first_leader":27867,"realname":"默认昵称","mobile":"17875592622","num":1,"No":4},{"first_leader":27874,"realname":"默认昵称","mobile":"18688677754","num":1,"No":5},{"first_leader":27761,"realname":"默认昵称","mobile":"15089607528","num":1,"No":6},{"first_leader":27872,"realname":"默认昵称","mobile":"15279401908","num":1,"No":7},{"first_leader":27870,"realname":"默认昵称","mobile":"13719364739","num":1,"No":8},{"first_leader":27868,"realname":"默认昵称","mobile":"13178489831","num":1,"No":9},{"first_leader":27864,"realname":"默认昵称","mobile":"15024070309","num":1,"No":10}]}
      */
 
     private int status;
     private String msg;
-    private String total;
-    private List<DataBean> data;
+    private DataBean data;
 
     public int getStatus() {
         return status;
@@ -36,85 +34,103 @@ public class BonusMonDto {
     }
 
     public String getMsg() {
-        return msg == null ? "" : msg;
+        return msg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg == null ? "" : msg;
+        this.msg = msg;
     }
 
-    public String getTotal() {
-        return total == null ? "" : total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public List<DataBean> getData() {
-        if (data == null) {
-            return new ArrayList<>();
-        }
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
     public static class DataBean {
         /**
-         * first_leader : 27875
-         * realname : 默认昵称
-         * mobile : 18665679407
-         * num : 6
-         * No : 1
+         * total : 5599.9.00
+         * list : [{"first_leader":27875,"realname":"默认昵称","mobile":"18665679407","num":6,"No":1},{"first_leader":27894,"realname":"默认昵称","mobile":"13642684991","num":3,"No":2},{"first_leader":27869,"realname":"默认昵称","mobile":"13286971460","num":1,"No":3},{"first_leader":27867,"realname":"默认昵称","mobile":"17875592622","num":1,"No":4},{"first_leader":27874,"realname":"默认昵称","mobile":"18688677754","num":1,"No":5},{"first_leader":27761,"realname":"默认昵称","mobile":"15089607528","num":1,"No":6},{"first_leader":27872,"realname":"默认昵称","mobile":"15279401908","num":1,"No":7},{"first_leader":27870,"realname":"默认昵称","mobile":"13719364739","num":1,"No":8},{"first_leader":27868,"realname":"默认昵称","mobile":"13178489831","num":1,"No":9},{"first_leader":27864,"realname":"默认昵称","mobile":"15024070309","num":1,"No":10}]
          */
 
-        private int first_leader;
-        private String realname;
-        private String mobile;
-        private int num;
-        private int No;
+        private String total;
+        private List<ListBean> list;
 
-        public int getFirst_leader() {
-            return first_leader;
+        public String getTotal() {
+            return total == null ? "" : total;
         }
 
-        public void setFirst_leader(int first_leader) {
-            this.first_leader = first_leader;
+        public void setTotal(String total) {
+            this.total = total == null ? "" : total;
         }
 
-        public String getRealname() {
-            return realname == null ? "" : realname;
+        public List<ListBean> getList() {
+            if (list == null) {
+                return new ArrayList<>();
+            }
+            return list;
         }
 
-        public void setRealname(String realname) {
-            this.realname = realname == null ? "" : realname;
+        public void setList(List<ListBean> list) {
+            this.list = list;
         }
 
-        public String getMobile() {
-            return mobile == null ? "" : mobile;
-        }
+        public static class ListBean {
+            /**
+             * first_leader : 27875
+             * realname : 默认昵称
+             * mobile : 18665679407
+             * num : 6
+             * No : 1
+             */
 
-        public void setMobile(String mobile) {
-            this.mobile = mobile == null ? "" : mobile;
-        }
+            private int first_leader;
+            private String realname;
+            private String mobile;
+            private int num;
+            private int No;
 
-        public int getNum() {
-            return num;
-        }
+            public int getFirst_leader() {
+                return first_leader;
+            }
 
-        public void setNum(int num) {
-            this.num = num;
-        }
+            public void setFirst_leader(int first_leader) {
+                this.first_leader = first_leader;
+            }
 
-        public int getNo() {
-            return No;
-        }
+            public String getRealname() {
+                return realname == null ? "" : realname;
+            }
 
-        public void setNo(int no) {
-            No = no;
+            public void setRealname(String realname) {
+                this.realname = realname == null ? "" : realname;
+            }
+
+            public String getMobile() {
+                return mobile == null ? "" : mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile == null ? "" : mobile;
+            }
+
+            public int getNum() {
+                return num;
+            }
+
+            public void setNum(int num) {
+                this.num = num;
+            }
+
+            public int getNo() {
+                return No;
+            }
+
+            public void setNo(int no) {
+                No = no;
+            }
         }
     }
 }

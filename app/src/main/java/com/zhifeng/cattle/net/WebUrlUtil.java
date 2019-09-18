@@ -200,4 +200,9 @@ public class WebUrlUtil {
      */
     public static final String POST_ADD_COLLECTION = "Collection/add_collection";
 
+    /**
+     * 申请退款
+     */
+    public static final String POST_ORDER_APPLY_REFUND = "order/apply_refund";
+
 }

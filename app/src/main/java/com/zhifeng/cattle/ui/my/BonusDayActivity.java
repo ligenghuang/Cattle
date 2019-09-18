@@ -135,10 +135,10 @@ public class BonusDayActivity extends UserBaseActivity<BonusDayAction> implement
     public void getBonusDaySuccess(BonusDayDto bonusDayDto) {
         loadDiss();
         refreshLayout.finishRefresh();
-        tvBonusDay.setText(bonusDayDto.getTotal());
-        tvBonusTime.setText(ResUtil.getFormatString(R.string.bonus_day_tab_4,bonusDayDto.getLottery_time()));
+        tvBonusDay.setText(bonusDayDto.getData().getTotal());
+        tvBonusTime.setText(ResUtil.getFormatString(R.string.bonus_day_tab_4,bonusDayDto.getData().getLottery_time()));
 
-        bonusDayListAdapter.refresh(bonusDayDto.getData());
+        bonusDayListAdapter.refresh(bonusDayDto.getData().getList());
 
     }
 
