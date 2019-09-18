@@ -173,9 +173,11 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         switch (view.getId()) {
             case R.id.tv_detail_record:
                 //todo 明细记录
+                jumpActivityNotFinish(mContext,DetailRecordActivity.class);
                 break;
             case R.id.tv_team_list:
                 //todo 团队列表
+                jumpActivityNotFinish(mContext,TeamListActivity.class);
                 break;
         }
     }

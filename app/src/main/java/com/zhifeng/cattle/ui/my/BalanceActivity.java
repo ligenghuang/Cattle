@@ -188,6 +188,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
                 break;
             case R.id.cv_balance_recharge_detail:
                 //todo 充值明细
+                jumpActivityNotFinish(mContext,RechargeDetailActivity.class);
                 break;
             case R.id.cv_balance_bill_detail:
                 //todo 账单明细

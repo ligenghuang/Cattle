@@ -14,7 +14,6 @@ import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.actions.MyAction;
 import com.zhifeng.cattle.modules.UserInfoDto;
 import com.zhifeng.cattle.ui.MainActivity;
@@ -222,6 +221,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 break;
             case R.id.tv_ranking_list:
                 //todo 排行榜
+                jumpActivityNotFinish(mContext,RankingListActivity.class);
                 break;
             case R.id.ll_bonus_month:
                 //todo 当月累计奖金

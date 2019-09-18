@@ -1,7 +1,6 @@
 package com.zhifeng.cattle.net;
 
 import com.zhifeng.cattle.BuildConfig;
-import com.zhifeng.cattle.modules.SafeInfoDto;
 
 public class WebUrlUtil {
 
@@ -95,12 +94,12 @@ public class WebUrlUtil {
     /**
      * 地址管理
      */
-    public static final String POST_ADDRESS_LIST = "Address/addressList";
+    public static final String POST_ADDRESS_LIST ="Address/addressList";
 
     /**
      * 删除地址
      */
-    public static final String POST_DEL_ADDRESS = "Address/delAddress";
+    public static final String POST_DEL_ADDRESS ="Address/delAddress";
 
     /**
      * 设为默认地址
@@ -140,23 +139,47 @@ public class WebUrlUtil {
     /**
      * 修改支付密码
      */
-    public static final String POST_EDIT_PAY_PWD = "user/edit_pay_password";
+    public static final  String POST_EDIT_PAY_PWD = "user/edit_pay_password";
 
     /**
      * 忘记支付密码
      */
-    public static final String POST_RESET_PAY_PWD = "user/paypwd_reset";
+    public static final  String POST_RESET_PAY_PWD = "user/paypwd_reset";
 
     /**
      * 设置支付密码
      */
-    public static final String POST_SET_PAY_PWD = "user/set_pay_password";
+    public static final  String POST_SET_PAY_PWD = "user/set_pay_password";
 
     /**
      * 提现明细
      */
     public static final String POST_WITHDRAWAL_LIST = "user/withdrawal_list";
 
+    /**
+     * 明细记录
+     */
+    public static final String POST_DetailRecord_LIST = "/api/Team/detail_record";
+
+    /**
+     * 团队列表
+     */
+    public static final String POST_Team_LIST = "/api/user/team_list";
+
+    /**
+     * 团队列表查看
+     */
+    public static final String POST_TeamOrder_LIST = "/api/Team/team_order";
+
+    /**
+     * 充值明细
+     */
+    public static final String POST_RechargeDetail_LIST = "/api/user/recharge";
+
+    /**
+     * 排行榜
+     */
+    public static final String POST_Ranking_LIST = "/api/user/ranking_list";
     /**
      * 提现
      */

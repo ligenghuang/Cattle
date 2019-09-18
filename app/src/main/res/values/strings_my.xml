@@ -164,6 +164,34 @@
     <string name="withdrawal_detail_tab_6">审核失败</string>
     <string name="withdrawal_detail_tab_7">待审核</string>
 
+    <string name="detail_record_tab_1">明细记录</string>
+    <string name="detail_record_tab_2">日期</string>
+    <string name="detail_record_tab_3">佣金</string>
+    <string name="detail_record_tab_4">描述</string>
+
+    <string name="team_list_tab_1">团队列表</string>
+    <string name="team_list_tab_2">用户ID</string>
+    <string name="team_list_tab_3">名称</string>
+    <string name="team_list_tab_4">订单</string>
+    <string name="team_list_tab_5">查看</string>
+
+    <string name="team_listorder_tab_1">查看订单</string>
+    <string name="team_listorder_tab_2">订单编号</string>
+    <string name="team_listorder_tab_3">收货人</string>
+    <string name="team_listorder_tab_4">下单时间</string>
+
+    <string name="team_rechargedetail_tab_1">充值明细</string>
+    <string name="team_rechargedetail_tab_2">充值日期</string>
+    <string name="team_rechargedetail_tab_3">金额</string>
+    <string name="team_rechargedetail_tab_4">充值状态</string>
+
+    <string name="rankinglist_tab_1">排行榜</string>
+    <string name="rankinglist_tab_2">名次</string>
+    <string name="rankinglist_tab_3">用户</string>
+    <string name="rankinglist_tab_4">消费金额</string>
+    <string name="rankinglist_tab_5">距离上一名</string>
+    <string name="rankinglist_myranking">我的排名：第%0$d名未上榜</string>
+    <string name="rankinglist_different_last">%0$s元</string>
 
     <string name="withdrawal_tab_1">提现方式</string>
     <string name="withdrawal_tab_2">请输入支付宝账号</string>
