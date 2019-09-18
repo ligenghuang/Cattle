@@ -12,8 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -26,7 +24,6 @@ import com.zhifeng.cattle.adapters.CollectionListAdapter;
 import com.zhifeng.cattle.modules.CollectionListDto;
 import com.zhifeng.cattle.ui.impl.CollectionView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
-import com.zhifeng.cattle.utils.json.GetJsonDataUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -164,11 +161,11 @@ public class CollectionActivity extends UserBaseActivity<CollectionAction> imple
     public void getCollectionListSuccess(CollectionListDto collectionListDto) {
         loadDiss();
         refreshLayout.finishRefresh();
-        String json = new GetJsonDataUtil().getJson(mContext,"collectionList.json");
-        CollectionListDto collectionListDto1 = new Gson().fromJson(json, new TypeToken<CollectionListDto>() {
-        }.getType());
+//        String json = new GetJsonDataUtil().getJson(mContext,"collectionList.json");
+//        CollectionListDto collectionListDto1 = new Gson().fromJson(json, new TypeToken<CollectionListDto>() {
+//        }.getType());
 
-        collectionListAdapter.refresh(collectionListDto1.getData());
+        collectionListAdapter.refresh(collectionListDto.getData());
         isManagement = false;
         setManagement();
     }
