@@ -9,7 +9,8 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -57,4 +58,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation project(':HuangLib')
     implementation 'cn.bingoogolapple:bga-banner:+'
+    implementation 'com.lxj:xpopup:1.8.10-x'
 }

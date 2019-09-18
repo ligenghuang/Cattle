@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/tv_to_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goods_detail_tab_18"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp"/>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="0.5dp"
+        android:background="@color/color_6"/>
+
+    <TextView
+        android:id="@+id/tv_to_classify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goods_detail_tab_19"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp"/>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="0.5dp"
+        android:background="@color/color_6"/>
+
+    <TextView
+        android:id="@+id/tv_to_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goods_detail_tab_20"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp"/>
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="0.5dp"
+        android:background="@color/color_6"/>
+
+    <TextView
+        android:id="@+id/tv_to_my"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goods_detail_tab_21"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:textStyle="bold"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp"/>
+
+
+
+</LinearLayout>

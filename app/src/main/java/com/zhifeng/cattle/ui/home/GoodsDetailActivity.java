@@ -1,30 +1,67 @@
 package com.zhifeng.cattle.ui.home;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideApp;
+import com.lgh.huanglib.util.cusview.richtxtview.ImageLoader;
+import com.lgh.huanglib.util.cusview.richtxtview.XRichText;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.BaseAction;
+import com.zhifeng.cattle.actions.GoodsDetailAction;
+import com.zhifeng.cattle.adapters.BannerGoods;
+import com.zhifeng.cattle.adapters.GoodsDetailCommentListAdapter;
+import com.zhifeng.cattle.modules.GoodsDetailDto;
+import com.zhifeng.cattle.ui.impl.GoodsDetailView;
+import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnTouch;
 import cn.bingoogolapple.bgabanner.BGABanner;
+/**
+  *
+  * @ClassName:     商品详情
+  * @Description:
+  * @Author:         lgh
+  * @CreateDate:     2019/9/18 16:47
+  * @Version:        1.0
+ */
 
-public class GoodsDetailActivity extends UserBaseActivity {
+public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> implements GoodsDetailView {
 
     @BindView(R.id.banner_main)
     BGABanner bannerMain;
-//    @BindView(R.id.top_view)
+    //    @BindView(R.id.top_view)
 //    View topView;
     @BindView(R.id.f_right_iv)
     ImageView fRightIv;
@@ -34,6 +71,75 @@ public class GoodsDetailActivity extends UserBaseActivity {
     CollapsingToolbarLayout toolbarLayout;
     @BindView(R.id.app_bar)
     AppBarLayout appBar;
+    @BindView(R.id.tv_goods_price)
+    TextView tvGoodsPrice;
+    @BindView(R.id.tv_goods_original_price)
+    TextView tvGoodsOriginalPrice;
+    @BindView(R.id.tv_goods_attention)
+    TextView tvGoodsAttention;
+    @BindView(R.id.tv_goods_name)
+    TextView tvGoodsName;
+    @BindView(R.id.tv_goods_sales)
+    TextView tvGoodsSales;
+    @BindView(R.id.tv_goods_stock)
+    TextView tvGoodsStock;
+    @BindView(R.id.tv_goods_address)
+    TextView tvGoodsAddress;
+    @BindView(R.id.tv_goods_freight)
+    TextView tvGoodsFreight;
+    @BindView(R.id.tv_goods_spec)
+    TextView tvGoodsSpec;
+    @BindView(R.id.tv_goods_comment_count)
+    TextView tvGoodsCommentCount;
+    @BindView(R.id.tv_goods_comment_all)
+    TextView tvGoodsCommentAll;
+    @BindView(R.id.rv_comment)
+    RecyclerView rvComment;
+    @BindView(R.id.tv_type_1)
+    TextView tvType1;
+    @BindView(R.id.tv_type_2)
+    TextView tvType2;
+    @BindView(R.id.xrichtext)
+    XRichText xrichtext;
+    @BindView(R.id.tv_goods_service)
+    TextView tvGoodsService;
+    @BindView(R.id.tv_goods_cart)
+    TextView tvGoodsCart;
+    @BindView(R.id.tv_goods_buy)
+    TextView tvGoodsBuy;
+    @BindView(R.id.f_title_tv)
+    TextView fTitleTv;
+    @BindView(R.id.iv_to_up_top)
+    ImageView ivToUpTop;
+    @BindView(R.id.iv_top)
+    ImageView ivTop;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView nestedScrollView;
+    @BindView(R.id.relativeLayout)
+    RelativeLayout relativeLayout;
+
+    int inventory;//库存
+    int goods_id;
+    public static int Position = 0;
+    private static final int POIONTONE = 0;
+    private static final int POIONTTWO = 1;
+
+    /**
+     * 轮播图所需参数
+     */
+    BannerGoods banner;
+
+    List<String> imgs = new ArrayList<>();
+    List<String> tips = new ArrayList<>();
+    List<String> url = new ArrayList<>();
+
+    String content;//图片详情
+    String content_param;//产品参数
+    String goodsName = "";
+    boolean isCollection = false;
+
+    GoodsDetailCommentListAdapter goodsDetailCommentListAdapter;
+
 
     @Override
     public int intiLayout() {
@@ -48,8 +154,8 @@ public class GoodsDetailActivity extends UserBaseActivity {
     }
 
     @Override
-    protected BaseAction initAction() {
-        return null;
+    protected GoodsDetailAction initAction() {
+        return new GoodsDetailAction(this, this);
     }
 
     /**
@@ -60,13 +166,12 @@ public class GoodsDetailActivity extends UserBaseActivity {
         super.initTitlebar();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        mImmersionBar
-//                .statusBarView(R.id.top_view)
-//                .keyboardEnable(true)
-//                .statusBarDarkFont(true, 0.2f)
-//                .addTag("GoodsDetailActivity")  //给上面参数打标记，以后可以通过标记恢复
-//                .navigationBarWithKitkatEnable(false)
-//                .init();
+        mImmersionBar
+                .keyboardEnable(true)
+                .statusBarDarkFont(true, 0.2f)
+                .addTag("GoodsDetailActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .navigationBarWithKitkatEnable(false)
+                .init();
         toolbar.setNavigationOnClickListener(view -> finish());
 
     }
@@ -77,5 +182,324 @@ public class GoodsDetailActivity extends UserBaseActivity {
         mActicity = this;
         mContext = this;
 
+        goods_id = getIntent().getIntExtra("goods_id", 75);
+
+        //轮播图
+        banner = new BannerGoods();
+        bannerMain.setAdapter(banner);
+
+        goodsDetailCommentListAdapter = new GoodsDetailCommentListAdapter(mContext);
+        rvComment.setLayoutManager(new LinearLayoutManager(mContext));
+        rvComment.setAdapter(goodsDetailCommentListAdapter);
+
+        loadDialog();
+        getGoodsDetail();
+        loadView();
+
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        appBar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if (state == State.EXPANDED) {
+                    //展开状态
+                    fTitleTv.setVisibility(View.INVISIBLE);
+//                    ivToUpTop.setVisibility(View.GONE);
+                } else if (state == State.COLLAPSED) {
+                    //折叠状态
+                    fTitleTv.setVisibility(View.VISIBLE);
+//                    ivToUpTop.setVisibility(View.VISIBLE);
+                } else {
+                    //中间状态
+                    fTitleTv.setVisibility(View.INVISIBLE);
+//                    ivToUpTop.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 获取商品详情
+     */
+    @Override
+    public void getGoodsDetail() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getGoodsDetail(goods_id);
+        }
+    }
+
+    /**
+     * 获取商品详情成功
+     *
+     * @param goodsDetailDto
+     */
+    @Override
+    public void getGoodsDetailSuccess(GoodsDetailDto goodsDetailDto) {
+        loadDiss();
+        GoodsDetailDto.DataBean dataBean = goodsDetailDto.getData();
+        tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
+        tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+        tvGoodsName.setText(dataBean.getGoods_name());//商品名称
+        goodsName = dataBean.getGoods_name();
+        fTitleTv.setText(goodsName);
+        setBanner(dataBean.getImg());
+        tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
+        tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
+        double freight = Double.parseDouble(dataBean.getShipping_price());
+        tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
+        isCollection = dataBean.getCollection() == 1;
+        tvGoodsAttention.setText(ResUtil.getString(isCollection?R.string.goods_detail_tab_17:R.string.goods_detail_tab_4));
+
+
+        tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, dataBean.getComment_count() + ""));//评价数量
+        goodsDetailCommentListAdapter.refresh(dataBean.getCommentlist());//评价列表
+        content = dataBean.getContent();//图片详情
+        content_param = dataBean.getContent_param();//产品参数
+        setSelectedLin(Position);
+
+    }
+
+    /**
+     * 取消关注或关注
+     */
+    @Override
+    public void deleteOrAddCollection() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            loadDialog();
+            baseAction.deleteOrAddCollection(goods_id+"");
+        }
+    }
+
+    /**
+     * 取消关注或关注成功
+     */
+    @Override
+    public void deleteOrAddCollection(String msg) {
+        showNormalToast(msg);
+        getGoodsDetail();
+    }
+
+
+    /**
+     * 设置图片轮播
+     *
+     * @param banners
+     */
+    private void setBanner(List<GoodsDetailDto.DataBean.ImgBean> banners) {
+        //设置轮播图
+        if (banners.size() != 0) {
+            bannerMain.setVisibility(View.VISIBLE);
+            imgs = new ArrayList<>();
+            tips = new ArrayList<>();
+            url = new ArrayList<>();
+            for (int i = 0; i < banners.size(); i++) {
+                GoodsDetailDto.DataBean.ImgBean bannersBean = banners.get(i);
+                imgs.add(bannersBean.getPicture());
+                tips.add("");
+                url.add(bannersBean.getPicture());
+            }
+            bannerMain.setAutoPlayAble(true);
+            bannerMain.setData(imgs, tips);
+            bannerMain.startAutoPlay();
+        }
+    }
+
+    /**
+     * 失败
+     *
+     * @param message
+     * @param code
+     */
+    @Override
+    public void onError(String message, int code) {
+        loadDiss();
+        showNormalToast(message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @OnTouch({R.id.tv_type_1, R.id.tv_type_2})
+    public boolean onTouch(View v) {
+        switch (v.getId()) {
+            case R.id.tv_type_1:
+                Position = POIONTONE;
+                break;
+            case R.id.tv_type_2:
+                Position = POIONTTWO;
+                break;
+            default:
+                break;
+        }
+        setSelectedLin(Position);
+        return false;
+    }
+
+    /**
+     * 选择
+     *
+     * @param position
+     */
+    private void setSelectedLin(int position) {
+        tvType1.setSelected(false);
+        tvType2.setSelected(false);
+        switch (position) {
+            case 0:
+                tvType1.setSelected(true);
+                setXRichText(content);
+                break;
+            case 1:
+                tvType2.setSelected(true);
+                setXRichText(content_param);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void setXRichText(String text) {
+        try {
+            xrichtext
+                    .callback(new XRichText.BaseClickCallback() {
+                        @Override
+                        public boolean onLinkClick(String url) {
+                            return true;
+                        }
+
+                        @Override
+                        public void onImageClick(List<String> urlList, int position) {
+                            super.onImageClick(urlList, position);
+                            //todo 图片点击事件
+                        }
+
+                        @Override
+                        public void onFix(XRichText.ImageHolder holder) {
+                            super.onFix(holder);
+                            //仅仅是文本的话不会进这边 holder.getPosition()
+//                                choseRlLoadingMusic.setVisibility(View.VISIBLE);
+                            L.e("XRichText", "w " + holder.getWidth() + " h " + holder.getHeight());
+                            holder.setStyle(XRichText.Style.CENTER);
+                            L.e("XRichText2", "w " + holder.getWidth() + " h " + holder.getHeight());
+                            //设置宽高
+                        }
+
+                    })
+                    .imageDownloader(new ImageLoader() {
+                        @Override
+                        public Bitmap getBitmap(String url) throws IOException {
+                            L.e("lgh", "url  = " + url);
+                            try {
+                                Bitmap myBitmap = GlideApp.with(mContext)
+                                        .asBitmap() //必须
+                                        .load(url)
+                                        .placeholder(R.drawable.icon_goods_detail)
+                                        .error(R.drawable.icon_goods_detail)
+                                        .submit()
+                                        .get();
+                                int screen_width = getWindowManager().getDefaultDisplay().getWidth();
+                                int image_width = myBitmap.getWidth();
+                                int image_height = myBitmap.getHeight();
+                                int widget_height = screen_width * image_height / image_width;
+                                myBitmap = Bitmap.createScaledBitmap(myBitmap, screen_width, widget_height, false);
+//
+                                return myBitmap;
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                                return BitmapFactory.decodeResource(getResources(), R.drawable.icon_goods_detail);
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                                return BitmapFactory.decodeResource(getResources(), R.drawable.icon_goods_detail);
+                            }
+                        }
+                    })
+                    .text(text);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @OnClick({R.id.f_right_iv, R.id.tv_goods_attention, R.id.tv_goods_address, R.id.tv_goods_spec, R.id.tv_goods_comment_all,
+            R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.f_right_iv:
+                //todo 导航栏右边菜单
+                new XPopup.Builder(mActicity)
+                        .hasShadowBg(false)
+                        .atView(fRightIv)
+                        .hasStatusBarShadow(true) //启用状态栏阴影
+                        .asAttachList(new String[]{"首页", "分类", "购物车","我的"},
+                                new int[]{},
+                                new OnSelectListener() {
+                                    @Override
+                                    public void onSelect(int position, String text) {
+                                       //todo 点击事件
+                                    }
+                                })
+                        .show();
+                break;
+            case R.id.tv_goods_attention:
+                //todo 取消关注或关注
+                deleteOrAddCollection();
+                break;
+            case R.id.tv_goods_address:
+                //todo 配送地址
+                break;
+            case R.id.tv_goods_spec:
+                //todo 商品规格
+                break;
+            case R.id.tv_goods_comment_all:
+                //todo 查看全部评价
+                break;
+            case R.id.tv_goods_service:
+                //todo  客服
+                break;
+            case R.id.tv_goods_cart:
+                //todo 购物车
+                jumpActivityNotFinish(mContext, ShoppingCartActivity.class);
+                break;
+            case R.id.tv_goods_buy:
+                //todo 立即购买
+                break;
+            case R.id.iv_to_up_top:
+                //todo 滚动到顶部
+                scrollToTop();
+                break;
+        }
+    }
+
+    /**
+     * 滚动到顶部
+     */
+    public void scrollToTop() {
+        //拿到 appbar 的 behavior,让 appbar 滚动
+        ViewGroup.LayoutParams layoutParams = appBar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior =
+                ((CoordinatorLayout.LayoutParams) layoutParams).getBehavior();
+        if (behavior instanceof AppBarLayout.Behavior) {
+            AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
+            //拿到下方tabs的y坐标，即为我要的偏移量
+            float y = ivTop.getY();
+            //注意传递负值
+            appBarLayoutBehavior.setTopAndBottomOffset((int) -y);
+            appBarLayoutBehavior.setTopAndBottomOffset((int) -y);
+            nestedScrollView.scrollTo(0,(int)y);
+        }
     }
 }

@@ -190,4 +190,14 @@ public class WebUrlUtil {
      */
     public static final String POST_EDIT_ALIPAY = "user/zfb_edit";
 
+    /**
+     * 商品详情
+     */
+    public static final String POST_GOODS_DETAILS ="goods/goodsDetail";
+
+    /**
+     * 添加关注
+     */
+    public static final String POST_ADD_COLLECTION = "Collection/add_collection";
+
 }

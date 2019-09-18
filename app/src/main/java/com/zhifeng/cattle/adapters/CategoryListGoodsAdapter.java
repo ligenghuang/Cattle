@@ -37,6 +37,7 @@ public class CategoryListGoodsAdapter extends BaseRecyclerAdapter<CategoryListDt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GoodsDetailActivity.class);
+                intent.putExtra("goods_id",model.getGoods_id());
                 context.startActivity(intent);
             }
         });
