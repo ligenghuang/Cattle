@@ -201,6 +201,16 @@ public class WebUrlUtil {
     public static final String POST_ADD_COLLECTION = "Collection/add_collection";
 
     /**
+     * 商品评价列表
+     */
+    public static final String POST_COMMENT_LIST = "/api/goods/comment_list";
+
+    /**
+     * 商品评价
+     */
+    public static final String POST_ORDER_COMMENT = "/api/order/order_comment";
+
+    /**
      * 申请退款
      */
     public static final String POST_ORDER_APPLY_REFUND = "order/apply_refund";

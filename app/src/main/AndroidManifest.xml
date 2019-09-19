@@ -18,18 +18,19 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
-        <activity android:name=".ui.my.RankingListActivity"></activity>
+        <activity android:name=".ui.home.GoodsCommentsActivity"/>
+        <activity android:name=".ui.my.RankingListActivity" />
         <activity android:name=".ui.my.RechargeDetailActivity" />
         <activity android:name=".ui.my.TeamOrderActivity" />
         <activity android:name=".ui.my.TeamListActivity" />
         <activity android:name=".ui.my.DetailRecordActivity" />
         <activity android:name=".ui.my.WithdrawalDetailActivity" />
-        <activity android:name=".ui.home.GoodsDetailActivity"
+        <activity
+            android:name=".ui.home.GoodsDetailActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.my.EditAliPayActivity" />
         <activity android:name=".ui.my.WithdrawalActivity" />
-        <activity android:name=".ui.my.WithdrawalDetailActivity" />
         <activity android:name=".ui.my.ForgetPwdActivity" />
         <activity android:name=".ui.my.ModifyPayPwdActivity" />
         <activity android:name=".ui.my.PayPwdActivity" />

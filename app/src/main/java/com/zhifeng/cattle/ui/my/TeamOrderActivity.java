@@ -27,7 +27,12 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-
+/**
+ * @ClassName:
+ * @Description: 我的 我的团队 团队列表查看
+ * @Author: Administrator
+ * @Date: 2019/9/18 18:23
+ */
 public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> implements TeamOrderView {
     @BindView(R.id.top_view)
     View topView;
