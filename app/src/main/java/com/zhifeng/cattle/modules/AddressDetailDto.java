@@ -1,4 +1,7 @@
 package com.zhifeng.cattle.modules;
+
+import java.util.Arrays;
+
 /**
   *
   * @ClassName:     收货地址详情实体类
@@ -94,6 +97,7 @@ public class AddressDetailDto {
         private String cityname;
         private String districtname;
         private Object twonname;
+
 
         public int getAddress_id() {
             return address_id;

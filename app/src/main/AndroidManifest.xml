@@ -29,7 +29,6 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.my.EditAliPayActivity" />
         <activity android:name=".ui.my.WithdrawalActivity" />
-        <activity android:name=".ui.my.WithdrawalDetailActivity" />
         <activity android:name=".ui.my.ForgetPwdActivity" />
         <activity android:name=".ui.my.ModifyPayPwdActivity" />
         <activity android:name=".ui.my.PayPwdActivity" />

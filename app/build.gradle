@@ -59,4 +59,5 @@ dependencies {
     implementation project(':HuangLib')
     implementation 'cn.bingoogolapple:bga-banner:+'
     implementation 'com.lxj:xpopup:1.8.10-x'
+    implementation project(':imagepickerLib')
 }

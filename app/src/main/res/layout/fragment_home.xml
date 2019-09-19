@@ -143,7 +143,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/fragment_home_recommend"/>
+    <include layout="@layout/fragment_poverty_relief"/>
 
     <com.lgh.huanglib.util.cusview.CustomViewPager
         android:id="@+id/viewpager"

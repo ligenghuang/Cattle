@@ -1,4 +1,9 @@
 package com.zhifeng.cattle.ui.home;
+
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.widget.TextView;
+
 /**
   *
   * @ClassName:     首页推荐
@@ -9,4 +14,5 @@ package com.zhifeng.cattle.ui.home;
  */
 
 public class RecommendHomeFragment {
+
 }
