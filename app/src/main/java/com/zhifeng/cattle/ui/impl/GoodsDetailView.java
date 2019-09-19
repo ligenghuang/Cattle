@@ -26,5 +26,13 @@ public interface GoodsDetailView extends BaseView {
     void deleteOrAddCollection();
     void deleteOrAddCollection(String msg);
 
+    /**
+     * 立即购买
+     * @param sku_id
+     * @param cart_number
+     */
+    void buyNow(int sku_id,int cart_number);
+    void buyNowSuccess(int cartId);
+
 
 }

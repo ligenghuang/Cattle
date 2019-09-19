@@ -181,12 +181,20 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
     @Override
     public void getCartListSuccess(CartListDto cartListDto) {
         loadDiss();
-        String json = new GetJsonDataUtil().getJson(mContext,"cart.json");
-        CartListDto cartListDto1 = new Gson().fromJson(json, new TypeToken<CartListDto>() {
-        }.getType());
+//        String json = new GetJsonDataUtil().getJson(mContext,"cart.json");
+//        CartListDto cartListDto1 = new Gson().fromJson(json, new TypeToken<CartListDto>() {
+//        }.getType());
 
-        cartListAdapter.refresh(cartListDto1.getData());
-        fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_9,cartListDto1.getData().size()+""));
+       if (cartListDto.getData().size()!= 0){
+           llData.setVisibility(View.VISIBLE);
+           llNull.setVisibility(View.GONE);
+           cartListAdapter.refresh(cartListDto.getData());
+           fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_9,cartListDto.getData().size()+""));
+       }else {
+           llData.setVisibility(View.GONE);
+           llNull.setVisibility(View.VISIBLE);
+           fTitleTv.setText(ResUtil.getString(R.string.cart_tab_11));
+       }
     }
 
     /**

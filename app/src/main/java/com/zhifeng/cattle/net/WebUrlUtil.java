@@ -215,4 +215,10 @@ public class WebUrlUtil {
      */
     public static final String POST_ORDER_APPLY_REFUND = "order/apply_refund";
 
+
+    /**
+     * 立即购买
+     */
+    public static final String POST_IMMEDIATELYORDER = "order/immediatelyOrder";
+
 }

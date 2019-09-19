@@ -33,8 +33,9 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
-import com.zhifeng.kuangchi.R;
-import com.zhifeng.kuangchi.util.Constanst;
+
+import com.zhifeng.cattle.R;
+import com.zhifeng.cattle.utils.Constanst;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

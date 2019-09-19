@@ -6,6 +6,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.BuyNowDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
@@ -52,6 +53,17 @@ public class GoodsDetailAction  extends BaseAction<GoodsDetailView> {
     public void deleteOrAddCollection(String goods_id){
         post(WebUrlUtil.POST_DELETE_COLLECTION,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"goods_id",goods_id),WebUrlUtil.POST_DELETE_COLLECTION)
+        ));
+    }
+
+    /**
+     * 立即购买
+     * @param sku_id
+     * @param cart_number
+     */
+    public void buyNow(int sku_id, int cart_number) {
+        post(WebUrlUtil.POST_IMMEDIATELYORDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"sku_id",sku_id,"cart_number",cart_number),WebUrlUtil.POST_IMMEDIATELYORDER)
         ));
     }
 
@@ -107,6 +119,22 @@ public class GoodsDetailAction  extends BaseAction<GoodsDetailView> {
                                 return;
                             }
                             view.onError(generalDto.getMsg(),action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_IMMEDIATELYORDER:
+                        //todo 立即购买
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            BuyNowDto buyNowDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BuyNowDto>() {
+                            }.getType());
+                            if (buyNowDto.getStatus() == 1){
+                                //todo 立即购买成功
+                                view.buyNowSuccess(buyNowDto.getData());
+                                return;
+                            }
+                            view.onError(buyNowDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

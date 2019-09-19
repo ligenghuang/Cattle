@@ -136,6 +136,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     String content;//图片详情
     String content_param;//产品参数
     String goodsName = "";
+    int sku_id;
+    int cart_number = 1;
     boolean isCollection = false;
 
     GoodsDetailCommentListAdapter goodsDetailCommentListAdapter;
@@ -254,7 +256,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection?R.string.goods_detail_tab_17:R.string.goods_detail_tab_4));
-
+        sku_id = dataBean.getSpec().getGoods_sku().get(0).getSku_id();//todo 2019/09/19 默认sku  后面添加规格选择器后需更改
 
         tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, dataBean.getComment_count() + ""));//评价数量
         goodsDetailCommentListAdapter.refresh(dataBean.getCommentlist());//评价列表
@@ -282,6 +284,28 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     public void deleteOrAddCollection(String msg) {
         showNormalToast(msg);
         getGoodsDetail();
+    }
+
+    /**
+     * 立即购买
+     * @param sku_id
+     * @param cart_number
+     */
+    @Override
+    public void buyNow(int sku_id, int cart_number) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            loadDialog();
+            baseAction.buyNow(sku_id,cart_number);
+        }
+    }
+
+    /**
+     * 立即购买成功  跳转至下单页面
+     * @param cartId
+     */
+    @Override
+    public void buyNowSuccess(int cartId) {
+        loadDiss();
     }
 
 
@@ -477,6 +501,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_buy:
                 //todo 立即购买
+                buyNow(sku_id,cart_number);
                 break;
             case R.id.iv_to_up_top:
                 //todo 滚动到顶部

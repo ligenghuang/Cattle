@@ -10,5 +10,5 @@
     <string name="cart_tab_8">商品数量不能超过库存！</string>
     <string name="cart_tab_9">购物车(%0$s)</string>
     <string name="cart_tab_10">请选择需要删除的商品</string>
-
+    <string name="cart_tab_11">购物车</string>
 </resources>

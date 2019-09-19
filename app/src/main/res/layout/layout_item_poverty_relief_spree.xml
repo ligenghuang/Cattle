@@ -31,7 +31,12 @@
             android:layout_weight="1"
             android:layout_marginRight="@dimen/dp_10"
             android:orientation="vertical"
-            ></LinearLayout>
+            >
+
+
+
+
+        </LinearLayout>
 
 
             <ImageView

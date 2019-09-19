@@ -50,7 +50,7 @@ public class MySp extends MySharedPreferencesUtil {
      */
     public static String getAccessToken(Context context) {
         SharedPreferences sp = getProjectSP(context);
-        return sp.getString("token", null);
+        return sp.getString("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEQyIsImlhdCI6MTU2ODg4MzM3MywiZXhwIjoxNTY4OTE5MzczLCJ1c2VyX2lkIjoyNzg5M30.d2rWln7m47NZ26poJloZg61qw8I2Izz8rf0pw3bNrMM");
     }
 
     /**
