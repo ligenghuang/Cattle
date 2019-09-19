@@ -41,13 +41,11 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:orientation="horizontal">
 
-                <com.zhifeng.cattle.utils.view.FlowLayout
-                    android:id="@+id/pic_flow"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_10"
-                    android:gravity="left|center"
-                    app:lineSpacing="0dp" />
+                    android:layout_margin="@dimen/dp_10"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -85,14 +83,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_comment_tab_5"
-                    android:textSize="@dimen/text_size15" />
+                    android:textSize="@dimen/text_size15"
+                    android:layout_marginRight="26dp"/>
 
                 <RatingBar
                     android:id="@+id/describeRatingBar"
                     style="@style/roomRatingBar2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="1.0"
+                    android:stepSize="1.0"/>
             </LinearLayout>
 
             <LinearLayout
@@ -107,14 +109,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_comment_tab_6"
-                    android:textSize="@dimen/text_size15" />
+                    android:textSize="@dimen/text_size15"
+                    android:layout_marginRight="26dp"/>
 
                 <RatingBar
                     android:id="@+id/logisticsRatingBar"
                     style="@style/roomRatingBar2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="1"
+                    android:stepSize="1"/>
             </LinearLayout>
 
             <LinearLayout
@@ -130,14 +136,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_comment_tab_7"
-                    android:textSize="@dimen/text_size15" />
+                    android:textSize="@dimen/text_size15"
+                    android:layout_marginRight="26dp"/>
 
                 <RatingBar
                     android:id="@+id/serviceRatingBar"
                     style="@style/roomRatingBar2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
+                    android:isIndicator="false"
+                    android:numStars="5"
+                    android:rating="1"
+                    android:stepSize="1"/>
             </LinearLayout>
 
             <Button
@@ -147,6 +157,8 @@
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_10"
+                android:textSize="@dimen/text_size15"
+                android:textColor="@color/white"
                 android:background="@drawable/shape_login_btn_bg"
                 android:text="@string/order_comment_tab_8" />
         </LinearLayout>

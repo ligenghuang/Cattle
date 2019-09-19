@@ -11,9 +11,9 @@ public class OrderComment {
     private int logistics;
     private int service;
     private String content;
-    private Base64[] img;
+    private String[] img;
 
-    public OrderComment(String order_id, String goods_id, String sku_id, int describe, int logistics, int service, String content, Base64[] img) {
+    public OrderComment(String order_id, String goods_id, String sku_id, int describe, int logistics, int service, String content, String[] img) {
         this.order_id = order_id;
         this.goods_id = goods_id;
         this.sku_id = sku_id;
@@ -80,11 +80,11 @@ public class OrderComment {
         this.content = content == null ? "" : content;
     }
 
-    public Base64[] getImg() {
+    public String[] getImg() {
         return img;
     }
 
-    public void setImg(Base64[] img) {
+    public void setImg(String[] img) {
         this.img = img;
     }
 
