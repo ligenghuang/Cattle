@@ -466,6 +466,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_comment_all:
                 //todo 查看全部评价
+                startActivity(GoodsCommentsActivity.class,"goods_id",String.valueOf(goods_id));
                 break;
             case R.id.tv_goods_service:
                 //todo  客服

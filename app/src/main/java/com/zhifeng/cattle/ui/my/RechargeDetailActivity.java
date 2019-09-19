@@ -26,7 +26,12 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-
+/**
+ * @ClassName:
+ * @Description: 充值明细
+ * @Author: Administrator
+ * @Date: 2019/9/18 18:21
+ */
 public class RechargeDetailActivity extends UserBaseActivity<ReChargeDetailAction> implements ReChargeDetailView {
     @BindView(R.id.top_view)
     View topView;

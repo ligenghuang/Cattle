@@ -24,7 +24,12 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-
+/**
+ * @ClassName:
+ * @Description: 我的 排行榜
+ * @Author: Administrator
+ * @Date: 2019/9/18 18:21
+ */
 public class RankingListActivity extends UserBaseActivity<RankingListAction> implements RankingListView {
     @BindView(R.id.top_view)
     View topView;
