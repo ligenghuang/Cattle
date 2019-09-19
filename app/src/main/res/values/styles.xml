@@ -162,4 +162,10 @@
         <item name="colorAccent">@color/color_fd69a5</item>
     </style>
 
+    <style name="roomRatingBar2" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_ful_2</item>
+        <item name="android:minHeight">19dp</item>
+        <item name="android:maxHeight">48dip</item>
+        <item name="android:isIndicator">true</item>
+    </style>
 </resources>

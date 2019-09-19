@@ -57,12 +57,14 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     private boolean isMore = true;
     private int page = 1;
     private String goods_id;
+    private String goods_comment_num;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         goods_id = getIntent().getStringExtra("goods_id");
+        goods_comment_num = getIntent().getStringExtra("goods_comment_num");
         binding();
     }
 
@@ -80,6 +82,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     protected void init() {
         super.init();
         mContext = this;
+        String text = "(" + goods_comment_num + ")";
+        tvCommentsNum.setText(text);
         RotateAnimation ra = new RotateAnimation(0, -90f, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         ra.setFillAfter(true);
         ivLookUpAll.startAnimation(ra);

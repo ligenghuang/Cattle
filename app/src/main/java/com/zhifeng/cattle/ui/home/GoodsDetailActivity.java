@@ -141,6 +141,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     boolean isCollection = false;
 
     GoodsDetailCommentListAdapter goodsDetailCommentListAdapter;
+    private int comment_count;
 
 
     @Override
@@ -258,7 +259,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsAttention.setText(ResUtil.getString(isCollection?R.string.goods_detail_tab_17:R.string.goods_detail_tab_4));
         sku_id = dataBean.getSpec().getGoods_sku().get(0).getSku_id();//todo 2019/09/19 默认sku  后面添加规格选择器后需更改
 
-        tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, dataBean.getComment_count() + ""));//评价数量
+        comment_count = dataBean.getComment_count();
+        tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, comment_count + ""));//评价数量
         goodsDetailCommentListAdapter.refresh(dataBean.getCommentlist());//评价列表
         content = dataBean.getContent();//图片详情
         content_param = dataBean.getContent_param();//产品参数
@@ -490,7 +492,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_comment_all:
                 //todo 查看全部评价
-                startActivity(GoodsCommentsActivity.class,"goods_id",String.valueOf(goods_id));
+                Bundle bundle=new Bundle();
+                bundle.putString("goods_id",String.valueOf(goods_id));
+                bundle.putString("goods_comment_num",String.valueOf(comment_count));
+                startActivity(GoodsCommentsActivity.class,bundle);
                 break;
             case R.id.tv_goods_service:
                 //todo  客服

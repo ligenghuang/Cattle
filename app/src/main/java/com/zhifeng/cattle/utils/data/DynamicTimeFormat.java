@@ -4,9 +4,7 @@ package com.zhifeng.cattle.utils.data;
 
 import androidx.annotation.NonNull;
 
-import java.io.UnsupportedEncodingException;
 import java.text.FieldPosition;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -135,6 +133,12 @@ public class DynamicTimeFormat  extends SimpleDateFormat {
 
     public static String LongToString4(long time) {
         SimpleDateFormat format2 = new SimpleDateFormat("yyyyMMdd");
+        return format2.format(new Date(time));
+
+    }
+
+    public static String LongToString5(long time) {
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format2.format(new Date(time));
 
     }

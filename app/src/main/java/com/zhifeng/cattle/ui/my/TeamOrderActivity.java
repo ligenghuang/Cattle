@@ -54,7 +54,6 @@ public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
-        team_member_id=getIntent().getStringExtra("team_member_id");
         binding();
     }
 
@@ -72,6 +71,7 @@ public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> impleme
     protected void init() {
         super.init();
         mContext = this;
+        team_member_id=getIntent().getStringExtra("team_member_id");
         adapter = new TeamOrderAdapter();
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);

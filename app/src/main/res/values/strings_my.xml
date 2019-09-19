@@ -212,4 +212,13 @@
     <string name="edit_alipay_tab_5">请输入真实姓名</string>
     <string name="edit_alipay_tab_6">确认</string>
 
+    <string name="order_comment_tab_1">发表评价</string>
+    <string name="order_comment_tab_2">说说它的优点和美中不足的地方吧</string>
+    <string name="order_comment_tab_3">添加图片</string>
+    <string name="order_comment_tab_4">商品评分</string>
+    <string name="order_comment_tab_5">描述相符</string>
+    <string name="order_comment_tab_6">物流服务</string>
+    <string name="order_comment_tab_7">服务态度</string>
+    <string name="order_comment_tab_8">提交评价</string>
+
 </resources>
