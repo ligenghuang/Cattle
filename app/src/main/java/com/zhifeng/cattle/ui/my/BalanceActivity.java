@@ -169,6 +169,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         switch (view.getId()) {
             case R.id.tv_balance_recharge:
                 //todo 充值
+                jumpActivityNotFinish(mContext,RechargeActivity.class);
                 break;
             case R.id.tv_balance_withdrawal:
                 //todo 提现

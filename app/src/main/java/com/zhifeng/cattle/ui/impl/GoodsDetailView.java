@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.cattle.modules.DefaultCityDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
 
 /**
@@ -34,5 +35,9 @@ public interface GoodsDetailView extends BaseView {
     void buyNow(int sku_id,int cart_number);
     void buyNowSuccess(int cartId);
 
-
+    /**
+     * 获取默认地址
+     */
+    void getDefaultCity();
+    void getDefaultCitySuccess(DefaultCityDto defaultCityDto);
 }

@@ -65,6 +65,9 @@
     <string name="order_tab_26">积分：</string>
     <string name="order_tab_27">订单总额</string>
     <string name="order_tab_28">订单详情</string>
+    <string name="order_tab_29">取消订单成功</string>
+    <string name="order_tab_30">确认收货成功</string>
+    <string name="order_tab_31">删除订单成功</string>
 
 
     <string name="sales_return_tab_1">正在退货</string>
@@ -220,5 +223,15 @@
     <string name="order_comment_tab_6">物流服务</string>
     <string name="order_comment_tab_7">服务态度</string>
     <string name="order_comment_tab_8">提交评价</string>
+
+    <string name="recharge_tab_1">金额充值</string>
+    <string name="recharge_tab_2">储蓄卡</string>
+    <string name="recharge_tab_3">充值金额</string>
+    <string name="recharge_tab_4">下一步</string>
+    <string name="recharge_tab_5">单日交易限额￥20000</string>
+    <string name="recharge_tab_6">请输入支付密码</string>
+    <string name="recharge_tab_7">金额</string>
+    <string name="recharge_tab_8">请输入充值金额</string>
+    <string name="recharge_tab_9">充值金额不能小于0</string>
 
 </resources>

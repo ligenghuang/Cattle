@@ -19,13 +19,15 @@ import com.zhifeng.cattle.modules.AddressListDto;
 
 public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataBean> {
     OnClickListener onClickListener;
+    boolean isGoods;
 
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
 
-    public AddressListAdapter() {
+    public AddressListAdapter(boolean isGoods) {
         super(R.layout.layout_item_address);
+        this.isGoods = isGoods;
     }
 
     @Override
@@ -33,12 +35,21 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_consignee,model.getConsignee());//收货人
         holder.text(R.id.tv_address_phone,model.getMobile());//联系电话
-        holder.text(R.id.tv_item_address,model.getAddress());//详细地址
+        holder.text(R.id.tv_item_address,model.getP_cn()+model.getC_cn()+model.getD_cn()+" "+model.getAddress());//详细地址
 
         TextView tvDefault = holder.itemView.findViewById(R.id.tv_item_default);
         tvDefault.setVisibility(model.getIs_default()==1? View.VISIBLE:View.GONE);
         ImageView img = holder.itemView.findViewById(R.id.iv_item_address);
         img.setSelected(model.getIs_default() == 1);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isGoods){
+                    onClickListener.itemView(model.getP_cn()+model.getC_cn()+model.getD_cn());
+                }
+            }
+        });
 
         img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,5 +79,6 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         void edit(int id);
         void Detele(int id);
         void Is_default(int id);
+        void itemView(String address);
     }
 }

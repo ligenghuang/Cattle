@@ -107,8 +107,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             }
 
             @Override
-            public void Delete(int id) {
+            public void Delete(int id,int status) {
                 //todo 删除订单
+                editOrderStatus(id,status);
             }
 
             @Override
@@ -119,11 +120,13 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Cancel(int id) {
                 //todo 取消订单
+                editOrderStatus(id,1);
             }
 
             @Override
             public void Pay(int id) {
                 //todo 去付款
+
             }
 
             @Override
@@ -134,6 +137,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Confirm(int id) {
                 //todo 确定收货
+                editOrderStatus(id,3);
             }
 
             @Override
@@ -170,6 +174,30 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
         refreshLayout.finishRefresh();
         loadDiss();
         orderListAdapter.refresh(orderListDto.getData());
+    }
+
+    /**
+     * 修改订单状态
+     * @param id
+     * @param status
+     */
+    @Override
+    public void editOrderStatus(int id, int status) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            loadDialog();
+            baseAction.editOrderStatus(id,status);
+        }
+    }
+
+    /**
+     * 修改订单状态 成功  需做处理
+     * @param msg
+     * @param status
+     */
+    @Override
+    public void editOrderStatusSuccess(String msg, int status) {
+        loadDiss();
+        refreshLayout.autoRefresh();
     }
 
     /**

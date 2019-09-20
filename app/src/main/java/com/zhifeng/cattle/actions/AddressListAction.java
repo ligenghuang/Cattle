@@ -61,7 +61,7 @@ public class AddressListAction extends BaseAction<AddressListView> {
      */
     public void setDefaultAddress(int id){
         post(WebUrlUtil.POST_SET_DEFAULT_ADDRESS,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"id",id),WebUrlUtil.POST_SET_DEFAULT_ADDRESS)
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"address_id",id),WebUrlUtil.POST_SET_DEFAULT_ADDRESS)
         ));
     }
 

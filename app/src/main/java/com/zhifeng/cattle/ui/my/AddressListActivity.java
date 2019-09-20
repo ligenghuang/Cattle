@@ -53,6 +53,8 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
 
     AddressListAdapter addressListAdapter;
 
+    boolean isGoods = false;
+
     @Override
     public int intiLayout() {
         return R.layout.activity_address_list;
@@ -93,8 +95,10 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
         mActicity = this;
         mContext = this;
 
+        isGoods = getIntent().getBooleanExtra("isGoods",false);
+
         refreshLayout.setEnableLoadMore(false);
-        addressListAdapter = new AddressListAdapter();
+        addressListAdapter = new AddressListAdapter(isGoods);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(addressListAdapter);
 
@@ -132,6 +136,14 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             public void Is_default(int id) {
                 //设置为默认地址
                 setDefaultAddress(id);
+            }
+
+            @Override
+            public void itemView(String address) {
+                Intent intent = new Intent();
+                intent.putExtra("address",address);
+                setResult(200,intent);
+                finish();
             }
         });
     }

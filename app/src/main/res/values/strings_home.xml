@@ -7,6 +7,8 @@
     <string name="home_tab_4">优选单品</string>
     <string name="home_tab_5">促销价</string>
     <string name="home_tab_6">元/12个装</string>
+    <string name="home_tab_7">立即购买</string>
+    <string name="home_tab_8">猜你喜欢</string>
 
     <string name="goods_detail_tab_1">客服</string>
     <string name="goods_detail_tab_2">购物车</string>
@@ -35,7 +37,20 @@
     <string name="goods_detail_tab_25">确定</string>
     <string name="goods_detail_tab_26">已选\" %0$s \"</string>
 
+    <string name="certification_tab_1">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="certification_tab_2">请输入姓名</string>
+    <string name="certification_tab_3">身份证号：</string>
+    <string name="certification_tab_4">请输入身份证号</string>
+    <string name="certification_tab_5">身份证正面</string>
+    <string name="certification_tab_6">身份证背面</string>
+    <string name="certification_tab_7">示例（证件文字清晰可识别）</string>
+    <string name="certification_tab_8">提交</string>
+    <string name="certification_tab_9">添加身份证</string>
+    <string name="certification_tab_10">提交订单</string>
+    <string name="certification_tab_11">请上传身份证</string>
 
+    <string name="bug_pwd_dialog_1">确认支付</string>
+    <string name="bug_pwd_dialog_2">支付方式</string>
 
 
 </resources>

@@ -98,6 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:orientation="vertical">
 
 
@@ -120,10 +122,43 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_spree"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/layout_item_poverty_relief_spree"/>
+
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/shape_login_btn_bg"
+                    android:paddingLeft="@dimen/item_height50"
+                    android:paddingTop="8dp"
+                    android:paddingRight="@dimen/item_height50"
+                    android:paddingBottom="8dp"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/home_tab_8"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_like"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/layout_item_poverty_relief_like"/>
 
             </LinearLayout>
 

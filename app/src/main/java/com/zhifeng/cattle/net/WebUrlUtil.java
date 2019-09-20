@@ -221,4 +221,29 @@ public class WebUrlUtil {
      */
     public static final String POST_IMMEDIATELYORDER = "order/immediatelyOrder";
 
+    /**
+     * 充值
+     */
+    public static final String POST_RECHARGE = "user/balance_recharge";
+
+    /**
+     * 获取银行卡列表
+     */
+    public static final String POST_BANK_NUMBER = "user/get_bank_number";
+
+    /**
+     * 修改订单状态
+     */
+    public static final String POST_EDIT_ORDER_STATUS = "order/edit_status";
+
+    /**
+     * 身份证认证
+     */
+    public static final String POST_UPDATA_IDCARD_PIC = "Index/updata_idcard_pic";
+
+    /**
+     * 获取默认地址
+     */
+    public static final String POST_DEFAULT_CITY = "Address/get_default_city";
+
 }

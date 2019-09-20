@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
@@ -40,8 +42,11 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.GoodsDetailAction;
 import com.zhifeng.cattle.adapters.BannerGoods;
 import com.zhifeng.cattle.adapters.GoodsDetailCommentListAdapter;
+import com.zhifeng.cattle.modules.DefaultCityDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
+import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.GoodsDetailView;
+import com.zhifeng.cattle.ui.my.AddressListActivity;
 import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
@@ -215,6 +220,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
         loadDialog();
         getGoodsDetail();
+        getDefaultCity();
         loadView();
 
     }
@@ -523,6 +529,27 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         loadDiss();
     }
 
+    /**
+     * 获取默认地址
+     */
+    @Override
+    public void getDefaultCity() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getDefaultCity();
+        }
+    }
+
+    /**
+     * 获取默认地址
+     * @param defaultCityDto
+     */
+    @Override
+    public void getDefaultCitySuccess(DefaultCityDto defaultCityDto) {
+        DefaultCityDto.DataBean dataBean = defaultCityDto.getData();
+        String address = dataBean.getProvincename()+dataBean.getCityname()+dataBean.getDistrictname();
+        tvGoodsAddress.setText(address);
+    }
+
 
     /**
      * 设置图片轮播
@@ -689,6 +716,13 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                                     @Override
                                     public void onSelect(int position, String text) {
                                         //todo 点击事件
+                                        if (position != 2){
+                                            MainActivity.Position = position;
+                                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class,GoodsDetailActivity.class);
+                                            finish();
+                                        }else {
+                                            jumpActivityNotFinish(mContext, ShoppingCartActivity.class);
+                                        }
                                     }
                                 })
                         .show();
@@ -699,6 +733,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_address:
                 //todo 配送地址
+                Intent intent = new Intent(mContext, AddressListActivity.class);
+                intent.putExtra("isGoods",true);
+                startActivityForResult(intent,200);
                 break;
             case R.id.tv_goods_spec:
                 //todo 商品规格
@@ -729,6 +766,18 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 //todo 滚动到顶部
                 scrollToTop();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 200){
+            if (data != null){
+                //配送地址
+                String address = data.getStringExtra("address");
+                tvGoodsAddress.setText(address);
+            }
         }
     }
 

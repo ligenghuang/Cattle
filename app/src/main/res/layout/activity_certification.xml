@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".ui.home.CertificationActivity">
+
+    <include layout="@layout/layout_title_grey_bar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f2"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2px"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/certification_tab_1"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"
+                        android:layout_marginRight="20dp"
+                        />
+
+                    <!--姓名-->
+                    <EditText
+                        android:id="@+id/et_certification_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size12"
+                        android:textColorHint="@color/color_9"
+                        android:hint="@string/certification_tab_2"
+                        />
+
+
+                </LinearLayout>
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2px"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/certification_tab_3"
+                        android:textSize="@dimen/text_size15"
+                        android:textColor="@color/color_15"
+                        android:layout_marginRight="20dp"
+                        />
+
+                    <!--身份证号-->
+                    <EditText
+                        android:id="@+id/et_certification_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size12"
+                        android:maxLength="18"
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="@color/color_9"
+                        android:hint="@string/certification_tab_4"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2px"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/certification_tab_5"
+                            android:textColor="@color/color_15"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="@dimen/text_size12"/>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_add_positive"
+                            android:layout_width="150dp"
+                            android:layout_height="95dp">
+
+                            <!--身份证正面-->
+                            <ImageView
+                                android:id="@+id/iv_add_positive"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/icon_add_idcard_positive"
+                                android:scaleType="fitXY"/>
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_add_positive"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:background="@color/color_800"
+                                android:gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dp_10"
+                                    android:src="@drawable/icon_add_idcard"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/text_size12"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:text="@string/certification_tab_9"/>
+
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/certification_tab_7"
+                            android:textColor="@color/color_15"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="@dimen/text_size12"/>
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="95dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_idcard_positive_sample"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2px"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/certification_tab_5"
+                            android:textColor="@color/color_15"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="@dimen/text_size12"/>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_add_back"
+                            android:layout_width="150dp"
+                            android:layout_height="95dp">
+
+                            <!--身份证背面-->
+                            <ImageView
+                                android:id="@+id/iv_add_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/icon_add_idcard_back"
+                                android:scaleType="fitXY"/>
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_add_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:background="@color/color_800"
+                                android:gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/dp_10"
+                                    android:src="@drawable/icon_add_idcard"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/text_size12"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:text="@string/certification_tab_9"/>
+
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/certification_tab_7"
+                            android:textColor="@color/color_15"
+                            android:layout_marginBottom="15dp"
+                            android:textSize="@dimen/text_size12"/>
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="95dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_idcard_back_sample"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!--提交-->
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/certification_tab_8"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size15"
+                android:gravity="center"
+                android:background="@drawable/shape_login_btn_bg"
+                android:layout_marginTop="@dimen/item_height50"
+                android:padding="15dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

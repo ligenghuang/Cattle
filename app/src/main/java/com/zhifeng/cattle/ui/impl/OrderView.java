@@ -21,4 +21,12 @@ public interface OrderView extends BaseView {
 //    void loadmoreOrderList();
     void getOrderListSuccess(OrderListDto orderListDto);
 
+    /**
+     * 修改订单状态
+     * @param id
+     * @param status
+     */
+    void editOrderStatus(int id,int status);
+    void editOrderStatusSuccess(String msg,int status);
+
 }

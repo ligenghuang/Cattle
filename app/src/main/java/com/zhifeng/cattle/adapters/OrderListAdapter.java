@@ -81,7 +81,8 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
         holder.itemView.findViewById(R.id.tv_item_order_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickListener.Delete(model.getOrder_id());
+                int status = model.getOrder_status() == 2?4:5;
+                onClickListener.Delete(model.getOrder_id(),status);
             }
         });
         /******************************查看物流**************************************/
@@ -202,7 +203,7 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
 
     public interface OnClickListener{
         void onClick(int id);
-        void Delete(int id);//删除订单
+        void Delete(int id,int status);//删除订单
         void Logistics(int id);//查看物流
         void Cancel(int id);//取消订单
         void Pay(int id);//付款

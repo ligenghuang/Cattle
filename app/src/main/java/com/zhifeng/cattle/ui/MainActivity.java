@@ -209,6 +209,7 @@ public class MainActivity extends UserBaseActivity {
     protected void onResume() {
         super.onResume();
         myPager.setCurrentItem(Position, false);
+        setSelectedLin(Position);
     }
 
     /**
