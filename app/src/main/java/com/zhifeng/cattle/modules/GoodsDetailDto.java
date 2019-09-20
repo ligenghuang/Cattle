@@ -760,7 +760,7 @@ public class GoodsDetailDto {
                 }
 
                 public String getPrice() {
-                    return price == null ? "" : price;
+                    return price == null ? "0" : price;
                 }
 
                 public void setPrice(String price) {

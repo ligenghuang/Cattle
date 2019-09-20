@@ -31,6 +31,9 @@
     <string name="goods_detail_tab_21">我的</string>
     <string name="goods_detail_tab_22">商品评价</string>
     <string name="goods_detail_tab_23">查看全部</string>
+    <string name="goods_detail_tab_24">购买数量</string>
+    <string name="goods_detail_tab_25">确定</string>
+    <string name="goods_detail_tab_26">已选\" %0$s \"</string>
 
 
 
