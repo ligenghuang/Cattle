@@ -50,31 +50,10 @@
             android:textColor="@color/color_15"
             android:textSize="@dimen/text_size12" />
 
-        <LinearLayout
-            android:id="@+id/llImage"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/iv1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp" />
-
-            <ImageView
-                android:id="@+id/iv2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp" />
-
-            <ImageView
-                android:id="@+id/iv3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp" />
-        </LinearLayout>
+            android:orientation="horizontal" />
     </LinearLayout>
 </RelativeLayout>

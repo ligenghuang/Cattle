@@ -2,8 +2,6 @@ package com.zhifeng.cattle.ui.home;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +26,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ClassName:
@@ -46,8 +45,6 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     TextView tv;
     @BindView(R.id.tvCommentsNum)
     TextView tvCommentsNum;
-    @BindView(R.id.ivLookUpAll)
-    ImageView ivLookUpAll;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @BindView(R.id.refreshLayout)
@@ -82,12 +79,11 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     protected void init() {
         super.init();
         mContext = this;
+        mActicity = this;
+
         String text = "(" + goods_comment_num + ")";
         tvCommentsNum.setText(text);
-        RotateAnimation ra = new RotateAnimation(0, -90f, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-        ra.setFillAfter(true);
-        ivLookUpAll.startAnimation(ra);
-        adapter = new GoodsCommentsAdapter();
+        adapter = new GoodsCommentsAdapter(mContext);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
         refreshLayout.autoRefresh();
@@ -178,8 +174,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         baseAction.toUnregister();
     }
 
-//    @OnClick(R.id.llLookUpAll)
-//    public void onViewClicked(View view) {
-//
-//    }
+    @OnClick(R.id.tvLookUpAll)
+    public void onViewClicked(View view) {
+
+    }
 }

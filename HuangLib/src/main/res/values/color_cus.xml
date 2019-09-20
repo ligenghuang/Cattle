@@ -75,6 +75,7 @@
     <color name="blue">#0090ff</color>
     <color name="red_packet">#ff8a00</color>
     <color name="login_packet">#00A1E9</color>
+    <color name="pink">#fd69a5</color>
 
 
 </resources>

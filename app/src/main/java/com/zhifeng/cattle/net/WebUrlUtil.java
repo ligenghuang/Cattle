@@ -222,6 +222,11 @@ public class WebUrlUtil {
     public static final String POST_IMMEDIATELYORDER = "order/immediatelyOrder";
 
     /**
+     * 购物车提交订单接口
+     */
+    public static final String POST_TEMPORARY = "/api/order/temporary";
+
+    /**
      * 充值
      */
     public static final String POST_RECHARGE = "user/balance_recharge";

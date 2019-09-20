@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -35,7 +34,6 @@ import com.lgh.huanglib.util.config.GlideApp;
 import com.lgh.huanglib.util.cusview.richtxtview.ImageLoader;
 import com.lgh.huanglib.util.cusview.richtxtview.XRichText;
 import com.lgh.huanglib.util.data.ResUtil;
-
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
 import com.zhifeng.cattle.R;
@@ -527,6 +525,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             mUiData.getBottomSheetDialog().dismiss();
         }
         loadDiss();
+        startActivity(TemporaryActivity.class,"cartId",String.valueOf(cartId));
     }
 
     /**

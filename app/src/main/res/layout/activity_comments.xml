@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F2F2"
+    android:background="@color/color_f2"
     android:orientation="vertical"
     tools:context=".ui.home.GoodsCommentsActivity">
 
@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="@dimen/dp_10">
 
@@ -31,31 +31,14 @@
             android:textColor="@color/color_8" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tvLookUpAll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="invisible" />
-
-        <LinearLayout
-            android:id="@+id/llLookUpAll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:text="@string/goods_detail_tab_23"
-                android:textColor="@color/color_8" />
-
-            <ImageView
-                android:id="@+id/ivLookUpAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_home_more" />
-        </LinearLayout>
+            android:drawableEnd="@drawable/icon_more"
+            android:drawablePadding="5dp"
+            android:gravity="end"
+            android:text="@string/goods_detail_tab_23"
+            android:textColor="@color/color_8" />
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

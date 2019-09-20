@@ -6,6 +6,7 @@
 
     <ImageView
         android:id="@+id/iv_item_comment_img"
+        android:padding="5dp"
         android:layout_width="@dimen/item_height50"
         android:layout_height="@dimen/item_height50"
         android:scaleType="fitXY"
