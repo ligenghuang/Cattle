@@ -246,4 +246,9 @@ public class WebUrlUtil {
      */
     public static final String POST_DEFAULT_CITY = "Address/get_default_city";
 
+    /**
+     * 首页推荐
+     */
+    public static final String POST_RECOMMENDhOME = "index/index";
+
 }
