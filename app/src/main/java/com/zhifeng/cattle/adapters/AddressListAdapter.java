@@ -46,7 +46,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
             @Override
             public void onClick(View v) {
                 if (isGoods){
-                    onClickListener.itemView(model.getP_cn()+model.getC_cn()+model.getD_cn());
+                    onClickListener.itemView(model);
                 }
             }
         });
@@ -79,6 +79,6 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
         void edit(int id);
         void Detele(int id);
         void Is_default(int id);
-        void itemView(String address);
+        void itemView(AddressListDto.DataBean model);
     }
 }

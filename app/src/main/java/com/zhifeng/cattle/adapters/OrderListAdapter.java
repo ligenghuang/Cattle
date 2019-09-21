@@ -197,8 +197,8 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
                    }
                    break;
            }
-           tvType.setText(ResUtil.getString(text));
        }
+        tvType.setText(ResUtil.getString(text));
     }
 
     public interface OnClickListener{

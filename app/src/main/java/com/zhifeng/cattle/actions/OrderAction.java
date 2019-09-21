@@ -115,7 +115,7 @@ public class OrderAction extends BaseAction<OrderView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
-                    case WebUrlUtil.POST_SEND_CODE:
+                    case WebUrlUtil.POST_ORDER_LIST:
 //                        //todo 获取订单列表
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());

@@ -6,12 +6,12 @@ public class LoginUser {
     private String mobile;
     private String avatar;
 
-    public LoginUser(String token, String realname, String mobile, String avatar) {
-        this.token = token;
-        this.realname = realname;
-        this.mobile = mobile;
-        this.avatar = avatar;
-    }
+//    public LoginUser(String token, String realname, String mobile, String avatar) {
+//        this.token = token;
+//        this.realname = realname;
+//        this.mobile = mobile;
+//        this.avatar = avatar;
+//    }
 
     public String getToken() {
         return token == null ? "" : token;

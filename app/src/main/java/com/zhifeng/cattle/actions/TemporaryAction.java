@@ -6,7 +6,9 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.TemporaryView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -25,6 +27,14 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
 
     public void getTemporary(String cart_id) {
         post(WebUrlUtil.POST_TEMPORARY, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "cart_id", cart_id), WebUrlUtil.POST_TEMPORARY)));
+    }
+
+    public void submitOrder(SubmitOrderPost submitOrderPost){
+        post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
+                        "cart_id",submitOrderPost.getCart_id(),"address_id",submitOrderPost.getAddress_id(),"pay_type",submitOrderPost.getPay_type()
+                ,"user_note",submitOrderPost.getUser_note(),"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_SUBMITORDER)
+        ));
     }
 
     /**
@@ -53,6 +63,22 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                             return;
                         }
                         view.onError(temporary.getMsg(), action.getErrorType());
+                        return;
+                    }
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_SUBMITORDER:
+                    //todo 提交订单
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                        SubmitOrderDto submitOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SubmitOrderDto>() {
+                        }.getType());
+                        if (submitOrderDto.getStatus() == 200) {
+                            //todo 提交订单成功
+                            view.submitOrderSuccess(submitOrderDto);
+                            return;
+                        }
+                        view.onError(submitOrderDto.getMsg(), action.getErrorType());
                         return;
                     }
                     view.onError(msg, action.getErrorType());

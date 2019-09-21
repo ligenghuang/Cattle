@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,16 +15,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.TemporaryAction;
 import com.zhifeng.cattle.adapters.GoodsResAdapter;
 import com.zhifeng.cattle.adapters.PayTypeAdapter;
+import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.ui.impl.TemporaryView;
 import com.zhifeng.cattle.ui.my.AddressListActivity;
+import com.zhifeng.cattle.ui.my.OrderDetailActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -64,9 +70,25 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     TextView tvTotalPrice;
     @BindView(R.id.btnPay)
     Button btnPay;
+    @BindView(R.id.tvShipping_price)
+    TextView tvShippingPrice;
+    @BindView(R.id.et_order_note)
+    EditText etOrderNote;
+    @BindView(R.id.ll_address)
+    LinearLayout llAddress;
+    @BindView(R.id.tv_no_address)
+    TextView tvNoAddress;
+    @BindView(R.id.ll_order_address)
+    LinearLayout llOrderAddress;
     private String cartId;
     private GoodsResAdapter adapter;
     private PayTypeAdapter payTypeAdapter;
+
+    double money = 0;
+    String payTypeNam;
+    int payType;
+    int addressId = -1;
+    PayPwdDialog bugPwdDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +126,17 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     protected void loadView() {
         super.loadView();
-        adapter.setOnGoodsNumChangeListener((totalNum, totalPrice) -> {
-            tvTotalGoodsNum.setText(ResUtil.getFormatString(R.string.cart_tab_26, String.valueOf(totalNum)));
-            tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
-            tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(totalNum)));
-            tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
+        payTypeAdapter.setOnClickListener(new PayTypeAdapter.OnClickListener() {
+            @Override
+            public void onClick(int type, String name) {
+                List<Temporary.DataBean.PayTypeBean> list = payTypeAdapter.getAllData();
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).setSelect(list.get(i).getPay_type() == type);
+                }
+                payTypeNam = name;
+                payType = type;
+                payTypeAdapter.notifyDataSetChanged();
+            }
         });
     }
 
@@ -140,15 +168,53 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         bindView(temporary);
     }
 
+    /**
+     * 提交订单
+     *
+     * @param submitOrderPost
+     */
+    @Override
+    public void submitOrder(SubmitOrderPost submitOrderPost) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.submitOrder(submitOrderPost);
+        }
+    }
+
+    /**
+     * 提交订单成功
+     *
+     * @param submitOrderDto
+     */
+    @Override
+    public void submitOrderSuccess(SubmitOrderDto submitOrderDto) {
+        loadDiss();
+        Intent intent = new Intent(mContext, OrderDetailActivity.class);
+        intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
+        startActivity(intent);
+        finish();
+    }
+
     private void bindView(Temporary temporary) {
         Temporary.DataBean dataBean = temporary.getData();
-        tvUser.setText(dataBean.getAddr_res().getConsignee());
-        tvMoblie.setText(dataBean.getAddr_res().getMobile());
-        tvAddress.setText(dataBean.getAddr_res().getAddress());
-        adapter.setShipping_price(dataBean.getShipping_price());
+        if (dataBean.getAddr_res().getAddress_id() == 0) {
+            llAddress.setVisibility(View.GONE);
+            tvNoAddress.setVisibility(View.VISIBLE);
+        } else {
+            llAddress.setVisibility(View.VISIBLE);
+            tvNoAddress.setVisibility(View.GONE);
+            addressId = dataBean.getAddr_res().getAddress_id();
+            tvUser.setText(dataBean.getAddr_res().getConsignee());
+            tvMoblie.setText(dataBean.getAddr_res().getMobile());
+            tvAddress.setText(dataBean.getAddr_res().getAddress());
+        }
+        double freight = Double.parseDouble(dataBean.getShipping_price());
+        tvShippingPrice.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
         adapter.refresh(dataBean.getGoods_res());
         List<Temporary.DataBean.PayTypeBean> payTypeBeans = dataBean.getPay_type();
         payTypeBeans.get(0).setSelect(true);
+        payTypeNam = payTypeBeans.get(0).getPay_name();
+        payType = payTypeBeans.get(0).getPay_type();
         payTypeAdapter.refresh(payTypeBeans);
         int num = 0;
         double totalPrice = 0;
@@ -156,6 +222,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             num += goodsResBean.getGoods_num();
             totalPrice += Double.parseDouble(goodsResBean.getSubtotal_price());
         }
+        money = totalPrice;
         tvTotalGoodsNum.setText(ResUtil.getFormatString(R.string.cart_tab_26, String.valueOf(num)));
         tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, String.valueOf(totalPrice)));
         tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(num)));
@@ -179,34 +246,43 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         showNormalToast(message);
     }
 
+    /**
+     * 提交订单
+     */
     private void buyNow() {
-        for (Temporary.DataBean.PayTypeBean payTypeBean : payTypeAdapter.getAllData()) {
-            if (payTypeBean.isSelect()) {
-                int pay_type = payTypeBean.getPay_type();
-                String address_id = tvAddress.getText().toString();
-                StringBuilder sb = new StringBuilder();
-                for (Temporary.DataBean.GoodsResBean goodsResBean : adapter.getAllData()) {
-                    if (!TextUtils.isEmpty(sb.toString())) {
-                        sb.append(",");
-                    }
-                    sb.append(goodsResBean.getCart_id());
-                    break;
-                }
-                break;
-            }
+        //未选择收货地址
+        if (addressId == -1) {
+            showNormalToast(ResUtil.getString(R.string.cart_tab_36));
+            return;
         }
+        bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
+        bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
+            @Override
+            public void inputFinish(String password) {
+                SubmitOrderPost post = new SubmitOrderPost();
+                post.setCart_id(cartId);
+                post.setAddress_id(addressId + "");
+                post.setPay_type(payType + "");
+                if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
+                    post.setUser_note(etOrderNote.getText().toString());
+                }
+                post.setPwd(password);
+                submitOrder(post);
+            }
+        });
+        bugPwdDialog.show();
     }
 
-    @OnClick({R.id.ll, R.id.tvCertificate, R.id.ivDingWei, R.id.btnPay})
+    @OnClick({R.id.ll, R.id.tvCertificate, R.id.ll_order_address, R.id.btnPay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll:
                 ll.requestFocus();
                 break;
             case R.id.tvCertificate:
-                jumpActivityNotFinish(mContext,CertificationActivity.class);
+                jumpActivityNotFinish(mContext, CertificationActivity.class);
                 break;
-            case R.id.ivDingWei:
+            case R.id.ll_order_address:
                 Intent i = new Intent(mContext, AddressListActivity.class);
                 i.putExtra("isGoods", true);
                 startActivityForResult(i, 200);
@@ -221,9 +297,18 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 200 && resultCode == 200) {
             if (data != null) {
-                String address = data.getStringExtra("address");
+                String address = data.getStringExtra("address2");
+                String phone = data.getStringExtra("phone");
+                String consignee = data.getStringExtra("consignee");
+                addressId = data.getIntExtra("address_id",-1);
                 tvAddress.setText(address);
+                tvUser.setText(consignee);
+                tvMoblie.setText(phone);
+                llAddress.setVisibility(View.VISIBLE);
+                tvNoAddress.setVisibility(View.GONE);
             }
         }
     }
+
+
 }

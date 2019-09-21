@@ -7,14 +7,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
+import com.zhifeng.cattle.adapters.UserListAdapter;
+import com.zhifeng.cattle.modules.LoginUser;
+import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,12 +42,10 @@ public class ChangeAccountActivity extends UserBaseActivity {
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.ivAccount)
-    ImageView ivAccount;
-    @BindView(R.id.tvAccount)
-    TextView tvAccount;
-    @BindView(R.id.btnChangeAccount)
-    Button btnChangeAccount;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerview;
+
+    UserListAdapter userListAdapter;
 
     @Override
     public int intiLayout() {
@@ -66,11 +74,11 @@ public class ChangeAccountActivity extends UserBaseActivity {
                 .statusBarView(R.id.top_view)
                 .keyboardEnable(true)
                 .statusBarDarkFont(true, 0.2f)
-                .addTag("InvitationActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .addTag("ChangeAccountActivity")  //给上面参数打标记，以后可以通过标记恢复
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-        fTitleTv.setText("");
+        fTitleTv.setText(ResUtil.getString(R.string.security_tab_4));
     }
 
     @Override
@@ -78,11 +86,36 @@ public class ChangeAccountActivity extends UserBaseActivity {
         super.init();
         mActicity = this;
         mContext = this;
+
+        userListAdapter = new UserListAdapter(mContext);
+        recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerview.setAdapter(userListAdapter);
+
+        String json = MySp.getUserList(mContext);
+        List<LoginUser> list = new Gson().fromJson(json, new TypeToken<List<LoginUser>>() {
+        }.getType());
+        userListAdapter.refresh(list);
+        loadView();
+
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        userListAdapter.setOnClickListener(new UserListAdapter.OnClickListener() {
+            @Override
+            public void OnClick(LoginUser dto) {
+                MySp.setAccessToken(mContext,dto.getToken());
+                MySp.setUserName(mContext,dto.getRealname());
+                MainActivity.isLogin2 = true;
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.btnChangeAccount)
     public void onViewClicked(View view) {
-        ActivityStack.getInstance().removeAll();
-        jumpActivity(mContext, LoginActivity.class);
+//        ActivityStack.getInstance().removeAll();
+        jumpActivityNotFinish(mContext, LoginActivity.class);
     }
 }

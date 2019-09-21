@@ -139,9 +139,13 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             }
 
             @Override
-            public void itemView(String address) {
+            public void itemView(AddressListDto.DataBean model) {
                 Intent intent = new Intent();
-                intent.putExtra("address",address);
+                intent.putExtra("address",model.getP_cn()+model.getC_cn()+model.getD_cn());
+                intent.putExtra("phone",model.getMobile());
+                intent.putExtra("address_id",model.getAddress_id());
+                intent.putExtra("consignee",model.getConsignee());
+                intent.putExtra("address2",model.getAddress());
                 setResult(200,intent);
                 finish();
             }

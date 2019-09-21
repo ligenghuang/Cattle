@@ -35,4 +35,5 @@
     <string name="cart_tab_33">立即支付</string>
     <string name="cart_tab_34">不支持7天无理由</string>
     <string name="cart_tab_35">库存不足</string>
+    <string name="cart_tab_36">请选择收货地址</string>
 </resources>

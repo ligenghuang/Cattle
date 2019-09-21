@@ -3,6 +3,7 @@ package com.zhifeng.cattle.ui.my;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
@@ -143,24 +146,39 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         tvHeadcount.setText(dataBean.getTeam_count()+"");//总人数
         tvRecommended.setText(dataBean.getToday_rec()+"");//今日推荐
 
-        String accountInfo = MySp.getAccountInfo(mContext, "accountInfo", "[]");
-        List<LoginUser> loginUsers = new ArrayList<>(Arrays.asList(new Gson().fromJson(accountInfo, LoginUser[].class)));
-        if (loginUsers.size() > 0) {
-            int index = -1;
-            for (int i = 0; i < loginUsers.size(); i++) {
-                LoginUser user = loginUsers.get(i);
-                if (user.getMobile().equals(dataBean.getMobile())) {
-                    index = i;
-                    break;
+        if (MainActivity.isLogin){
+            String json = MySp.getUserList(mContext);
+            List<LoginUser> list = new ArrayList<>();
+            if (!TextUtils.isEmpty(json)){
+                list = new Gson().fromJson(json, new TypeToken<List<LoginUser>>() {
+                }.getType());
+            }
+            LoginUser userDto = new LoginUser();
+            userDto.setAvatar(dataBean.getAvatar());
+            userDto.setRealname(dataBean.getRealname());
+            userDto.setMobile(dataBean.getMobile());
+            userDto.setToken(MySp.getAccessToken(mContext));
+            L.e("lgh_user","token  = "+MySp.getAccessToken(mContext));
+
+            for (int i = 0; i <list.size() ; i++) {
+                if(list.get(i).getMobile().equals(userDto.getMobile())){
+                    list.set(i,userDto);
+                    L.e("lgh_user","user  = "+userDto.getToken());
+                    MySp.setUserList(mContext,new Gson().toJson(list));
+                    MainActivity.isLogin = false;
+                    return;
                 }
             }
-            if (index == -1) {
-
-            } else {
-
+            if (list.size() >= 3){
+                list.set(0,userDto);
+            }else {
+                list.add(userDto);
             }
-        } else {
-//            loginUsers.add(new LoginUser());
+
+
+
+            MySp.setUserList(mContext,new Gson().toJson(list));
+            MainActivity.isLogin = false;
         }
     }
 
@@ -197,6 +215,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
+        getUserInfo();
     }
 
     @OnClick({R.id.ll_my_remainder_money, R.id.ll_my_collection, R.id.ll_my_order,

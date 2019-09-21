@@ -90,14 +90,12 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     Context mContext;
     double money;
-    int payType;
     String payTypeName;
 
-    public PayPwdDialog(@NonNull Context context, int themeResId, double money,int payType,String payTypeName) {
+    public PayPwdDialog(@NonNull Context context, int themeResId, double money,String payTypeName) {
         super(context, themeResId);
         mContext = context;
         this.money = money;
-        this.payType = payType;
         this.payTypeName = payTypeName;
     }
 

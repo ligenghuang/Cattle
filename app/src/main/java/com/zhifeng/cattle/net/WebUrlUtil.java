@@ -280,4 +280,9 @@ public class WebUrlUtil {
      */
     public static final String POST_IMPORT = "index/index_import";
 
+    /**
+     * 提交订单
+     */
+    public static final String POST_SUBMITORDER = "order/submitOrder";
+
 }

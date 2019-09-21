@@ -2,12 +2,19 @@ package com.zhifeng.cattle.adapters;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.Temporary;
 
 public class PayTypeAdapter extends BaseRecyclerAdapter<Temporary.DataBean.PayTypeBean> {
+
+    OnClickListener onClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public PayTypeAdapter() {
         super(R.layout.layout_item_paytype);
@@ -33,12 +40,15 @@ public class PayTypeAdapter extends BaseRecyclerAdapter<Temporary.DataBean.PayTy
         }else{
             ivPayTypeCircle.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
-        ivPayTypeCircle.setOnClickListener(v -> {
-            for (Temporary.DataBean.PayTypeBean bean : getAllData()) {
-                bean.setSelect(false);
-            }
-            model.setSelect(true);
-            notifyDataSetChanged();
-        });
+       holder.itemView.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               onClickListener.onClick(pay_type,model.getPay_name());
+           }
+       });
+    }
+
+    public interface OnClickListener{
+        void onClick(int type,String name);
     }
 }

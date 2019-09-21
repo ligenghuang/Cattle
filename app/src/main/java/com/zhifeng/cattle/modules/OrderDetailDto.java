@@ -92,7 +92,7 @@ public class OrderDetailDto {
         private String shipping_name;
         private String shipping_price;
         private String user_note;
-        private int pay_time;
+        private String pay_time;
         private String user_money;
         private int comment;
         private int is_refund;
@@ -228,12 +228,12 @@ public class OrderDetailDto {
             this.user_note = user_note == null ? "" : user_note;
         }
 
-        public int getPay_time() {
-            return pay_time;
+        public String getPay_time() {
+            return pay_time == null ? "" : pay_time;
         }
 
-        public void setPay_time(int pay_time) {
-            this.pay_time = pay_time;
+        public void setPay_time(String pay_time) {
+            this.pay_time = pay_time == null ? "" : pay_time;
         }
 
         public String getUser_money() {

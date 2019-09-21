@@ -65,6 +65,8 @@ public class MainActivity extends UserBaseActivity {
     // 上次按退出的时间
     private long downTime;
 
+    public static boolean isLogin = false;
+    public static boolean isLogin2 = false;
 
     @Override
     public int intiLayout() {
@@ -103,6 +105,8 @@ public class MainActivity extends UserBaseActivity {
                 .addTag("main")  //给上面参数打标记，以后可以通过标记恢复
                 .init();
 
+        isLogin = getIntent().getBooleanExtra("isLogin",false);
+        isLogin2 = getIntent().getBooleanExtra("isLogin",true);
         initViewPager();
 
     }

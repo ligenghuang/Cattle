@@ -64,15 +64,25 @@ public class MySp extends MySharedPreferencesUtil {
         SharedPreferences.Editor editor = sp.edit();
         return editor.putString("token", token).commit();
     }
-
-    public static String getAccountInfo(Context context,String key,String defValue){
-        SharedPreferences sp = getProjectSP(context);
-        return sp.getString(key,defValue);
-    }
-
-    public static boolean saveAccountInfo(Context context,String accountJson){
+    /**
+     * 保存用户列表
+     * @param context
+     * @param json
+     * @return
+     */
+    public static boolean setUserList(Context context,String json){
         SharedPreferences sp = getProjectSP(context);
         SharedPreferences.Editor editor = sp.edit();
-        return editor.putString("accountInfo", accountJson).commit();
+        return editor.putString("UserJson", json).commit();
+    }
+
+    /**
+     * 获取用户列表
+     * @param context
+     * @return
+     */
+    public static String getUserList(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getString("UserJson", null);
     }
 }
