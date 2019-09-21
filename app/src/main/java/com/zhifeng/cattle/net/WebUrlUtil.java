@@ -256,4 +256,19 @@ public class WebUrlUtil {
      */
     public static final String POST_RECOMMENDhOME = "index/index";
 
+    /**
+     * 首页兴农扶贫
+     */
+    public static final String POST_POVEERYRELIEF = "index/indexfarm";
+
+    /**
+     * 首页食品酒水
+     */
+    public static final String POST_FOODDRINK = "index/index_food_drink";
+
+    /**
+     * 首页进口货物
+     */
+    public static final String POST_IMPORT = "index/index_import";
+
 }

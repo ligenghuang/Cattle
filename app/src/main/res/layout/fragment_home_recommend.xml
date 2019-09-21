@@ -7,75 +7,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+   <com.scwang.smartrefresh.layout.SmartRefreshLayout
+       android:id="@+id/refreshLayout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <androidx.core.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
 
 
-            <!--轮播图-->
-            <cn.bingoogolapple.bgabanner.BGABanner
-                android:id="@+id/banner_recomment"
-                style="@style/BannerRecommendStyle"
-                android:background="@drawable/icon_selfnav_banner"
-                app:banner_transitionEffect="defaultEffect"/>
+               <!--轮播图-->
+               <cn.bingoogolapple.bgabanner.BGABanner
+                   android:id="@+id/banner_recomment"
+                   style="@style/BannerRecommendStyle"
+                   android:background="@drawable/icon_selfnav_banner"
+                   app:banner_transitionEffect="defaultEffect"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_classify"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="25dp"
-                android:background="@drawable/icon_recommend_classify_bg"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4"
-                tools:listitem="@layout/layout_item_recmment_classify"
-                tools:itemCount="8"/>
-            <!--广告轮播图-->
-            <cn.bingoogolapple.bgabanner.BGABanner
-                android:id="@+id/banner_selfnav"
-                style="@style/BannerRecommendStyle2"
-                android:background="@drawable/icon_selfnav_banner"
-                app:banner_transitionEffect="defaultEffect"/>
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rv_classify"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:paddingTop="25dp"
+                   android:background="@drawable/icon_recommend_classify_bg"
+                   app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                   app:spanCount="4"
+                   tools:listitem="@layout/layout_item_recmment_classify"
+                   tools:itemCount="8"/>
+               <!--广告轮播图-->
+               <cn.bingoogolapple.bgabanner.BGABanner
+                   android:id="@+id/banner_selfnav"
+                   style="@style/BannerRecommendStyle2"
+                   android:background="@drawable/icon_selfnav_banner"
+                   app:banner_transitionEffect="defaultEffect"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_selfnav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-15dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="3"
-                tools:itemCount="3"
-                tools:listitem="@layout/layout_item_recommend_goods"
-                />
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rv_selfnav"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="-15dp"
+                   app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                   app:spanCount="3"
+                   tools:itemCount="3"
+                   tools:listitem="@layout/layout_item_recommend_goods"
+                   />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_tab_4"
-                    android:background="@drawable/shape_login_btn_bg"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:textSize="@dimen/text_size15"
-                    android:textColor="@color/white"
-                    />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_spree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/layout_item_spree"/>
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="@string/home_tab_4"
+                   android:background="@drawable/shape_login_btn_bg"
+                   android:gravity="center"
+                   android:padding="8dp"
+                   android:layout_margin="@dimen/dp_10"
+                   android:textSize="@dimen/text_size15"
+                   android:textColor="@color/white"
+                   />
 
 
-        </LinearLayout>
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rv_spree"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   tools:listitem="@layout/layout_item_spree"/>
 
 
-    </androidx.core.widget.NestedScrollView>
+           </LinearLayout>
+
+
+       </androidx.core.widget.NestedScrollView>
+
+   </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

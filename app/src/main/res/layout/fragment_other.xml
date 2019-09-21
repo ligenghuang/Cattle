@@ -6,111 +6,121 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_f2">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!--轮播图-->
-            <cn.bingoogolapple.bgabanner.BGABanner
-                android:id="@+id/banner_recomment"
-                style="@style/BannerRecommendStyle"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:background="@drawable/icon_selfnav_banner"
-                app:banner_transitionEffect="defaultEffect" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_classify"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:background="@color/white"
-                android:paddingLeft="@dimen/item_height40"
-                android:paddingTop="25dp"
-                android:paddingRight="@dimen/item_height40"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4"
-                tools:itemCount="8"
-                tools:listitem="@layout/layout_item_recmment_classify" />
+            android:background="@color/color_f2">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="@dimen/dp_10"
-                    android:background="@drawable/shape_login_btn_bg"
-                    android:paddingLeft="@dimen/item_height50"
-                    android:paddingTop="8dp"
-                    android:paddingRight="@dimen/item_height50"
-                    android:paddingBottom="8dp"
-                    android:text="@string/home_tab_9"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size15" />
+                <!--轮播图-->
+                <cn.bingoogolapple.bgabanner.BGABanner
+                    android:id="@+id/banner_recomment"
+                    style="@style/BannerRecommendStyle"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:background="@drawable/icon_selfnav_banner"
+                    app:banner_transitionEffect="defaultEffect" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="125dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/icon_selfnav_banner"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_selfnav"
+                    android:id="@+id/rv_classify"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/item_height40"
+                    android:paddingTop="25dp"
+                    android:paddingRight="@dimen/item_height40"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
-                    tools:listitem="@layout/layout_item_other_selfnav"
-                    tools:itemCount="3"
-                    android:padding="5dp"/>
+                    app:spanCount="4"
+                    tools:itemCount="8"
+                    tools:listitem="@layout/layout_item_recmment_classify" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dp_10"
+                        android:background="@drawable/shape_login_btn_bg"
+                        android:paddingLeft="@dimen/item_height50"
+                        android:paddingTop="8dp"
+                        android:paddingRight="@dimen/item_height50"
+                        android:paddingBottom="8dp"
+                        android:text="@string/home_tab_9"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size15" />
+
+                    <ImageView
+                        android:id="@+id/iv_other_selfnav"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_selfnav_banner"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_selfnav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        tools:listitem="@layout/layout_item_other_selfnav"
+                        tools:itemCount="3"
+                        android:padding="5dp"/>
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_goods_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="@dimen/dp_10"
+                        android:background="@drawable/shape_login_btn_bg"
+                        android:paddingLeft="@dimen/item_height50"
+                        android:paddingTop="8dp"
+                        android:paddingRight="@dimen/item_height50"
+                        android:paddingBottom="8dp"
+                        android:text="@string/home_tab_10"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size15" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_goods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        app:spanCount="2"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        tools:itemCount="6"
+                        tools:listitem="@layout/layout_item_other_goods"/>
+
+
+                </LinearLayout>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginTop="@dimen/dp_10"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/shape_login_btn_bg"
-                android:paddingLeft="@dimen/item_height50"
-                android:paddingTop="8dp"
-                android:paddingRight="@dimen/item_height50"
-                android:paddingBottom="8dp"
-                android:text="@string/home_tab_10"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size15" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_goods"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:spanCount="2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:itemCount="6"
-                tools:listitem="@layout/layout_item_other_goods"/>
-
-
-        </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

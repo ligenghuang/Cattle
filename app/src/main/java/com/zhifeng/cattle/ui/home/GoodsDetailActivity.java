@@ -304,10 +304,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         List<GoodsDetailDto.DataBean.SpecBean.SpecAttrBean> specAttrBeans = specBean.getSpec_attr();
         // 设置组合数据"1;2726;95"=“型号；颜色；尺寸”
         testData = new ProductModel();
-        ProductModel.AttributesEntity group01 = new ProductModel.AttributesEntity();
-        group01.setName("规格");
+
         for (int i = 0; i < specAttrBeans.size(); i++) {
             GoodsDetailDto.DataBean.SpecBean.SpecAttrBean specAttrBean = specAttrBeans.get(i);
+            ProductModel.AttributesEntity group01 = new ProductModel.AttributesEntity();
+            group01.setName(specAttrBean.getSpec_name());
             for (int j = 0; j < goodsSkuBeans.size(); j++) {
                 GoodsDetailDto.DataBean.SpecBean.GoodsSkuBean goodsSkuBean = goodsSkuBeans.get(j);
                 String str = goodsSkuBean.getSku_attr().substring(2, goodsSkuBean.getSku_attr().lastIndexOf("\""));
@@ -327,8 +328,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     }
                 }
             }
+            testData.getAttributes().add(0, group01);//第一组
         }
-        testData.getAttributes().add(0, group01);//第一组
+
     }
 
 

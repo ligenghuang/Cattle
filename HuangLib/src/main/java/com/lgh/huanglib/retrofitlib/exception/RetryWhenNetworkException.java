@@ -17,7 +17,7 @@ public class RetryWhenNetworkException implements Func1<Observable<? extends Thr
 //    retry次数
     private int count = 3;
 //    延迟
-    private long delay = 3000;
+    private long delay = 20000;
 //    叠加延迟
     private long increaseDelay = 3000;
 

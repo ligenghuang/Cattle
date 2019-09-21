@@ -364,7 +364,7 @@
                             android:background="@drawable/selector_goods_text_bg"
                             android:gravity="center"
                             android:paddingBottom="@dimen/dp_10"
-                            android:text="@string/goods_detail_tab_13"
+                            android:text="@string/goods_detail_tab_14"
                             android:textColor="@color/color_15"
                             android:textSize="@dimen/text_size15" />
 

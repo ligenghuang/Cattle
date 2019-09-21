@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,19 +14,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
+import com.lgh.huanglib.util.config.GlideUtil;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.RecommendHomeAction;
+import com.zhifeng.cattle.actions.HomeOtherAction;
 import com.zhifeng.cattle.adapters.BannerHome;
 import com.zhifeng.cattle.adapters.HomeClassifyAdapter;
-import com.zhifeng.cattle.adapters.RecommenSelfnavAdapter;
-import com.zhifeng.cattle.adapters.HomeSpreeAdapter;
+import com.zhifeng.cattle.adapters.HomeOtherGoodsAdapter;
+import com.zhifeng.cattle.adapters.HomeOtherSelfnavAdapter;
+import com.zhifeng.cattle.modules.BannersBean;
 import com.zhifeng.cattle.modules.Catenav2Bean;
-import com.zhifeng.cattle.modules.RecommendHomeDto;
-import com.zhifeng.cattle.ui.impl.RecommendHomeView;
+import com.zhifeng.cattle.modules.FoodDrinkDto;
+import com.zhifeng.cattle.modules.HomeImportDto;
+import com.zhifeng.cattle.modules.HomeOtherSelfnavBean;
+import com.zhifeng.cattle.ui.impl.HomeOtherView;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
 
 import java.util.ArrayList;
@@ -35,50 +43,48 @@ import butterknife.ButterKnife;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
- * @ClassName: 首页推荐
+ * @ClassName: 首页进口货物和食品酒水
  * @Description:
  * @Author: lgh
- * @CreateDate: 2019/9/18 17:12
+ * @CreateDate: 2019/9/21 11:01
  * @Version: 1.0
  */
 
-public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction> implements RecommendHomeView {
+public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> implements HomeOtherView {
+
     View view;
+    int type;
     @BindView(R.id.banner_recomment)
     BGABanner bannerRecomment;
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
-    @BindView(R.id.banner_selfnav)
-    BGABanner bannerSelfnav;
     @BindView(R.id.rv_selfnav)
     RecyclerView rvSelfnav;
-    @BindView(R.id.rv_spree)
-    RecyclerView rvSpree;
+    @BindView(R.id.rv_goods)
+    RecyclerView rvGoods;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.iv_other_selfnav)
+    ImageView ivOtherSelfnav;
+    @BindView(R.id.tv_goods_title)
+    TextView tvGoodsTitle;
 
 
     /**
      * 轮播图所需参数
      */
     BannerHome banner;
-    BannerHome beSelfnav;
 
     List<String> imgs = new ArrayList<>();
     List<String> tips = new ArrayList<>();
     List<String> url = new ArrayList<>();
-
-    List<String> imgsSelfnav = new ArrayList<>();
-    List<String> tipsSelfnav = new ArrayList<>();
-    List<String> urlSelfnav = new ArrayList<>();
-
     HomeClassifyAdapter homeClassifyAdapter;//分类列表
-    RecommenSelfnavAdapter recommenSelfnavAdapter;//商品列表
-    HomeSpreeAdapter recommendSpreeAdapter;//优选单品列表
+    HomeOtherSelfnavAdapter homeOtherSelfnavAdapter;//广告列表
+    HomeOtherGoodsAdapter homeOtherGoodsAdapter;//商品列表
 
     @Override
-    protected RecommendHomeAction initAction() {
-        return new RecommendHomeAction((RxAppCompatActivity) getActivity(), this);
+    protected HomeOtherAction initAction() {
+        return new HomeOtherAction((RxAppCompatActivity) getActivity(), this);
     }
 
     @Override
@@ -86,6 +92,10 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         super.onAttach(activity);
         mContext = getContext();
         mActivity = activity;
+    }
+
+    public HomeOtherFragment(int type) {
+        this.type = type;
     }
 
     @Override
@@ -99,32 +109,30 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         super.init();
         refreshLayout.setEnableLoadMore(false);//禁止上拉加载更多
 
+        tvGoodsTitle.setText(ResUtil.getString(type == 1?R.string.home_tab_10:R.string.home_tab_11));
+
         //轮播图
         banner = new BannerHome();
         bannerRecomment.setAdapter(banner);
 
-        beSelfnav = new BannerHome();
-        bannerSelfnav.setAdapter(beSelfnav);
-
         homeClassifyAdapter = new HomeClassifyAdapter(mContext);
-        rvClassify.setLayoutManager(new GridLayoutManager(mContext,4));
+        rvClassify.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvClassify.setAdapter(homeClassifyAdapter);
 
-        recommenSelfnavAdapter = new RecommenSelfnavAdapter(mContext);
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(mContext);
+        homeOtherSelfnavAdapter = new HomeOtherSelfnavAdapter(mContext);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         rvSelfnav.setLayoutManager(linearLayoutManager);
-        rvSelfnav.setAdapter(recommenSelfnavAdapter);
+        rvSelfnav.setAdapter(homeOtherSelfnavAdapter);
 
-        recommendSpreeAdapter = new HomeSpreeAdapter(mContext);
-        rvSpree.setLayoutManager(new LinearLayoutManager(mContext));
-        rvSpree.setAdapter(recommendSpreeAdapter);
+        homeOtherGoodsAdapter = new HomeOtherGoodsAdapter(mContext);
+        rvGoods.setLayoutManager(new GridLayoutManager(mContext,2));
+        rvGoods.setAdapter(homeOtherGoodsAdapter);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home_recommend, container, false);
+        view = inflater.inflate(R.layout.fragment_other, container, false);
         ButterKnife.bind(this, view);
         binding();
         return view;
@@ -134,7 +142,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) {
-            getRecommendHome();
+           getData();
         }
     }
 
@@ -144,7 +152,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getRecommendHome();
+                getData();
             }
         });
 
@@ -157,32 +165,48 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
     }
 
     /**
-     * 获取首页推荐
+     * 获取数据
+     */
+    private void getData() {
+        switch (type){
+            case 2:
+                //进口货物
+                getImport();
+                break;
+            case 1:
+                //食品酒水
+                getFoodDrink();
+                break;
+        }
+    }
+
+
+    /**
+     * 获取进口货物数据
      */
     @Override
-    public void getRecommendHome() {
+    public void getImport() {
         if (CheckNetwork.checkNetwork2(mContext)) {
-            baseAction.getRecommendHome();
-        }else {
+            baseAction.getImport();
+        } else {
             refreshLayout.finishRefresh();
         }
     }
 
     /**
-     * 获取首页推荐成功
-     * @param recommendHomeDto
+     * 获取进口货物数据成功
+     *
+     * @param homeImportDto
      */
     @Override
-    public void getRecommendHomeSuccess(RecommendHomeDto recommendHomeDto) {
+    public void getImportSuccess(HomeImportDto homeImportDto) {
         refreshLayout.finishRefresh();
-        RecommendHomeDto.DataBean dataBean = recommendHomeDto.getData();
-        setTitle(dataBean.getCatenav1());
+        HomeImportDto.DataBean dataBean = homeImportDto.getData();
         setCatenavList(dataBean.getCatenav2());
         setBanner(dataBean.getBanners());//轮播图
         homeClassifyAdapter.refresh(dataBean.getCatenav2());//二级分类列表
-        setBannerSelfnav(dataBean.getSelfnav());//轮播图
-        recommenSelfnavAdapter.refresh(dataBean.getBuy_now());//商品列表
-        recommendSpreeAdapter.refresh(dataBean.getYouxuan_goods());//优选单品
+        setOtherSelfnav(dataBean.getSelfnav());//设置广告列表
+        homeOtherGoodsAdapter.refresh(dataBean.getJinkou());//商品列表
     }
 
     /**
@@ -198,19 +222,37 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
     }
 
     /**
-     * 失败
-     * @param message
-     * @param code
+     * 获取食品酒水
      */
+    @Override
+    public void getFoodDrink() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            baseAction.getFoodDrink();
+        } else {
+            refreshLayout.finishRefresh();
+        }
+    }
+
+    /**
+     * 获取食品酒水成功
+     *
+     * @param foodDrinkDto
+     */
+    @Override
+    public void getFoodDrinkSuccess(FoodDrinkDto foodDrinkDto) {
+        refreshLayout.finishRefresh();
+        FoodDrinkDto.DataBean dataBean = foodDrinkDto.getData();
+        setBanner(dataBean.getBanners());//轮播图
+        homeClassifyAdapter.refresh(dataBean.getCatenav2());//二级分类列表
+        setOtherSelfnav(dataBean.getSelfnav());//设置广告列表
+        L.e("lgh_other","other = "+dataBean.getFood_drink().size());
+        homeOtherGoodsAdapter.refresh(dataBean.getFood_drink());//商品列表
+    }
+
+
     @Override
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        baseAction.toUnregister();
     }
 
     @Override
@@ -219,11 +261,13 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         baseAction.toRegister();
     }
 
-    /**
-     * 设置轮播图
-     * @param banners
-     */
-    private void setBanner(List<RecommendHomeDto.DataBean.BannersBean> banners) {
+    @Override
+    public void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    private void setBanner(List<BannersBean> banners) {
         //设置轮播图
         if (banners.size() != 0) {
             bannerRecomment.setVisibility(View.VISIBLE);
@@ -231,7 +275,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
             tips = new ArrayList<>();
             url = new ArrayList<>();
             for (int i = 0; i < banners.size(); i++) {
-                RecommendHomeDto.DataBean.BannersBean bannersBean = banners.get(i);
+                BannersBean bannersBean = banners.get(i);
                 imgs.add(bannersBean.getPicture());
                 tips.add("");
                 url.add(bannersBean.getUrl());
@@ -243,34 +287,16 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
     }
 
     /**
-     * 设置广告轮播图
+     * 设置广告列表
      * @param selfnav
      */
-    private void setBannerSelfnav(List<RecommendHomeDto.DataBean.SelfnavBean> selfnav) {
-        //设置轮播图
-        if (selfnav.size() != 0) {
-            bannerSelfnav.setVisibility(View.VISIBLE);
-            imgsSelfnav = new ArrayList<>();
-            tipsSelfnav = new ArrayList<>();
-            urlSelfnav = new ArrayList<>();
-            for (int i = 0; i < selfnav.size(); i++) {
-                RecommendHomeDto.DataBean.SelfnavBean bannersBean = selfnav.get(i);
-                imgsSelfnav.add(bannersBean.getImage());
-                tipsSelfnav.add("");
-                urlSelfnav.add(bannersBean.getUrl());
-            }
-            bannerSelfnav.setAutoPlayAble(true);
-            bannerSelfnav.setData(imgsSelfnav, tipsSelfnav);
-            bannerSelfnav.startAutoPlay();
+    private void setOtherSelfnav(List<HomeOtherSelfnavBean> selfnav) {
+        GlideUtil.setImage(mContext,selfnav.get(0).getImage(),ivOtherSelfnav,R.drawable.icon_selfnav_banner);
+        List<HomeOtherSelfnavBean> list = new ArrayList<>();
+        for (int i = 1; i <selfnav.size() ; i++) {
+            list.add(selfnav.get(i));
         }
-    }
-
-    private void setTitle(List<RecommendHomeDto.DataBean.Catenav1Bean> catenav1) {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < catenav1.size(); i++) {
-            list.add(catenav1.get(i).getCat_name());
-        }
-        HomeFragment.fragment.setTitle(list);
+        homeOtherSelfnavAdapter.refresh(list);
     }
 
 }

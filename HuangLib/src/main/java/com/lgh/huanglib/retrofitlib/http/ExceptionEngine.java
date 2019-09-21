@@ -68,7 +68,7 @@ public class ExceptionEngine {
             return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN, ERROR.UNKNOWN);
-            ex.message = "未知错误";          //未知错误
+            ex.message = "请求失败";          //未知错误
             return ex;
         }
     }

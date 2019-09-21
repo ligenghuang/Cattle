@@ -3,12 +3,13 @@ package com.zhifeng.cattle.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecommendHomeDto {
+public class PovertyReliefDto {
+
 
     /**
      * status : 200
      * msg : 获取成功
-     * data : {"catenav1":[{"cat_id":1,"cat_name":"推荐"},{"cat_id":5,"cat_name":"兴农扶贫"},{"cat_id":9,"cat_name":"食品酒水"},{"cat_id":13,"cat_name":"进口货物"}],"banners":[{"picture":"http://zf8020.com/public\\uploads\\fixed_picture\\20190904\\a386819162ebd483bb791b8da346d4c3.png","title":"测试","url":"www.baidu.com"}],"catenav2":[{"cat_id":27,"cat_name":"11111","img":"http://zf8020.com/public/upload/images/category/20190919156887540392102.png"},{"cat_id":30,"cat_name":"22222","img":"http://zf8020.com/public/upload/images/"},{"cat_id":31,"cat_name":"太热","img":"http://zf8020.com/public/upload/images/"},{"cat_id":32,"cat_name":"5","img":"http://zf8020.com/public/upload/images/"},{"cat_id":33,"cat_name":"7","img":"http://zf8020.com/public/upload/images/"},{"cat_id":34,"cat_name":"22222","img":"http://zf8020.com/public/upload/images/"},{"cat_id":35,"cat_name":"太热1","img":"http://zf8020.com/public/upload/images/"},{"cat_id":36,"cat_name":"hj0","img":"http://zf8020.com/public/upload/images/"}],"buy_now":[{"goods_id":75,"goods_name":"企业版 矿机","img":"http://zf8020.com/public/upload/images/goods/20190803156482339365585.png","desc":"","price":"19900.00","original_price":"0.00"},{"goods_id":74,"goods_name":"小鸟鸟","img":"http://zf8020.com/public/upload/images/goods/20190717156332971828319.png","desc":"","price":"1.00","original_price":"0.00"},{"goods_id":73,"goods_name":"444","img":"http://zf8020.com/public/upload/images/goods/20190716156324887558693.png","desc":"","price":"0.00","original_price":"0.00"}],"youxuan_goods":[{"id":1,"title":"苹果","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\c395b1a63fe5be1738862c403262612c.jpeg","status":1,"create_time":1569664,"url":"https://www.baidu.com/","location":1},{"id":3,"title":"女鞋","image":"http://zf8020.com/public//uploads/fixed_picture/20190710/6a08bac0afec27c32e435f1e65550c89.jpeg","status":1,"create_time":1562407536,"url":"https://www.baidu.com/","location":1},{"id":4,"title":"玩具","image":"http://zf8020.com/public//uploads/fixed_picture/20190710/01f90438dc9d73809022ba67446b835f.jpeg","status":1,"create_time":1562407796,"url":"https://www.baidu.com/","location":1},{"id":5,"title":"测试33","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190907\\c23fa611f3722e1e633214c9da225acc.png","status":1,"create_time":1567827831,"url":"www.baidu.com","location":1}]}
+     * data : {"catenav1":[{"cat_id":1,"cat_name":"推荐"},{"cat_id":5,"cat_name":"兴农扶贫"},{"cat_id":9,"cat_name":"食品酒水"},{"cat_id":13,"cat_name":"进口货物"}],"banners":[{"picture":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190904\\a386819162ebd483bb791b8da346d4c3.png","title":"测试","url":"www.baidu.com"},{"picture":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\c82117917fe5e75788457f676cd0aa90.jpeg","title":"测试1","url":"www.baidu.com"},{"picture":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190904\\38f8199bea0c3ad5d091d181815f8396.png","title":"测试33","url":"www.baidu.com"}],"catenav2":[{"cat_id":28,"cat_name":"时令水果","img":"http://zf8020.com/public/upload/images/category/20190919156887424731884.png"},{"cat_id":38,"cat_name":"肉禽蛋类","img":"http://zf8020.com/public/upload/images/category/2019091915688743636942.png"},{"cat_id":39,"cat_name":"新鲜蔬菜","img":"http://zf8020.com/public/upload/images/category/20190919156887437928833.png"},{"cat_id":40,"cat_name":"粮油调味","img":"http://zf8020.com/public/upload/images/category/20190919156887440242617.png"},{"cat_id":41,"cat_name":"南北干货","img":"http://zf8020.com/public/upload/images/category/20190919156887441580438.png"},{"cat_id":42,"cat_name":"海鲜水产","img":"http://zf8020.com/public/upload/images/category/20190919156887443726867.png"},{"cat_id":43,"cat_name":"乳品烘焙","img":"http://zf8020.com/public/upload/images/category/20190919156887446865664.png"},{"cat_id":44,"cat_name":"粮食面点","img":"http://zf8020.com/public/upload/images/category/20190919156887449291726.png"}],"selfnav":[{"title":"肉类","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\3cf7db22e1b39891bc825cfa73f1275d.jpeg","url":"https://www.baidu.com/"},{"title":"电脑","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190907\\e9e0bd637752403b0a1a11bd33684ad8.png","url":"https://www.baidu.com/"},{"title":"测试33","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190907\\c23fa611f3722e1e633214c9da225acc.png","url":"www.baidu.com"},{"title":"测试","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\3c0d927f9211cd9a2a87b424eaaf84d0.png","url":"www.baidu.com"}],"youxuan_goods":[{"id":7,"title":"商品1","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\96505c2def598697de1f16db6fd7b55f.jpeg","status":1,"create_time":1568881912,"url":"www.baidu.com","location":2},{"id":8,"title":"测试商品2","image":"http://zf8020.com/public/\\uploads\\fixed_picture\\20190919\\bf23d641d747e62723c270743e5c0299.jpeg","status":1,"create_time":1568882050,"url":"www.baidu.com","location":2}],"like":[{"goods_id":72,"goods_name":"商务保温杯","img":"http://zf8020.com/public/upload/images/goods/20190716156324016790465.png","desc":"","price":"500.00","original_price":"0.00"},{"goods_id":45,"goods_name":"礼品专区商品1","img":"http://zf8020.com/public/upload/images/goods/20190710156274057499262.png","desc":"神秘礼物","price":"500.00","original_price":"0.00"},{"goods_id":40,"goods_name":"礼品商品","img":"http://zf8020.com/public/upload/images/goods/2019071015627391512588.png","desc":"","price":"500.00","original_price":"500.00"}]}
      */
 
     private int status;
@@ -44,20 +45,8 @@ public class RecommendHomeDto {
         private List<BannersBean> banners;
         private List<Catenav2Bean> catenav2;
         private List<SelfnavBean> selfnav;
-
-        public List<SelfnavBean> getSelfnav() {
-            if (selfnav == null) {
-                return new ArrayList<>();
-            }
-            return selfnav;
-        }
-
-        public void setSelfnav(List<SelfnavBean> selfnav) {
-            this.selfnav = selfnav;
-        }
-
-        private List<BuyNowBean> buy_now;
         private List<SpreeDto> youxuan_goods;
+        private List<LikeBean> like;
 
         public List<Catenav1Bean> getCatenav1() {
             if (catenav1 == null) {
@@ -92,15 +81,15 @@ public class RecommendHomeDto {
             this.catenav2 = catenav2;
         }
 
-        public List<BuyNowBean> getBuy_now() {
-            if (buy_now == null) {
+        public List<SelfnavBean> getSelfnav() {
+            if (selfnav == null) {
                 return new ArrayList<>();
             }
-            return buy_now;
+            return selfnav;
         }
 
-        public void setBuy_now(List<BuyNowBean> buy_now) {
-            this.buy_now = buy_now;
+        public void setSelfnav(List<SelfnavBean> selfnav) {
+            this.selfnav = selfnav;
         }
 
         public List<SpreeDto> getYouxuan_goods() {
@@ -112,6 +101,17 @@ public class RecommendHomeDto {
 
         public void setYouxuan_goods(List<SpreeDto> youxuan_goods) {
             this.youxuan_goods = youxuan_goods;
+        }
+
+        public List<LikeBean> getLike() {
+            if (like == null) {
+                return new ArrayList<>();
+            }
+            return like;
+        }
+
+        public void setLike(List<LikeBean> like) {
+            this.like = like;
         }
 
         public static class Catenav1Bean {
@@ -176,13 +176,49 @@ public class RecommendHomeDto {
             }
         }
 
-        public static class BuyNowBean {
+        public static class SelfnavBean {
             /**
-             * goods_id : 75
-             * goods_name : 企业版 矿机
-             * img : http://zf8020.com/public/upload/images/goods/20190803156482339365585.png
+             * title : 肉类
+             * image :
+             * url : https://www.baidu.com/
+             */
+
+            private String title;
+            private String image;
+            private String url;
+
+            public String getTitle() {
+                return title == null ? "" : title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title == null ? "" : title;
+            }
+
+            public String getImage() {
+                return image == null ? "" : image;
+            }
+
+            public void setImage(String image) {
+                this.image = image == null ? "" : image;
+            }
+
+            public String getUrl() {
+                return url == null ? "" : url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url == null ? "" : url;
+            }
+        }
+
+        public static class LikeBean {
+            /**
+             * goods_id : 72
+             * goods_name : 商务保温杯
+             * img : http://zf8020.com/public/upload/images/goods/20190716156324016790465.png
              * desc :
-             * price : 19900.00
+             * price : 500.00
              * original_price : 0.00
              */
 
@@ -239,36 +275,6 @@ public class RecommendHomeDto {
 
             public void setOriginal_price(String original_price) {
                 this.original_price = original_price == null ? "" : original_price;
-            }
-        }
-
-        public static class SelfnavBean{
-            private String title;
-            private String image;
-            private String url;
-
-            public String getTitle() {
-                return title == null ? "" : title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title == null ? "" : title;
-            }
-
-            public String getImage() {
-                return image == null ? "" : image;
-            }
-
-            public void setImage(String image) {
-                this.image = image == null ? "" : image;
-            }
-
-            public String getUrl() {
-                return url == null ? "" : url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url == null ? "" : url;
             }
         }
     }

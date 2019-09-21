@@ -6,7 +6,7 @@ package com.lgh.huanglib.retrofitlib.http;
 
 public class ERROR {
     /**
-     * 未知错误
+     * 请求失败
      */
     public static final int UNKNOWN = 1000;
     /**

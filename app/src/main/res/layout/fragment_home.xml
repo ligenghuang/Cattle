@@ -12,6 +12,7 @@
         android:background="@color/transparent" />
 
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -103,7 +104,7 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="@string/home_tab_1"
                 android:textColor="@color/color_15"
-                android:textSize="@dimen/text_size15" />
+                android:textSize="@dimen/text_size13" />
 
             <TextView
                 android:id="@+id/tv_type_2"
@@ -115,7 +116,7 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="@string/home_tab_2"
                 android:textColor="@color/color_15"
-                android:textSize="@dimen/text_size15" />
+                android:textSize="@dimen/text_size13" />
 
             <TextView
                 android:id="@+id/tv_type_3"
@@ -127,13 +128,26 @@
                 android:paddingBottom="@dimen/dp_10"
                 android:text="@string/home_tab_3"
                 android:textColor="@color/color_15"
-                android:textSize="@dimen/text_size15" />
+                android:textSize="@dimen/text_size13" />
+
+            <TextView
+                android:id="@+id/tv_type_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/selector_goods_text_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/home_tab_3"
+                android:textColor="@color/color_15"
+                android:textSize="@dimen/text_size13" />
 
 
         </LinearLayout>
 
 
         <ImageView
+            android:id="@+id/iv_home_more"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -142,8 +156,6 @@
             android:src="@drawable/icon_home_more"/>
 
     </LinearLayout>
-
-    <include layout="@layout/fragment_other"/>
 
     <com.lgh.huanglib.util.cusview.CustomViewPager
         android:id="@+id/viewpager"
