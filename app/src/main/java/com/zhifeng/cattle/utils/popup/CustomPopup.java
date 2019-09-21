@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.utils.popup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,6 +14,7 @@ import com.lxj.xpopup.impl.PartShadowPopupView;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.adapters.CatenavListAdapter;
 import com.zhifeng.cattle.modules.Catenav2Bean;
+import com.zhifeng.cattle.ui.home.ListPageActivity;
 
 import java.util.List;
 
@@ -50,6 +52,10 @@ public class CustomPopup extends PartShadowPopupView {
             @Override
             public void onClick(int id,String name) {
                 //todo 跳转页面
+                Intent i = new Intent(context, ListPageActivity.class);
+                i.putExtra("cat_id", id);
+                i.putExtra("name", name);
+                context.startActivity(i);
             }
         });
 

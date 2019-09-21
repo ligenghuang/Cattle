@@ -3,9 +3,6 @@ package com.zhifeng.cattle.ui.home;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.lgh.huanglib.util.cusview.CustomViewPager;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.enums.PopupPosition;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.modules.Catenav2Bean;
@@ -237,14 +233,17 @@ public class HomeFragment extends UserBaseFragment {
         this.list = list;
     }
 
-    @OnClick(R.id.iv_home_more)
+    @OnClick({R.id.et_classify_search,R.id.iv_home_more})
     public void OnClick(View view){
         switch (view.getId()){
+            case R.id.et_classify_search:
+                jumpActivityNotFinish(mContext, SearchGoodsActivity.class);
+                break;
             case R.id.iv_home_more:
                 new XPopup.Builder(mActivity)
                         .hasShadowBg(false)
                         .atView(llTop)
-                        .asCustom(new CustomPopup(mContext,list))
+                        .asCustom(new CustomPopup(mContext, list))
                         .show();
                 break;
         }

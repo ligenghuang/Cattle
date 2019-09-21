@@ -281,6 +281,15 @@ public class WebUrlUtil {
     public static final String POST_IMPORT = "index/index_import";
 
     /**
+     * 首页列表页
+     */
+    public static final String POST_LIST_PAGE = "/api/index/list_page";
+
+    /**
+     * 首页搜索
+     */
+    public static final String POST_SEARCH_GOODS = "/api/goods/search_goods";
+    /**
      * 提交订单
      */
     public static final String POST_SUBMITORDER = "order/submitOrder";

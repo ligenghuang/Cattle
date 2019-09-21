@@ -36,7 +36,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+/**
+ * @ClassName:
+ * @Description: 提交订单
+ * @Author: Administrator
+ * @Date: 2019/9/21 16:53
+ */
 public class TemporaryActivity extends UserBaseActivity<TemporaryAction> implements TemporaryView {
     @BindView(R.id.ll)
     LinearLayout ll;

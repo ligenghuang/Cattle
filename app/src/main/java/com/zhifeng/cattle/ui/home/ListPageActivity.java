@@ -6,75 +6,69 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
-import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.GoodsCommentsAction;
-import com.zhifeng.cattle.adapters.GoodsCommentsAdapter;
-import com.zhifeng.cattle.modules.GoodsComment;
-import com.zhifeng.cattle.ui.impl.GoodsCommentsView;
+import com.zhifeng.cattle.actions.ListPageAction;
+import com.zhifeng.cattle.adapters.ListPageAdapter;
+import com.zhifeng.cattle.modules.ListPage;
+import com.zhifeng.cattle.ui.impl.ListPageView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @ClassName:
- * @Description: 商品评价
+ * @Description: 列表页
  * @Author: Administrator
- * @Date: 2019/9/18 17:17
+ * @Date: 2019/9/21 16:09
  */
-public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction> implements GoodsCommentsView {
+public class ListPageActivity extends UserBaseActivity<ListPageAction> implements ListPageView {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv)
-    TextView tv;
-    @BindView(R.id.tvCommentsNum)
-    TextView tvCommentsNum;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    private GoodsCommentsAdapter adapter;
+    private final int pageSize = 20;
+    private int page;
     private boolean isRefresh = true;
     private boolean isMore = true;
-    private int page = 1;
-    private final int pageSize = 20;
-    private String goods_id;
-    private String goods_comment_num;
+    private ListPageAdapter adapter;
+    private String title;
+    private String cat_id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
-        goods_id = getIntent().getStringExtra("goods_id");
-        goods_comment_num = getIntent().getStringExtra("goods_comment_num");
+        cat_id = getIntent().getStringExtra("cat_id");
+        title = getIntent().getStringExtra("name");
         binding();
     }
 
     @Override
     public int intiLayout() {
-        return R.layout.activity_comments;
+        return R.layout.activity_listpage;
     }
 
     @Override
-    protected GoodsCommentsAction initAction() {
-        return new GoodsCommentsAction(this, this);
+    protected ListPageAction initAction() {
+        return new ListPageAction(this, this);
     }
 
     @Override
@@ -82,11 +76,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         super.init();
         mContext = this;
         mActicity = this;
-
-        String text = "(" + goods_comment_num + ")";
-        tvCommentsNum.setText(text);
-        adapter = new GoodsCommentsAdapter(mContext);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ListPageAdapter(mContext);
+        recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerview.setAdapter(adapter);
         refreshLayout.autoRefresh();
         loadView();
@@ -98,12 +89,12 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getGoodsComments();
+                getListPage();
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMoreGoodsComments();
+                loadMoreListPage();
             }
         });
     }
@@ -118,43 +109,43 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
                 .statusBarView(R.id.top_view)
                 .keyboardEnable(true)
                 .statusBarDarkFont(true, 0.2f)
-                .addTag("GoodsCommentsActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .addTag("ListPageActivity")  //给上面参数打标记，以后可以通过标记恢复
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
 
-        fTitleTv.setText(ResUtil.getString(R.string.goods_detail_tab_22));
+        fTitleTv.setText(title);
     }
 
     @Override
-    public void getGoodsComments() {
+    public void getListPage() {
         if (CheckNetwork.checkNetwork2(mContext)) {
             isRefresh = true;
             page = 1;
-            baseAction.getComments(goods_id, pageSize, page);
+            baseAction.getListPage(cat_id, pageSize, page);
         } else {
             refreshLayout.finishRefresh();
         }
     }
 
-    private void loadMoreGoodsComments() {
+    private void loadMoreListPage() {
         if (CheckNetwork.checkNetwork2(mContext)) {
             isRefresh = false;
             page++;
-            baseAction.getComments(goods_id, pageSize, page);
+            baseAction.getListPage(cat_id, pageSize, page);
         } else {
             refreshLayout.finishLoadMore();
         }
     }
 
     @Override
-    public void getGoodsCommentsSuccess(GoodsComment goodsComment) {
+    public void getListPageSuccess(ListPage listPage) {
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-        List<GoodsComment.DataBeanX.DataBean> beans = goodsComment.getData().getData();
+        List<ListPage.DataBeanX.GoodsBean.DataBean> beans = listPage.getData().getGoods().getData();
         if (beans.size() > 0) {
             recyclerview.setVisibility(View.VISIBLE);
-            isMore = page < goodsComment.getData().getLast_page();
+            isMore = page < listPage.getData().getGoods().getLast_page();
             if (isRefresh) {
                 adapter.refresh(beans);
             } else {
@@ -197,10 +188,5 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     protected void onPause() {
         super.onPause();
         baseAction.toUnregister();
-    }
-
-    @OnClick(R.id.tvLookUpAll)
-    public void onViewClicked(View view) {
-
     }
 }
