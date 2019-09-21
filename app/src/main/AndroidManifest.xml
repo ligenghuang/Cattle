@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/activity_theme">
+        <activity android:name=".ui.my.ChangeAccountActivity" />
         <activity android:name=".ui.home.TemporaryActivity"/>
         <activity android:name=".ui.home.CertificationActivity"/>
         <activity

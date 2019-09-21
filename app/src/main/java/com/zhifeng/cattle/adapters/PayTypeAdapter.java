@@ -1,7 +1,8 @@
 package com.zhifeng.cattle.adapters;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.Temporary;
@@ -25,9 +26,14 @@ public class PayTypeAdapter extends BaseRecyclerAdapter<Temporary.DataBean.PayTy
             iv.setImageResource(model.isSelect() ? R.drawable.weixinzhifu : R.drawable.weixinweizhifu);
         }
         holder.text(R.id.tvPayType, model.getPay_name());
-        RadioButton rb = holder.itemView.findViewById(R.id.rbPayType);
-        rb.setChecked(model.isSelect());
-        rb.setOnClickListener(v -> {
+
+        ImageView ivPayTypeCircle = holder.itemView.findViewById(R.id.iv);
+        if (model.isSelect()){
+            ivPayTypeCircle.setImageResource(R.drawable.shape_solid_circle);
+        }else{
+            ivPayTypeCircle.setImageDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        ivPayTypeCircle.setOnClickListener(v -> {
             for (Temporary.DataBean.PayTypeBean bean : getAllData()) {
                 bean.setSelect(false);
             }

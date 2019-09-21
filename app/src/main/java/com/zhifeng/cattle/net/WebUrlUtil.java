@@ -257,6 +257,15 @@ public class WebUrlUtil {
     public static final String POST_RECOMMENDhOME = "index/index";
 
     /**
+     * 分享邀请
+     */
+    public static final String POST_SHAREPOSTER = "api/user/sharePoster";
+
+    /**
+     * 申请供应商
+     */
+    public static final String POST_SUPPLIER = "/api/Team/supplier";
+    /**
      * 首页兴农扶贫
      */
     public static final String POST_POVEERYRELIEF = "index/indexfarm";

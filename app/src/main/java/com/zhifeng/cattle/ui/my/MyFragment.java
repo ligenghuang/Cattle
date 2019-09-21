@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.MyAction;
+import com.zhifeng.cattle.modules.LoginUser;
 import com.zhifeng.cattle.modules.UserInfoDto;
 import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.MyView;
@@ -23,6 +25,9 @@ import com.zhifeng.cattle.utils.base.UserBaseFragment;
 import com.zhifeng.cattle.utils.data.MySp;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,6 +143,25 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         tvHeadcount.setText(dataBean.getTeam_count()+"");//总人数
         tvRecommended.setText(dataBean.getToday_rec()+"");//今日推荐
 
+        String accountInfo = MySp.getAccountInfo(mContext, "accountInfo", "[]");
+        List<LoginUser> loginUsers = new ArrayList<>(Arrays.asList(new Gson().fromJson(accountInfo, LoginUser[].class)));
+        if (loginUsers.size() > 0) {
+            int index = -1;
+            for (int i = 0; i < loginUsers.size(); i++) {
+                LoginUser user = loginUsers.get(i);
+                if (user.getMobile().equals(dataBean.getMobile())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) {
+
+            } else {
+
+            }
+        } else {
+//            loginUsers.add(new LoginUser());
+        }
     }
 
     /**

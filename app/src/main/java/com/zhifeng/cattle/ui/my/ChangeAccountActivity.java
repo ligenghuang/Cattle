@@ -2,18 +2,16 @@ package com.zhifeng.cattle.ui.my;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.lgh.huanglib.util.base.ActivityStack;
-import com.lgh.huanglib.util.config.GlideUtil;
-import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.InvitationAction;
-import com.zhifeng.cattle.modules.SharePoster;
-import com.zhifeng.cattle.ui.impl.InvitationView;
+import com.zhifeng.cattle.actions.BaseAction;
+import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
@@ -22,29 +20,28 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * @ClassName: 邀请页面
- * @Description:
- * @Author: lgh
- * @CreateDate: 2019/9/12 14:21
- * @Version: 1.0
+ * @ClassName:
+ * @Description: 切换用户页面
+ * @Author: Administrator
+ * @Date: 2019/9/21 14:28
  */
-
-public class InvitationActivity extends UserBaseActivity<InvitationAction> implements InvitationView {
-
+public class ChangeAccountActivity extends UserBaseActivity {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.iv_qc_code)
-    ImageView ivQcCode;
-    @BindView(R.id.tv_invitation_code)
-    TextView tvInvitationCode;
+    @BindView(R.id.ivAccount)
+    ImageView ivAccount;
+    @BindView(R.id.tvAccount)
+    TextView tvAccount;
+    @BindView(R.id.btnChangeAccount)
+    Button btnChangeAccount;
 
     @Override
     public int intiLayout() {
-        return R.layout.activity_invitation;
+        return R.layout.activity_changeaccount;
     }
 
     @Override
@@ -52,12 +49,11 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
-        getSharePoster();
     }
 
     @Override
-    protected InvitationAction initAction() {
-        return new InvitationAction(this,this);
+    protected BaseAction initAction() {
+        return null;
     }
 
     /**
@@ -74,7 +70,7 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-        fTitleTv.setText(ResUtil.getString(R.string.my_tab_18));
+        fTitleTv.setText("");
     }
 
     @Override
@@ -84,31 +80,9 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
         mContext = this;
     }
 
-    @Override
-    public void getSharePoster() {
-        baseAction.getSharePoster();
-    }
-
-    @Override
-    public void getSharePosterSuccess(SharePoster sharePoster) {
-        GlideUtil.setImage(mContext,sharePoster.getData().getAvatar(),ivQcCode,R.drawable.erweima);
-        tvInvitationCode.setText(sharePoster.getData().getInvitation_code());
-    }
-
-    @Override
-    public void onError(String message, int code) {
-
-    }
-
-    @OnClick({R.id.tv_share, R.id.tv_save})
+    @OnClick(R.id.btnChangeAccount)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_share:
-
-                break;
-            case R.id.tv_save:
-
-                break;
-        }
+        ActivityStack.getInstance().removeAll();
+        jumpActivity(mContext, LoginActivity.class);
     }
 }

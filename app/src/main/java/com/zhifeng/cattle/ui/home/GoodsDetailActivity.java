@@ -527,7 +527,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             mUiData.getBottomSheetDialog().dismiss();
         }
         loadDiss();
-        startActivity(TemporaryActivity.class,"cartId",String.valueOf(cartId));
+        if (inventory < 1) {
+            showNormalToast(R.string.cart_tab_35);
+            return;
+        }
+        startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
     }
 
     /**

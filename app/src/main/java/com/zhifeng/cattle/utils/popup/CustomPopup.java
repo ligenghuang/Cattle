@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lxj.xpopup.animator.PopupAnimator;
-import com.lxj.xpopup.core.CenterPopupView;
-import com.lxj.xpopup.core.PositionPopupView;
 import com.lxj.xpopup.impl.PartShadowPopupView;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.adapters.CatenavListAdapter;
@@ -50,7 +48,7 @@ public class CustomPopup extends PartShadowPopupView {
         catenavListAdapter.refresh(list);
         catenavListAdapter.setOnClickListener(new CatenavListAdapter.OnClickListener() {
             @Override
-            public void onClick(int id) {
+            public void onClick(int id,String name) {
                 //todo 跳转页面
             }
         });

@@ -11,7 +11,7 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.GoodsComment;
 import com.zhifeng.cattle.utils.data.DynamicTimeFormat;
 
-public class GoodsCommentsAdapter extends BaseRecyclerAdapter<GoodsComment.DataBean> {
+public class GoodsCommentsAdapter extends BaseRecyclerAdapter<GoodsComment.DataBeanX.DataBean> {
     private Context context;
 
     public GoodsCommentsAdapter(Context context) {
@@ -20,7 +20,7 @@ public class GoodsCommentsAdapter extends BaseRecyclerAdapter<GoodsComment.DataB
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, GoodsComment.DataBean model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder, GoodsComment.DataBeanX.DataBean model, int position) {
         holder.setIsRecyclable(false);
         ImageView ivAvatar = holder.itemView.findViewById(R.id.ivAvatar);
         GlideUtil.setImageCircle(context, model.getAvatar(), ivAvatar, R.mipmap.touxiang);

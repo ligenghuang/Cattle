@@ -6,9 +6,9 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.zhifeng.cattle.modules.GoodsComment;
+import com.zhifeng.cattle.modules.Supplier;
 import com.zhifeng.cattle.net.WebUrlUtil;
-import com.zhifeng.cattle.ui.impl.GoodsCommentsView;
+import com.zhifeng.cattle.ui.impl.SupplierView;
 import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 
@@ -17,14 +17,20 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observable;
 
-public class GoodsCommentsAction extends BaseAction<GoodsCommentsView> {
-    public GoodsCommentsAction(RxAppCompatActivity _rxAppCompatActivity, GoodsCommentsView commentsView) {
+/**
+ * @ClassName:
+ * @Description: 申请供应商
+ * @Author: Administrator
+ * @Date: 2019/9/21 11:05
+ */
+public class SupplierAction extends BaseAction<SupplierView> {
+    public SupplierAction(RxAppCompatActivity _rxAppCompatActivity, SupplierView supplierView) {
         super(_rxAppCompatActivity);
-        attachView(commentsView);
+        attachView(supplierView);
     }
 
-    public void getComments(String goods_id, int pageSize,int page) {
-        post(WebUrlUtil.POST_COMMENT_LIST, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "goods_id", goods_id, "pageSize", pageSize,"page", page), WebUrlUtil.POST_COMMENT_LIST)));
+    public void postSupplier(String name, String mobile) {
+        post(WebUrlUtil.POST_SUPPLIER, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "name", name, "moblie", mobile), WebUrlUtil.POST_SUPPLIER)));
     }
 
     /**
@@ -41,18 +47,18 @@ public class GoodsCommentsAction extends BaseAction<GoodsCommentsView> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
             switch (action.getIdentifying()) {
-                case WebUrlUtil.POST_COMMENT_LIST:
-                    //todo 获取商品评价
+                case WebUrlUtil.POST_SUPPLIER:
+                    //todo 提交申请供应商
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        GoodsComment goodsComment = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GoodsComment>() {
+                        Supplier supplier = new Gson().fromJson(action.getUserData().toString(), new TypeToken<Supplier>() {
                         }.getType());
-                        if (goodsComment.getStatus() == 1) {
-                            //todo 获取商品评价成功
-                            view.getGoodsCommentsSuccess(goodsComment);
+                        if (supplier.getStatus() == 200) {
+                            //todo 提交申请供应商成功
+                            view.postSupplierSuccess(supplier);
                             return;
                         }
-                        view.onError(goodsComment.getMsg(), action.getErrorType());
+                        view.onError(supplier.getMsg(), action.getErrorType());
                         return;
                     }
                     view.onError(msg, action.getErrorType());

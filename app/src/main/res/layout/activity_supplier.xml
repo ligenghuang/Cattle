@@ -87,6 +87,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size15"
+                        android:inputType="phone"
+                        android:maxLength="11"
                         android:textColor="@color/color_15"
                         android:textColorHint="@color/color_9"
                         android:hint="@string/supplier_tab_4"

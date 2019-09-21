@@ -26,9 +26,11 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/rbPayType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/shape_hollow_circle"
+            android:padding="5dp" />
     </LinearLayout>
 </LinearLayout>

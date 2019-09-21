@@ -65,4 +65,14 @@ public class MySp extends MySharedPreferencesUtil {
         return editor.putString("token", token).commit();
     }
 
+    public static String getAccountInfo(Context context,String key,String defValue){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getString(key,defValue);
+    }
+
+    public static boolean saveAccountInfo(Context context,String accountJson){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putString("accountInfo", accountJson).commit();
+    }
 }

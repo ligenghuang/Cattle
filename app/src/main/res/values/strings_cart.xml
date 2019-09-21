@@ -34,4 +34,5 @@
     <string name="cart_tab_32">共%0$s件合计：</string>
     <string name="cart_tab_33">立即支付</string>
     <string name="cart_tab_34">不支持7天无理由</string>
+    <string name="cart_tab_35">库存不足</string>
 </resources>

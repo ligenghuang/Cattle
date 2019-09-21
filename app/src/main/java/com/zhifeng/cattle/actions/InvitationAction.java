@@ -6,9 +6,9 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-import com.zhifeng.cattle.modules.GoodsComment;
+import com.zhifeng.cattle.modules.SharePoster;
 import com.zhifeng.cattle.net.WebUrlUtil;
-import com.zhifeng.cattle.ui.impl.GoodsCommentsView;
+import com.zhifeng.cattle.ui.impl.InvitationView;
 import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 
@@ -17,14 +17,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observable;
 
-public class GoodsCommentsAction extends BaseAction<GoodsCommentsView> {
-    public GoodsCommentsAction(RxAppCompatActivity _rxAppCompatActivity, GoodsCommentsView commentsView) {
+public class InvitationAction extends BaseAction<InvitationView> {
+    public InvitationAction(RxAppCompatActivity _rxAppCompatActivity, InvitationView invitationView) {
         super(_rxAppCompatActivity);
-        attachView(commentsView);
+        attachView(invitationView);
     }
 
-    public void getComments(String goods_id, int pageSize,int page) {
-        post(WebUrlUtil.POST_COMMENT_LIST, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "goods_id", goods_id, "pageSize", pageSize,"page", page), WebUrlUtil.POST_COMMENT_LIST)));
+    public void getSharePoster() {
+        post(WebUrlUtil.POST_SHAREPOSTER, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHAREPOSTER)));
     }
 
     /**
@@ -41,18 +41,18 @@ public class GoodsCommentsAction extends BaseAction<GoodsCommentsView> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
             switch (action.getIdentifying()) {
-                case WebUrlUtil.POST_COMMENT_LIST:
-                    //todo 获取商品评价
+                case WebUrlUtil.POST_SHAREPOSTER:
+                    //todo 获取邀请分享接口
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        GoodsComment goodsComment = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GoodsComment>() {
+                        SharePoster sharePoster = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SharePoster>() {
                         }.getType());
-                        if (goodsComment.getStatus() == 1) {
-                            //todo 获取商品评价成功
-                            view.getGoodsCommentsSuccess(goodsComment);
+                        if (sharePoster.getStatus() == 1) {
+                            //todo 获取邀请分享接口成功
+                            view.getSharePosterSuccess(sharePoster);
                             return;
                         }
-                        view.onError(goodsComment.getMsg(), action.getErrorType());
+                        view.onError(sharePoster.getMsg(), action.getErrorType());
                         return;
                     }
                     view.onError(msg, action.getErrorType());

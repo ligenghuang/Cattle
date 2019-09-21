@@ -7,6 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
+    android:id="@+id/ll"
     tools:context=".ui.home.TemporaryActivity">
 
     <include layout="@layout/layout_title_black_bar" />
@@ -18,6 +19,7 @@
         android:background="@drawable/shape_bonus_day_rv_bg">
 
         <TextView
+            android:id="@+id/tvCertificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/icon_more"

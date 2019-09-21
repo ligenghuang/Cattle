@@ -91,7 +91,7 @@
 
     <string name="invitation_tab_1">您的邀请码为</string>
     <string name="invitation_tab_2">分享好友</string>
-    <string name="invitation_tab_3">保存接口</string>
+    <string name="invitation_tab_3">保存图片</string>
 
     <string name="address_tab_1">默认</string>
     <string name="address_tab_2">编辑</string>
@@ -119,6 +119,7 @@
     <string name="supplier_tab_3">提交</string>
     <string name="supplier_tab_4">请输入手机号码</string>
     <string name="supplier_tab_5">请输入姓名</string>
+    <string name="supplier_tab_6">请输入有效的手机号码</string>
 
     <string name="security_tab_1">会员名</string>
     <string name="security_tab_2">修改手机号码</string>
@@ -234,4 +235,8 @@
     <string name="recharge_tab_8">请输入充值金额</string>
     <string name="recharge_tab_9">充值金额不能小于0</string>
 
+    <string name="changeaccount_tab1">切换账户登录</string>
+    <string name="changeaccount_tab2">轻触账户以登录</string>
+    <string name="changeaccount_tab3">当前登录</string>
+    <string name="changeaccount_tab4">换个账户登录</string>
 </resources>

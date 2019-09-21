@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -53,6 +54,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     private boolean isRefresh = true;
     private boolean isMore = true;
     private int page = 1;
+    private final int pageSize = 20;
     private String goods_id;
     private String goods_comment_num;
 
@@ -127,8 +129,9 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     @Override
     public void getGoodsComments() {
         if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = true;
             page = 1;
-            baseAction.getComments(goods_id, page);
+            baseAction.getComments(goods_id, pageSize, page);
         } else {
             refreshLayout.finishRefresh();
         }
@@ -138,7 +141,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         if (CheckNetwork.checkNetwork2(mContext)) {
             isRefresh = false;
             page++;
-            baseAction.getComments(goods_id, page);
+            baseAction.getComments(goods_id, pageSize, page);
         } else {
             refreshLayout.finishLoadMore();
         }
@@ -147,12 +150,19 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     @Override
     public void getGoodsCommentsSuccess(GoodsComment goodsComment) {
         refreshLayout.finishRefresh();
-        List<GoodsComment.DataBean> beans = goodsComment.getData();
+        refreshLayout.finishLoadMore();
+        List<GoodsComment.DataBeanX.DataBean> beans = goodsComment.getData().getData();
         if (beans.size() > 0) {
             recyclerview.setVisibility(View.VISIBLE);
-            adapter.refresh(beans);
+            isMore = page < goodsComment.getData().getLast_page();
+            if (isRefresh) {
+                adapter.refresh(beans);
+            } else {
+                adapter.loadMore(beans);
+            }
         } else {
-
+            isMore = false;
+            loadSwapTab();
         }
     }
 
@@ -160,6 +170,20 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
         showNormalToast(message);
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    public void loadSwapTab() {
+        if (!isMore) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
+        }
     }
 
     @Override

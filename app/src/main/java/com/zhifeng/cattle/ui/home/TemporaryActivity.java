@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -32,6 +32,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class TemporaryActivity extends UserBaseActivity<TemporaryAction> implements TemporaryView {
+    @BindView(R.id.ll)
+    LinearLayout ll;
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -56,7 +58,6 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     TextView tvTotalGoodsPrice;
     @BindView(R.id.rvPayType)
     RecyclerView rvPayType;
-    RadioButton rbWangYinPay;
     @BindView(R.id.tvTotalNum)
     TextView tvTotalNum;
     @BindView(R.id.tvTotalPrice)
@@ -103,16 +104,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     protected void loadView() {
         super.loadView();
-        adapter.setOnGoodsDecreaseListener((totalNum, totalPrice) -> {
+        adapter.setOnGoodsNumChangeListener((totalNum, totalPrice) -> {
             tvTotalGoodsNum.setText(ResUtil.getFormatString(R.string.cart_tab_26, String.valueOf(totalNum)));
             tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
             tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(totalNum)));
-            tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
-        });
-        adapter.setOnGoodsIncreaseListener((totalNum, totalPrice) -> {
-            tvTotalGoodsNum.setText(ResUtil.getFormatString(R.string.cart_tab_26, String.valueOf(totalNum)));
-            tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
-            tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, totalNum));
             tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, totalPrice));
         });
     }
@@ -202,13 +197,19 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         }
     }
 
-    @OnClick({R.id.ivDingWei, R.id.btnPay})
+    @OnClick({R.id.ll, R.id.tvCertificate, R.id.ivDingWei, R.id.btnPay})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll:
+                ll.requestFocus();
+                break;
+            case R.id.tvCertificate:
+                jumpActivityNotFinish(mContext,CertificationActivity.class);
+                break;
             case R.id.ivDingWei:
-                Intent intent = new Intent(mContext, AddressListActivity.class);
-                intent.putExtra("isGoods", true);
-                startActivityForResult(intent, 200);
+                Intent i = new Intent(mContext, AddressListActivity.class);
+                i.putExtra("isGoods", true);
+                startActivityForResult(i, 200);
                 break;
             case R.id.btnPay:
                 buyNow();

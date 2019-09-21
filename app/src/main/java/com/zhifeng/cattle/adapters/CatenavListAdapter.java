@@ -41,13 +41,13 @@ public class CatenavListAdapter extends BaseRecyclerAdapter<Catenav2Bean> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onClick(model.getCat_id());
+                onClickListener.onClick(model.getCat_id(),model.getCat_name());
             }
         });
     }
 
     public interface OnClickListener{
-        void onClick(int id);
+        void onClick(int id,String name);
     }
 
 
