@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -44,9 +45,11 @@ import com.zhifeng.cattle.modules.DefaultCityDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
 import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.GoodsDetailView;
+import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.ui.my.AddressListActivity;
 import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
 import com.zhifeng.cattle.utils.sku.BaseSkuModel;
 import com.zhifeng.cattle.utils.sku.ItemClickListener;
@@ -293,6 +296,18 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     }
 
     /**
+     * token过期
+     */
+    @Override
+    public void onLoginNo() {
+        loadDiss();
+        Toast.makeText(mContext, "登录过期，请重新登录！", Toast.LENGTH_SHORT).show();
+        MainActivity.Position = 0;
+        MySp.clearAllSP(mContext);
+        jumpActivity(mContext, LoginActivity.class);
+    }
+
+    /**
      * 初始化规格
      *
      * @param dataBean
@@ -527,10 +542,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             mUiData.getBottomSheetDialog().dismiss();
         }
         loadDiss();
-        if (inventory < 1) {
-            showNormalToast(R.string.cart_tab_35);
-            return;
-        }
+//        if (inventory < 1) {
+//            showNormalToast(R.string.cart_tab_35);
+//            return;
+//        }
         startActivity(TemporaryActivity.class, "cartId", String.valueOf(cartId));
     }
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lxj.xpopup.XPopup;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
@@ -18,14 +19,17 @@ import com.zhifeng.cattle.actions.ClassifyAction;
 import com.zhifeng.cattle.adapters.CategoryAdapter;
 import com.zhifeng.cattle.adapters.CategoryListAdapter;
 import com.zhifeng.cattle.modules.CategoryListDto;
+import com.zhifeng.cattle.ui.home.SearchGoodsActivity;
 import com.zhifeng.cattle.ui.impl.ClassifyView;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
+import com.zhifeng.cattle.utils.popup.CustomPopup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @ClassName: 分类fragment
@@ -39,8 +43,6 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
     View view;
     @BindView(R.id.top_view)
     View topView;
-    @BindView(R.id.et_classify_search)
-    EditText etClassifySearch;
     @BindView(R.id.rv_left)
     RecyclerView rvLeft;
     @BindView(R.id.rv_right)
@@ -169,6 +171,15 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
+    }
+
+    @OnClick({R.id.et_classify_search})
+    public void OnClick(View view){
+        switch (view.getId()){
+            case R.id.et_classify_search:
+                jumpActivityNotFinish(mContext, SearchGoodsActivity.class);
+                break;
+        }
     }
 
 

@@ -1,13 +1,16 @@
 package com.zhifeng.cattle.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.HomeImportOrFoodBean;
+import com.zhifeng.cattle.ui.home.GoodsDetailActivity;
 
 /**
   *
@@ -36,5 +39,13 @@ public class HomeOtherGoodsAdapter extends BaseRecyclerAdapter<HomeImportOrFoodB
         textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         ImageView imageView = holder.itemView.findViewById(R.id.iv_item_goods_img);
         GlideUtil.setImage(context,model.getImg(),imageView,R.drawable.icon_goods);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                intent.putExtra("goods_id",model.getGoods_id());
+                context.startActivity(intent);
+            }
+        });
     }
 }

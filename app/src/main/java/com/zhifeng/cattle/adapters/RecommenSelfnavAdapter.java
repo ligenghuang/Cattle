@@ -1,11 +1,14 @@
 package com.zhifeng.cattle.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.RecommendHomeDto;
+import com.zhifeng.cattle.ui.home.GoodsDetailActivity;
 
 /**
   *
@@ -31,5 +34,13 @@ public class RecommenSelfnavAdapter extends BaseRecyclerAdapter<RecommendHomeDto
 
         ImageView img = holder.itemView.findViewById(R.id.iv_goods_img);
         GlideUtil.setRoundedImage(context,model.getImg(),img,R.drawable.icon_goods,4);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                intent.putExtra("goods_id",model.getGoods_id());
+                context.startActivity(intent);
+            }
+        });
     }
 }

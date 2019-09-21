@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.shoppingcart;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.zhifeng.cattle.actions.ShoppingCartAction;
 import com.zhifeng.cattle.adapters.CartListAdapter;
 import com.zhifeng.cattle.modules.CartListDto;
 import com.zhifeng.cattle.ui.MainActivity;
+import com.zhifeng.cattle.ui.home.TemporaryActivity;
 import com.zhifeng.cattle.ui.impl.ShoppingCartView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.json.GetJsonDataUtil;
@@ -161,6 +163,11 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
                 }
                 tvCartPrice.setText(ResUtil.getFormatString(R.string.cart_tab_5,total+""));
             }
+
+            @Override
+            public void editGoodsNum(int id, int num) {
+                editCart(id+"",num+"");
+            }
         });
     }
 
@@ -217,6 +224,42 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
         getCartList();
     }
 
+    @Override
+    public void addCart(String id) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.addCart(id);
+        }
+    }
+
+    @Override
+    public void addCartSuccess() {
+
+    }
+
+    @Override
+    public void subtractCart(String id) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.subtractCart(id);
+        }
+    }
+
+    @Override
+    public void subtractCartSuccess() {
+
+    }
+
+    @Override
+    public void editCart(String id, String num) {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.editCart(id,num);
+        }
+    }
+
+    @Override
+    public void editCartSuccess() {
+
+    }
+
     /**
      * 失败
      * @param message
@@ -234,6 +277,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getCartList();
     }
 
     @Override
@@ -260,6 +304,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
                 break;
             case R.id.tv_cart_settlement:
                 //todo 结算
+                settlement();
                 break;
             case R.id.tv_cart_f:
             case R.id.f_right_iv:
@@ -268,6 +313,34 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
                 finish();
                 break;
         }
+    }
+
+    /**
+     * 结算
+     */
+    private void settlement() {
+        List<CartListDto.DataBean> listDtos = cartListAdapter.getAllData();
+        String id = "";
+        int num = 0;
+        for (int i = 0; i <listDtos.size() ; i++) {
+            if (listDtos.get(i).getSelected() == 1){
+                num++;
+                if (i ==0){
+                    id = listDtos.get(i).getCart_id()+"";
+                }else {
+                    id = ","+listDtos.get(i).getCart_id();
+                }
+            }
+        }
+
+        if (num == 0){
+            showNormalToast(ResUtil.getString(R.string.cart_tab_38));
+            return;
+        }
+
+        Intent intent = new Intent(mContext, TemporaryActivity.class);
+        intent.putExtra("cartId",id);
+        startActivity(intent);
     }
 
     /**

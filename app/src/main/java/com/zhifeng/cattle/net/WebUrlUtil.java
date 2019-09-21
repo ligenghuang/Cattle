@@ -294,4 +294,19 @@ public class WebUrlUtil {
      */
     public static final String POST_SUBMITORDER = "order/submitOrder";
 
+    /**
+     * 购物车数量增加
+     */
+    public static final String POST_CHAGE_CART_NUM = "cart/change_num";
+
+    /**
+     * 购物车数量减少
+     */
+    public static final String POST_REDUCE_CART_NUM = "cart/reduce_num";
+
+    /**
+     * 购物车数量修改
+     */
+    public static final String POST_CART_NUM= "cart/car_num";
+
 }

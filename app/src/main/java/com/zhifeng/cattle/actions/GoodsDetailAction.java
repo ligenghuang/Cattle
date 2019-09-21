@@ -9,6 +9,7 @@ import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.BuyNowDto;
 import com.zhifeng.cattle.modules.DefaultCityDto;
+import com.zhifeng.cattle.modules.ErrorDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
@@ -106,15 +107,23 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                         //todo 获取商品详情
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            GoodsDetailDto goodsDetailDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GoodsDetailDto>() {
-                            }.getType());
-                            if (goodsDetailDto.getStatus() == 200) {
-                                //todo 获取商品详情
-                                view.getGoodsDetailSuccess(goodsDetailDto);
-                                return;
-                            }
-                            view.onError(goodsDetailDto.getMsg(), action.getErrorType());
-                            return;
+                          try{
+                              GoodsDetailDto goodsDetailDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GoodsDetailDto>() {
+                              }.getType());
+                              if (goodsDetailDto.getStatus() == 200) {
+                                  //todo 获取商品详情
+                                  view.getGoodsDetailSuccess(goodsDetailDto);
+                                  return;
+                              }
+                              view.onError(goodsDetailDto.getMsg(), action.getErrorType());
+                              return;
+                          }catch (JsonSyntaxException e){
+                              ErrorDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ErrorDto>() {
+                              }.getType());
+                              if (generalDto.getStatus() == 999){
+                                  view.onLoginNo();
+                              }
+                          }
                         }
                         view.onError(msg, action.getErrorType());
                         break;

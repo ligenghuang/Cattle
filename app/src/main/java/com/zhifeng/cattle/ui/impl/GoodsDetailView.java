@@ -40,4 +40,6 @@ public interface GoodsDetailView extends BaseView {
      */
     void getDefaultCity();
     void getDefaultCitySuccess(DefaultCityDto defaultCityDto);
+
+    void onLoginNo();
 }

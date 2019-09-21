@@ -187,7 +187,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
      */
     @Override
     public void onLoginNo() {
-        loadDialog();
+        loadDiss();
         Toast.makeText(mContext, "登录过期，请重新登录！", Toast.LENGTH_SHORT).show();
         MainActivity.Position = 0;
         MySp.clearAllSP(mContext);

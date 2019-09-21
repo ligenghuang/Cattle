@@ -14,9 +14,25 @@ import com.zhifeng.cattle.modules.CartListDto;
 
 public interface ShoppingCartView extends BaseView {
 
+    /**
+     * 获取购物车列表
+     */
     void getCartList();
     void getCartListSuccess(CartListDto cartListDto);
 
+    /***
+     * 删除购物车商品
+     * @param id
+     */
     void delCart(String id);
     void delCartSuccess();
+
+    void addCart(String id);
+    void addCartSuccess();
+
+    void subtractCart(String id);
+    void subtractCartSuccess();
+
+    void editCart(String id,String num);
+    void editCartSuccess();
 }

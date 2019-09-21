@@ -16,6 +16,7 @@ import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.CartListDto;
+import com.zhifeng.cattle.utils.Util;
 
 /**
   *
@@ -88,6 +89,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                     L.e("lgh_cart","onTextChanged = "+model.getGoods_num());
                     onClickListener.goodsNumListener();
                 }
+                onClickListener.editGoodsNum(model.getCart_id(),model.getGoods_num());
             }
 
             @Override
@@ -105,16 +107,20 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
         subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (model.getGoods_num() == 1){
-                    model.setGoods_num(1);
-                    editText.setText(model.getGoods_num());
-                    Toast.makeText(context, ResUtil.getString(R.string.cart_tab_7), Toast.LENGTH_SHORT).show();
-                }else {
-                    int num = model.getGoods_num()-1;
-                    model.setGoods_num(num);
-                    editText.setText(num+"");
-                }
-                L.e("lgh_cart","subtract = "+model.getGoods_num());
+               if (Util.isFastDoubleClick()){
+                   if (model.getGoods_num() == 1){
+                       model.setGoods_num(1);
+                       editText.setText(model.getGoods_num());
+                       Toast.makeText(context, ResUtil.getString(R.string.cart_tab_7), Toast.LENGTH_SHORT).show();
+                   }else {
+                       int num = model.getGoods_num()-1;
+                       model.setGoods_num(num);
+                       editText.setText(num+"");
+                   }
+                   L.e("lgh_cart","subtract = "+model.getGoods_num());
+               }else {
+                   Toast.makeText(context, ResUtil.getString(R.string.cart_tab_37), Toast.LENGTH_SHORT).show();
+               }
             }
         });
 
@@ -124,6 +130,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Util.isFastDoubleClick()){
                 if (model.getGoods_num() >= inventory){
                     Toast.makeText(context, ResUtil.getString(R.string.cart_tab_8), Toast.LENGTH_SHORT).show();
                 }else {
@@ -132,6 +139,9 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                     editText.setText(model.getGoods_num()+"");
                 }
                 L.e("lgh_cart","add = "+model.getGoods_num());
+                }else {
+                    Toast.makeText(context, ResUtil.getString(R.string.cart_tab_37), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         /***********************************商品数量 end*****************************************/
@@ -151,5 +161,6 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
     public interface OnClickListener{
         void selectedListener(int id);
         void goodsNumListener();
+        void editGoodsNum(int id,int num);
     }
 }
