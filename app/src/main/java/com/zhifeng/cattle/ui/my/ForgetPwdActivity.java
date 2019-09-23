@@ -152,7 +152,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
     @Override
     public void forgetPwdSuccess(GeneralDto generalDto) {
         loadDiss();
-        showNormalToast(generalDto.getData());
+        showNormalToast(generalDto.getMsg());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -180,7 +180,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
     @Override
     public void setPayPwdSuccess(GeneralDto generalDto) {
         loadDiss();
-        showNormalToast(generalDto.getData());
+        showNormalToast(generalDto.getMsg());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

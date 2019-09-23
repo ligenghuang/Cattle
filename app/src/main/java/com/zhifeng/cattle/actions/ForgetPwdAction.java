@@ -112,12 +112,12 @@ public class ForgetPwdAction extends BaseAction<ForgetPwdView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 200){
+                            if (generalDto.getStatus() == 1){
                                 //todo 重置支付密码成功
                                 view.forgetPwdSuccess(generalDto);
                                 return;
                             }
-                            view.onError(generalDto.getData(),action.getErrorType());
+                            view.onError(generalDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());
@@ -128,12 +128,12 @@ public class ForgetPwdAction extends BaseAction<ForgetPwdView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 200){
+                            if (generalDto.getStatus() == 1){
                                 //todo 设置支付密码成功
                                 view.setPayPwdSuccess(generalDto);
                                 return;
                             }
-                            view.onError(generalDto.getData(),action.getErrorType());
+                            view.onError(generalDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

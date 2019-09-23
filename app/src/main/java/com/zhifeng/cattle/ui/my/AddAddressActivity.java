@@ -174,6 +174,7 @@ public class AddAddressActivity extends UserBaseActivity<AddAddressAction> imple
         etConsignee.setText(dataBean.getConsignee());//收货人
         etMobile.setText(dataBean.getMobile());//联系电话
         //收货地址
+        Isdistrict = true;
         district = dataBean.getDistrictcode();
         tvDistrict.setText(dataBean.getProvincename()+dataBean.getCityname()+dataBean.getDistrictname());
         etAddress.setText(dataBean.getAddress());//收货地址
