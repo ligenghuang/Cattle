@@ -149,7 +149,6 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
             SearchHistory.DataBean dataBean = (SearchHistory.DataBean) hotSearchAdapter.getItem(position);
             etSearch.setText(dataBean.getKeyword());
             etSearch.setSelection(dataBean.getKeyword().length());
-            getGoods();
         });
         adapter.setOnItemClickListener((parent, view, position, id) -> {
             SearchGoods.DataBean dataBean = (SearchGoods.DataBean) adapter.getItem(position);
