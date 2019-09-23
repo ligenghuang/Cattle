@@ -159,27 +159,27 @@ public class WebUrlUtil {
     /**
      * 明细记录
      */
-    public static final String POST_DetailRecord_LIST = "/api/Team/detail_record";
+    public static final String POST_DetailRecord_LIST = "Team/detail_record";
 
     /**
      * 团队列表
      */
-    public static final String POST_Team_LIST = "/api/user/team_list";
+    public static final String POST_Team_LIST = "user/team_list";
 
     /**
      * 团队列表查看
      */
-    public static final String POST_TeamOrder_LIST = "/api/Team/team_order";
+    public static final String POST_TeamOrder_LIST = "Team/team_order";
 
     /**
      * 充值明细
      */
-    public static final String POST_RechargeDetail_LIST = "/api/user/recharge";
+    public static final String POST_RechargeDetail_LIST = "user/recharge";
 
     /**
      * 排行榜
      */
-    public static final String POST_Ranking_LIST = "/api/user/ranking_list";
+    public static final String POST_Ranking_LIST = "user/ranking_list";
     /**
      * 提现
      */
@@ -203,12 +203,12 @@ public class WebUrlUtil {
     /**
      * 商品评价列表
      */
-    public static final String POST_COMMENT_LIST = "/api/goods/comment_list";
+    public static final String POST_COMMENT_LIST = "goods/comment_list";
 
     /**
      * 商品评价
      */
-    public static final String POST_ORDER_COMMENT = "/api/order/order_comment";
+    public static final String POST_ORDER_COMMENT = "order/order_comment";
 
     /**
      * 申请退款
@@ -224,7 +224,7 @@ public class WebUrlUtil {
     /**
      * 购物车提交订单接口
      */
-    public static final String POST_TEMPORARY = "/api/order/temporary";
+    public static final String POST_TEMPORARY = "order/temporary";
 
     /**
      * 充值
@@ -259,12 +259,12 @@ public class WebUrlUtil {
     /**
      * 分享邀请
      */
-    public static final String POST_SHAREPOSTER = "api/user/sharePoster";
+    public static final String POST_SHAREPOSTER = "user/sharePoster";
 
     /**
      * 申请供应商
      */
-    public static final String POST_SUPPLIER = "/api/Team/supplier";
+    public static final String POST_SUPPLIER = "Team/supplier";
     /**
      * 首页兴农扶贫
      */
@@ -283,12 +283,12 @@ public class WebUrlUtil {
     /**
      * 首页列表页
      */
-    public static final String POST_LIST_PAGE = "/api/index/list_page";
+    public static final String POST_LIST_PAGE = "index/list_page";
 
     /**
      * 首页搜索
      */
-    public static final String POST_SEARCH_GOODS = "/api/goods/search_goods";
+    public static final String POST_SEARCH_GOODS = "goods/search_goods";
     /**
      * 提交订单
      */
@@ -308,5 +308,10 @@ public class WebUrlUtil {
      * 购物车数量修改
      */
     public static final String POST_CART_NUM= "cart/car_num";
+
+    /**
+     * 首页搜索历史
+     */
+    public static final String POST_SEARCH_HISTORY= "search/search_history";
 
 }

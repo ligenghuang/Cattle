@@ -120,6 +120,7 @@
     <string name="supplier_tab_4">请输入手机号码</string>
     <string name="supplier_tab_5">请输入姓名</string>
     <string name="supplier_tab_6">请输入有效的手机号码</string>
+    <string name="supplier_tab_7">提交成功</string>
 
     <string name="security_tab_1">会员名</string>
     <string name="security_tab_2">修改手机号码</string>

@@ -7,6 +7,7 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.SearchGoods;
+import com.zhifeng.cattle.modules.SearchHistory;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.SearchGoodsView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -21,6 +22,10 @@ public class SearchGoodsAction extends BaseAction<SearchGoodsView> {
     public SearchGoodsAction(RxAppCompatActivity _rxAppCompatActivity, SearchGoodsView searchGoodsView) {
         super(_rxAppCompatActivity);
         attachView(searchGoodsView);
+    }
+
+    public void getSearchHistory() {
+        post(WebUrlUtil.POST_SEARCH_HISTORY, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SEARCH_HISTORY)));
     }
 
     public void getGoods(String keyword, int page, int num) {
@@ -41,6 +46,22 @@ public class SearchGoodsAction extends BaseAction<SearchGoodsView> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
             switch (action.getIdentifying()) {
+                case WebUrlUtil.POST_SEARCH_HISTORY:
+                    //todo 获取搜索历史
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                        SearchHistory searchHistory = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SearchHistory>() {
+                        }.getType());
+                        if (searchHistory.getStatus() == 1) {
+                            //todo 获取搜索历史
+                            view.getSearchHistorySuccess(searchHistory);
+                            return;
+                        }
+                        view.onError(searchHistory.getMsg(), action.getErrorType());
+                        return;
+                    }
+                    view.onError(msg, action.getErrorType());
+                    break;
                 case WebUrlUtil.POST_SEARCH_GOODS:
                     //todo 获取搜索商品
                     if (aBoolean) {

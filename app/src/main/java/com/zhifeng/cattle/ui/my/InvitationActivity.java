@@ -57,7 +57,7 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
 
     @Override
     protected InvitationAction initAction() {
-        return new InvitationAction(this,this);
+        return new InvitationAction(this, this);
     }
 
     /**
@@ -91,13 +91,25 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
 
     @Override
     public void getSharePosterSuccess(SharePoster sharePoster) {
-        GlideUtil.setImage(mContext,sharePoster.getData().getAvatar(),ivQcCode,R.drawable.erweima);
-        tvInvitationCode.setText(sharePoster.getData().getInvitation_code());
+        GlideUtil.setImage(mContext, sharePoster.getData().getAvatar(), ivQcCode, R.drawable.erweima);
+        tvInvitationCode.setText(String.valueOf(sharePoster.getData().getInvitation_code()));
     }
 
     @Override
     public void onError(String message, int code) {
+        showNormalToast(message);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
     }
 
     @OnClick({R.id.tv_share, R.id.tv_save})

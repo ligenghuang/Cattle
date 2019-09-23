@@ -103,7 +103,7 @@ public class SupplierActivity extends UserBaseActivity<SupplierAction> implement
 
     @Override
     public void postSupplierSuccess(Supplier supplier) {
-        showNormalToast(supplier.getMsg());
+        showNormalToast(R.string.supplier_tab_7);
         finish();
     }
 

@@ -47,7 +47,7 @@ public class InvitationAction extends BaseAction<InvitationView> {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
                         SharePoster sharePoster = new Gson().fromJson(action.getUserData().toString(), new TypeToken<SharePoster>() {
                         }.getType());
-                        if (sharePoster.getStatus() == 1) {
+                        if (sharePoster.getStatus() == 200) {
                             //todo 获取邀请分享接口成功
                             view.getSharePosterSuccess(sharePoster);
                             return;

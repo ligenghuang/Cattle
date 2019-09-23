@@ -1,9 +1,14 @@
 package com.zhifeng.cattle.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.DensityUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.SearchGoodsAction;
+import com.zhifeng.cattle.adapters.HotSearchAdapter;
 import com.zhifeng.cattle.adapters.SearchGoodsAdapter;
 import com.zhifeng.cattle.modules.SearchGoods;
+import com.zhifeng.cattle.modules.SearchHistory;
 import com.zhifeng.cattle.ui.impl.SearchGoodsView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.view.SpaceItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -35,13 +44,18 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
     View topView;
     @BindView(R.id.etSearch)
     EditText etSearch;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    @BindView(R.id.llHotSearch)
+    LinearLayout llHotSearch;
+    @BindView(R.id.rv_hotSearch)
+    RecyclerView rv_hotSearch;
+    @BindView(R.id.rv_goods)
+    RecyclerView rv_goods;
     //    @BindView(R.id.refreshLayout)
 //    SmartRefreshLayout refreshLayout;
     private int page = 1;
     private int num = 10;
     private boolean isRefresh = true;
+    private HotSearchAdapter hotSearchAdapter;
     private SearchGoodsAdapter adapter;
     private boolean isMore = true;
 
@@ -50,6 +64,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+        getSearchHistory();
     }
 
     @Override
@@ -67,12 +82,27 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
         super.init();
         mContext = this;
         mActicity = this;
-        adapter = new SearchGoodsAdapter();
-        recyclerview.setLayoutManager(new GridLayoutManager(this, 5));
-        recyclerview.setAdapter(adapter);
+        hotSearchAdapter = new HotSearchAdapter();
+        rv_hotSearch.addItemDecoration(new SpaceItemDecoration(DensityUtil.dp2px(5)));
+        rv_hotSearch.setLayoutManager(new GridLayoutManager(mContext, 5));
+        rv_hotSearch.setAdapter(hotSearchAdapter);
+        adapter = new SearchGoodsAdapter(mContext);
+        rv_goods.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rv_goods.setAdapter(adapter);
         etSearch.requestFocus();
 //        refreshLayout.autoRefresh();
-//        loadView();
+        loadView();
+    }
+
+    @Override
+    protected void initTitlebar() {
+        mImmersionBar
+                .statusBarView(R.id.top_view)
+                .keyboardEnable(true)
+                .statusBarDarkFont(true, 0.2f)
+                .addTag("SearchGoodsActivity")  //给上面参数打标记，以后可以通过标记恢复
+                .navigationBarWithKitkatEnable(false)
+                .init();
     }
 
     @Override
@@ -89,6 +119,55 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
 //                loadMoreListPage();
 //            }
 //        });
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (adapter.getAllData().size() == 0) {
+                    llHotSearch.setVisibility(TextUtils.isEmpty(s.toString()) ? View.VISIBLE : View.GONE);
+                } else {
+                    llHotSearch.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                getGoods();
+            }
+            return false;
+        });
+        hotSearchAdapter.setOnItemClickListener((parent, view, position, id) -> {
+            SearchHistory.DataBean dataBean = (SearchHistory.DataBean) hotSearchAdapter.getItem(position);
+            etSearch.setText(dataBean.getKeyword());
+            etSearch.setSelection(dataBean.getKeyword().length());
+            getGoods();
+        });
+        adapter.setOnItemClickListener((parent, view, position, id) -> {
+            SearchGoods.DataBean dataBean = (SearchGoods.DataBean) adapter.getItem(position);
+            Intent i = new Intent(mContext, GoodsDetailActivity.class);
+            i.putExtra("goods_id", dataBean.getGoods_id());
+            startActivity(i);
+        });
+    }
+
+    @Override
+    public void getSearchHistory() {
+        baseAction.getSearchHistory();
+    }
+
+    @Override
+    public void getSearchHistorySuccess(SearchHistory searchHistory) {
+        List<SearchHistory.DataBean> dataBeans = searchHistory.getData();
+        hotSearchAdapter.refresh(dataBeans);
     }
 
     @Override
@@ -119,12 +198,12 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
     public void getGoodsSuccess(SearchGoods searchGoods) {
 //        refreshLayout.finishRefresh();
 //        refreshLayout.finishLoadMore();
+        llHotSearch.setVisibility(View.GONE);
         List<SearchGoods.DataBean> beans = searchGoods.getData();
         if (beans.size() > 0) {
-            recyclerview.setVisibility(View.VISIBLE);
 //            isMore = page < searchGoods.getData();
 //            if (isRefresh) {
-                adapter.refresh(beans);
+            adapter.refresh(beans);
 //            } else {
 //                adapter.loadMore(beans);
 //            }
@@ -136,6 +215,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
 
     @Override
     public void onError(String message, int code) {
+        llHotSearch.setVisibility(View.GONE);
 //        refreshLayout.finishRefresh();
 //        refreshLayout.finishLoadMore();
         showNormalToast(message);
