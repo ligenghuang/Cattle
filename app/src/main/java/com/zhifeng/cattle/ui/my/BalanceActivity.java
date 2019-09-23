@@ -193,6 +193,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
                 break;
             case R.id.cv_balance_bill_detail:
                 //todo 账单明细
+                jumpActivityNotFinish(mContext,CheckDetailActivity.class);
                 break;
         }
     }

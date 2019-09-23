@@ -319,4 +319,8 @@ public class WebUrlUtil {
      */
     public static final String POST_PAY_ORDER = "pay/payment";
 
+    /**
+     * 我的-提现余额-账单明细
+     */
+    public static final String POST_CHECK_DETAIL = "user/remainder_list";
 }
