@@ -109,7 +109,7 @@ public class ModifyPayPwdActivity extends UserBaseActivity<ModifyPayPwdAction> i
     @Override
     public void modifyPayPwdSuccess(BaseDto baseDto) {
         loadDiss();
-        showNormalToast(baseDto.getData().toString());
+        showNormalToast(baseDto.getMsg());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -128,6 +128,18 @@ public class ModifyPayPwdActivity extends UserBaseActivity<ModifyPayPwdAction> i
     public void onError(String message, int code) {
         loadDiss();
         showNormalToast(message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
     }
 
     @OnClick(R.id.tv_save)

@@ -136,6 +136,7 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             public void Is_default(AddressListDto.DataBean model) {
               if (isGoods){
                   jumpActivity(model);
+                  setDefaultAddress(model.getAddress_id());
               }else {
                   //设置为默认地址
                   setDefaultAddress(model.getAddress_id());

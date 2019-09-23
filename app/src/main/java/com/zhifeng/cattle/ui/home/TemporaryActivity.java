@@ -305,10 +305,11 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         if (requestCode == 200 && resultCode == 200) {
             if (data != null) {
                 String address = data.getStringExtra("address2");
+                String address_info = data.getStringExtra("address");
                 String phone = data.getStringExtra("phone");
                 String consignee = data.getStringExtra("consignee");
                 addressId = data.getIntExtra("address_id",-1);
-                tvAddress.setText(address);
+                tvAddress.setText(address_info+" "+address);
                 tvUser.setText(consignee);
                 tvMoblie.setText(phone);
                 llAddress.setVisibility(View.VISIBLE);

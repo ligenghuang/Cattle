@@ -74,7 +74,7 @@ public class ModifyPayPwdAction extends BaseAction<ModifyPayPwdView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             BaseDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BaseDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 200){
+                            if (generalDto.getStatus() == 1){
                                 //todo 修改支付密码成功
                                 view.modifyPayPwdSuccess(generalDto);
                                 return;
