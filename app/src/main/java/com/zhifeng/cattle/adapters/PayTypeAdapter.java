@@ -26,9 +26,9 @@ public class PayTypeAdapter extends BaseRecyclerAdapter<Temporary.DataBean.PayTy
         ImageView iv = holder.itemView.findViewById(R.id.ivPayType);
         int pay_type = model.getPay_type();
         if (pay_type == 1) {
-            iv.setImageResource(model.isSelect() ? R.drawable.yueweizhifu : R.drawable.yueweizhifu);
+            iv.setImageResource(model.isSelect() ? R.drawable.yueweizhifu_y : R.drawable.yueweizhifu);
         } else if (pay_type == 3) {
-            iv.setImageResource(model.isSelect() ? R.drawable.zhifubaoweizhifu : R.drawable.zhifubaoweizhifu);
+            iv.setImageResource(model.isSelect() ? R.drawable.zhifubaoweizhifu_y : R.drawable.zhifubaoweizhifu);
         } else {
             iv.setImageResource(model.isSelect() ? R.drawable.weixinzhifu : R.drawable.weixinweizhifu);
         }

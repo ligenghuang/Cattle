@@ -68,6 +68,10 @@
     <string name="order_tab_29">取消订单成功</string>
     <string name="order_tab_30">确认收货成功</string>
     <string name="order_tab_31">删除订单成功</string>
+    <string name="order_tab_32">已取消</string>
+    <string name="order_tab_33">退款中</string>
+    <string name="order_tab_34">已退款</string>
+    <string name="order_tab_35">退款失败</string>
 
 
     <string name="sales_return_tab_1">正在退货</string>
@@ -195,6 +199,7 @@
     <string name="rankinglist_tab_3">用户</string>
     <string name="rankinglist_tab_4">消费金额</string>
     <string name="rankinglist_tab_5">距离上一名</string>
+    <string name="rankinglist_tab_6">第%0$s名</string>
     <string name="rankinglist_myranking">我的排名：第%0$d名未上榜</string>
     <string name="rankinglist_different_last">%0$s元</string>
 

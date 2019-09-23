@@ -314,4 +314,9 @@ public class WebUrlUtil {
      */
     public static final String POST_SEARCH_HISTORY= "search/search_history";
 
+    /**
+     * 订单支付
+     */
+    public static final String POST_PAY_ORDER = "pay/payment";
+
 }

@@ -10,6 +10,8 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.OrderListDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.OrderView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -91,6 +93,17 @@ public class OrderAction extends BaseAction<OrderView> {
         ));
     }
 
+    /**
+     * 支付
+     * @param submitOrderPost
+     */
+    public void submitOrder(SubmitOrderPost submitOrderPost){
+        post(WebUrlUtil.POST_PAY_ORDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
+                        "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
+                        ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
+        ));
+    }
 
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
@@ -137,7 +150,7 @@ public class OrderAction extends BaseAction<OrderView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 200) {
+                            if (generalDto.getStatus() == 1) {
                                 //todo 修改订单状态成功
                                 String text = "";
                                 switch (status) {
@@ -155,6 +168,22 @@ public class OrderAction extends BaseAction<OrderView> {
                                 return;
                             }
                             view.onError(generalDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_PAY_ORDER:
+                        //todo 订单支付
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
+                            }.getType());
+                            if (payOrderDto.getStatus() == 200) {
+                                //todo 订单支付成功
+                                view.submitOrderSuccess(payOrderDto);
+                                return;
+                            }
+                            view.onError(payOrderDto.getMsg(), action.getErrorType());
                             return;
                         }
                         view.onError(msg, action.getErrorType());

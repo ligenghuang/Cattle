@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -164,7 +165,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvOrderAddress.setText(dataBean.getAddress());//收货地址
         tvOrderConsignee.setText(dataBean.getConsignee());//收货人
         tvOrderPayType.setText(dataBean.getPay_type().getPay_name());//支付方式
-        tvOrderMessage.setText(dataBean.getUser_note());//买家留言
+        tvOrderMessage.setText(TextUtils.isEmpty(dataBean.getUser_note())?"无":dataBean.getUser_note());//买家留言
         tvOrderGoodsPrice.setText("￥"+dataBean.getTotal_amount());
         tvOrderTotalPrice.setText("￥"+dataBean.getTotal_amount());
         tvOrderFreight.setText("￥"+dataBean.getShipping_price());

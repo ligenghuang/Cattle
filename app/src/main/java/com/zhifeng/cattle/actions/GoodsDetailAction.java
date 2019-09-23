@@ -147,15 +147,21 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                         //todo 立即购买
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            BuyNowDto buyNowDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BuyNowDto>() {
-                            }.getType());
-                            if (buyNowDto.getStatus() == 1) {
-                                //todo 立即购买成功
-                                view.buyNowSuccess(buyNowDto.getData());
+                            try{
+                                BuyNowDto buyNowDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BuyNowDto>() {
+                                }.getType());
+                                if (buyNowDto.getStatus() == 1) {
+                                    //todo 立即购买成功
+                                    view.buyNowSuccess(buyNowDto.getData());
+                                    return;
+                                }
+                                view.onError(buyNowDto.getMsg(), action.getErrorType());
                                 return;
+                            }catch (JsonSyntaxException e){
+                                GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                                }.getType());
+                                view.onError(generalDto.getMsg(), action.getErrorType());
                             }
-                            view.onError(buyNowDto.getMsg(), action.getErrorType());
-                            return;
                         }
                         view.onError(msg, action.getErrorType());
                         break;

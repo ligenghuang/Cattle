@@ -67,7 +67,7 @@ public class RankingListActivity extends UserBaseActivity<RankingListAction> imp
         super.init();
         mContext = this;
         adapter = new RankingListAdapter();
-        recyclerview.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
+
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);
         refreshLayout.setEnableLoadMore(false);

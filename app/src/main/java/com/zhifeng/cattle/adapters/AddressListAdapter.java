@@ -55,7 +55,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
             @Override
             public void onClick(View v) {
                 if (model.getIs_default() != 1){
-                    onClickListener.Is_default(model.getAddress_id());
+                    onClickListener.Is_default(model);
                 }
             }
         });
@@ -78,7 +78,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListDto.DataB
     public interface OnClickListener{
         void edit(int id);
         void Detele(int id);
-        void Is_default(int id);
+        void Is_default(AddressListDto.DataBean model);
         void itemView(AddressListDto.DataBean model);
     }
 }

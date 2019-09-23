@@ -54,25 +54,6 @@ public class ShoppingCartAction extends BaseAction<ShoppingCartView> {
 
     }
 
-    /**
-     * 购物车商品数量增加
-     * @param id
-     */
-    public void addCart(String id){
-        post(WebUrlUtil.POST_CHAGE_CART_NUM,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"cart_id",id), WebUrlUtil.POST_CHAGE_CART_NUM)));
-
-    }
-
-    /**
-     * 购物车商品数量减少
-     * @param id
-     */
-    public void subtractCart(String id){
-        post(WebUrlUtil.POST_REDUCE_CART_NUM,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"cart_id",id), WebUrlUtil.POST_REDUCE_CART_NUM)));
-
-    }
 
     /***
      * 购物车商品数量修改
@@ -141,38 +122,6 @@ public class ShoppingCartAction extends BaseAction<ShoppingCartView> {
                         }
                         view.onError(msg,action.getErrorType());
                         break;
-                    case WebUrlUtil.POST_CHAGE_CART_NUM:
-                        //todo 获取购物车 增加
-                        if (aBoolean) {
-                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
-                            }.getType());
-                            if (generalDto.getStatus() == 1){
-                                //todo 获取购物车 增加 成功
-                                view.addCartSuccess();
-                                return;
-                            }
-                            view.onError(generalDto.getMsg(),action.getErrorType());
-                            return;
-                        }
-                        view.onError(msg,action.getErrorType());
-                        break;
-                    case WebUrlUtil.POST_REDUCE_CART_NUM:
-                        //todo 获取购物车 减少
-                        if (aBoolean) {
-                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
-                            }.getType());
-                            if (generalDto.getStatus() == 1){
-                                //todo 获取购物车 减少 成功
-                                view.subtractCartSuccess();
-                                return;
-                            }
-                            view.onError(generalDto.getMsg(),action.getErrorType());
-                            return;
-                        }
-                        view.onError(msg,action.getErrorType());
-                        break;
                     case WebUrlUtil.POST_CART_NUM:
                         //todo 获取购物车 数量修改
                         if (aBoolean) {
@@ -184,7 +133,7 @@ public class ShoppingCartAction extends BaseAction<ShoppingCartView> {
                                 view.editCartSuccess();
                                 return;
                             }
-                            view.onError(generalDto.getMsg(),action.getErrorType());
+                            view.editCartError(generalDto.getMsg());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

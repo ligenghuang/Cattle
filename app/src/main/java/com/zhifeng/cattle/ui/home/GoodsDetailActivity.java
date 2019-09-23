@@ -492,6 +492,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     L.d("lgh_sku","tvGoodsSpec  = "+msg.obj.toString());
                     tvGoodsSpec.setText(ResUtil.getFormatString(R.string.goods_detail_tab_26,msg.obj.toString()));
                     break;
+//                case 6:
+//                    //todo 库存不足
+//                    showNormalToast(ResUtil.getString(R.string.goods_detail_tab_27));
+//                    break;
             }
         }};
 

@@ -2,6 +2,9 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.OrderListDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.SubmitOrderDto;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 
 /**
   *
@@ -28,5 +31,11 @@ public interface OrderView extends BaseView {
      */
     void editOrderStatus(int id,int status);
     void editOrderStatusSuccess(String msg,int status);
+
+    /**
+     * 提交订单
+     */
+    void submitOrder(SubmitOrderPost submitOrderPost);
+    void submitOrderSuccess(PayOrderDto submitOrderDto);
 
 }

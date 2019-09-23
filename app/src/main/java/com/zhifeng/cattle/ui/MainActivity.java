@@ -20,6 +20,7 @@ import com.zhifeng.cattle.ui.classify.ClassifyFragment;
 import com.zhifeng.cattle.ui.home.HomeFragment;
 import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.ui.my.MyFragment;
+import com.zhifeng.cattle.ui.shoppingcart.CartFragment;
 import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
@@ -41,6 +42,7 @@ public class MainActivity extends UserBaseActivity {
 
     HomeFragment homeFragment;
     ClassifyFragment classifyFragment;
+    CartFragment cartFragment;
     MyFragment myFragment;
 
     @BindView(R.id.top_view)
@@ -133,6 +135,13 @@ public class MainActivity extends UserBaseActivity {
                     }
                     fragments.add(classifyFragment);
                     break;
+                case POIONTTHREE:
+                    cartFragment = new CartFragment();
+                    if (Position != POIONTTHREE) {
+                        cartFragment.setUserVisibleHint(false);//
+                    }
+                    fragments.add(cartFragment);
+                    break;
                 case POIONTFOUR://
                     myFragment = new MyFragment();
                     if (Position != POIONTFOUR) {
@@ -187,11 +196,12 @@ public class MainActivity extends UserBaseActivity {
                 Position = POIONTTWO;
                 break;
             case R.id.lin_3:
+                //todo 判断是否已经登录
                 if (!MySp.iSLoginLive(mContext)){
                     jumpActivityNotFinish(mContext, LoginActivity.class);
                     return false;
                 }
-                jumpActivityNotFinish(mContext, ShoppingCartActivity.class);
+                Position = POIONTTHREE;
                 break;
             case R.id.lin_4:
                 if (!MySp.iSLoginLive(mContext)){
@@ -221,9 +231,10 @@ public class MainActivity extends UserBaseActivity {
      *
      * @param position
      */
-    private void setSelectedLin(int position) {
+    public void setSelectedLin(int position) {
         lin1.setSelected(false);
         lin2.setSelected(false);
+        lin3.setSelected(false);
         lin4.setSelected(false);
         //设置状态栏黑色字体与图标
 //        QMUIStatusBarHelper.setStatusBarLightMode(this);
@@ -234,6 +245,9 @@ public class MainActivity extends UserBaseActivity {
                 break;
             case 1:
                 lin2.setSelected(true);
+                break;
+            case 2:
+                lin3.setSelected(true);
                 break;
             case 3:
                 lin4.setSelected(true);

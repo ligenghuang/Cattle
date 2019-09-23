@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -231,7 +232,10 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         //todo 保存登录或注册返回的数据
         L.e("lgh_user", "token  = " + loginDto.getData().getToken());
         MySp.setAccessToken(mContext, loginDto.getData().getToken());
-        jumpActivity(mContext, MainActivity.class);
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.putExtra("isLogin", true);
+        startActivity(intent);
+//        jumpActivity(mContext,MainActivity.class);
         ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
     }
 

@@ -133,25 +133,35 @@ public class AddressListActivity extends UserBaseActivity<AddressListAction> imp
             }
 
             @Override
-            public void Is_default(int id) {
-                //设置为默认地址
-                setDefaultAddress(id);
+            public void Is_default(AddressListDto.DataBean model) {
+              if (isGoods){
+                  jumpActivity(model);
+              }else {
+                  //设置为默认地址
+                  setDefaultAddress(model.getAddress_id());
+              }
             }
 
             @Override
             public void itemView(AddressListDto.DataBean model) {
-                Intent intent = new Intent();
-                intent.putExtra("address",model.getP_cn()+model.getC_cn()+model.getD_cn());
-                intent.putExtra("phone",model.getMobile());
-                intent.putExtra("address_id",model.getAddress_id());
-                intent.putExtra("consignee",model.getConsignee());
-                intent.putExtra("address2",model.getAddress());
-                setResult(200,intent);
-                finish();
+               jumpActivity(model);
             }
         });
     }
 
+    /**
+     * 跳转页面
+     */
+    private void jumpActivity(AddressListDto.DataBean model){
+        Intent intent = new Intent();
+        intent.putExtra("address",model.getP_cn()+model.getC_cn()+model.getD_cn());
+        intent.putExtra("phone",model.getMobile());
+        intent.putExtra("address_id",model.getAddress_id());
+        intent.putExtra("consignee",model.getConsignee());
+        intent.putExtra("address2",model.getAddress());
+        setResult(200,intent);
+        finish();
+    }
     /**
      * 获取地址列表
      */

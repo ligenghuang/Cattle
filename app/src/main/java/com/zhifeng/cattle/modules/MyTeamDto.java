@@ -59,7 +59,7 @@ public class MyTeamDto {
         private int id;
         private String realname;
         private int first_leader;
-        private String first_leader_name;
+        private String first_leadername;
         private String performance;
         private double reward;
         private int team_number;
@@ -89,11 +89,11 @@ public class MyTeamDto {
         }
 
         public String getFirst_leader_name() {
-            return first_leader_name == null ? "" : first_leader_name;
+            return first_leadername == null ? "" : first_leadername;
         }
 
         public void setFirst_leader_name(String first_leader_name) {
-            this.first_leader_name = first_leader_name == null ? "" : first_leader_name;
+            this.first_leadername = first_leader_name == null ? "" : first_leader_name;
         }
 
         public String getPerformance() {

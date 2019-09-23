@@ -53,4 +53,14 @@ public class CertificationPost {
     public void setIdcard(String idcard) {
         this.idcard = idcard == null ? "" : idcard;
     }
+
+    @Override
+    public String toString() {
+        return "CertificationPost{" +
+                "pic_front='" + pic_front + '\'' +
+                ", pic_back='" + pic_back + '\'' +
+                ", name='" + name + '\'' +
+                ", idcard='" + idcard + '\'' +
+                '}';
+    }
 }

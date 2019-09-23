@@ -27,12 +27,7 @@ public interface ShoppingCartView extends BaseView {
     void delCart(String id);
     void delCartSuccess();
 
-    void addCart(String id);
-    void addCartSuccess();
-
-    void subtractCart(String id);
-    void subtractCartSuccess();
-
     void editCart(String id,String num);
     void editCartSuccess();
+    void editCartError(String msg);
 }

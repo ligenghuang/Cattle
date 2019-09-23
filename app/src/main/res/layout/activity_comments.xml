@@ -38,6 +38,7 @@
             android:drawablePadding="5dp"
             android:gravity="end"
             android:text="@string/goods_detail_tab_23"
+            android:visibility="gone"
             android:textColor="@color/color_8" />
     </LinearLayout>
 

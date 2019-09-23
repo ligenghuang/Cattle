@@ -3,7 +3,9 @@ package com.zhifeng.cattle.ui.shoppingcart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,12 +14,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.util.CheckNetwork;
-import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.ShoppingCartAction;
 import com.zhifeng.cattle.adapters.CartListAdapter;
@@ -25,13 +25,12 @@ import com.zhifeng.cattle.modules.CartListDto;
 import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.home.TemporaryActivity;
 import com.zhifeng.cattle.ui.impl.ShoppingCartView;
-import com.zhifeng.cattle.utils.base.UserBaseActivity;
-import com.zhifeng.cattle.utils.json.GetJsonDataUtil;
+import com.zhifeng.cattle.utils.base.UserBaseFragment;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -41,9 +40,8 @@ import butterknife.OnClick;
  * @CreateDate: 2019/9/9 17:04
  * @Version: 1.0
  */
-
-public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> implements ShoppingCartView {
-
+public class CartFragment extends UserBaseFragment<ShoppingCartAction> implements ShoppingCartView {
+    View view;
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -76,54 +74,45 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
     CartListAdapter cartListAdapter;
 
     @Override
-    public int intiLayout() {
-        return R.layout.activity_shopping_cart;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivityStack.getInstance().addActivity(new WeakReference<Activity>(this));
-        binding();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = getContext();
+        mActivity = activity;
     }
 
     @Override
     protected ShoppingCartAction initAction() {
-        return new ShoppingCartAction(this,this);
+        return new ShoppingCartAction((RxAppCompatActivity) getActivity(),this);
     }
 
-    /**
-     * 初始化标题栏
-     */
     @Override
-    protected void initTitlebar() {
-        super.initTitlebar();
-        mImmersionBar
-                .statusBarView(R.id.top_view)
-                .keyboardEnable(true)
-                .statusBarDarkFont(true, 0.2f)
-                .addTag("ShoppingCartActivity")  //给上面参数打标记，以后可以通过标记恢复
-                .navigationBarWithKitkatEnable(false)
-                .init();
-        fTitleTv.setText(ResUtil.getString(R.string.main_tab_3));
-        toolbar.setNavigationOnClickListener(view -> finish());
+    protected void initialize() {
+        init();
+        loadView();
     }
 
     @Override
     protected void init() {
         super.init();
-        mActicity = this;
-        mContext = this;
-
+        fTitleTv.setText(ResUtil.getString(R.string.main_tab_3));
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
 
-        cartListAdapter = new CartListAdapter(this);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        cartListAdapter = new CartListAdapter(mContext);
+        recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerview.setAdapter(cartListAdapter);
         loadDialog();
         getCartList();
-        loadView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_cart, container, false);
+        ButterKnife.bind(this, view);
+        binding();
+        mImmersionBar.setStatusBarView(getActivity(), topView);
+
+        return view;
     }
 
     @Override
@@ -192,16 +181,16 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
 //        CartListDto cartListDto1 = new Gson().fromJson(json, new TypeToken<CartListDto>() {
 //        }.getType());
 
-       if (cartListDto.getData().size()!= 0){
-           llData.setVisibility(View.VISIBLE);
-           llNull.setVisibility(View.GONE);
-           cartListAdapter.refresh(cartListDto.getData());
-           fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_9,cartListDto.getData().size()+""));
-       }else {
-           llData.setVisibility(View.GONE);
-           llNull.setVisibility(View.VISIBLE);
-           fTitleTv.setText(ResUtil.getString(R.string.cart_tab_11));
-       }
+        if (cartListDto.getData().size()!= 0){
+            llData.setVisibility(View.VISIBLE);
+            llNull.setVisibility(View.GONE);
+            cartListAdapter.refresh(cartListDto.getData());
+            fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_9,cartListDto.getData().size()+""));
+        }else {
+            llData.setVisibility(View.GONE);
+            llNull.setVisibility(View.VISIBLE);
+            fTitleTv.setText(ResUtil.getString(R.string.cart_tab_11));
+        }
     }
 
     /**
@@ -239,7 +228,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
 
     @Override
     public void editCartError(String msg) {
-        showNormalToast(msg);
+        showToast(msg);
         getCartList();
     }
 
@@ -253,11 +242,12 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
         loadDiss();
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-        showNormalToast(message);
+        showToast(message);
     }
 
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         baseAction.toRegister();
         getCartList();
@@ -265,7 +255,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         baseAction.toUnregister();
     }
@@ -294,7 +284,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
             case R.id.f_right_iv:
                 //todo 返回首页
                 MainActivity.Position = 0;
-                finish();
+                ((MainActivity)mActivity).setSelectedLin(MainActivity.Position);
                 break;
         }
     }
@@ -318,7 +308,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
         }
 
         if (num == 0){
-            showNormalToast(ResUtil.getString(R.string.cart_tab_38));
+            showToast(ResUtil.getString(R.string.cart_tab_38));
             return;
         }
 
@@ -347,7 +337,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
         }
         //todo 判断是否有选中的商品
         if (num == 0){
-            showNormalToast(ResUtil.getString(R.string.cart_tab_10));
+            showToast(ResUtil.getString(R.string.cart_tab_10));
             return;
         }
 

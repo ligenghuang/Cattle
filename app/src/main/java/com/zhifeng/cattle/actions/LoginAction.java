@@ -86,7 +86,7 @@ public class LoginAction extends BaseAction<LoginView> {
                                 view.getCodeSuccess(generalDto.getData());
                                 return;
                             }
-                            view.onError(generalDto.getData(),action.getErrorType());
+                            view.onError(generalDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

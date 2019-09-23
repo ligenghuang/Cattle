@@ -107,6 +107,9 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size15"
         android:padding="13dp"
-        android:layout_margin="@dimen/dp_10"/>
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

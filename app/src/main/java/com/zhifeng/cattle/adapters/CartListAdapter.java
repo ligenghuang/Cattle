@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.util.EthiopicCalendar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.CartListDto;
+import com.zhifeng.cattle.ui.home.GoodsDetailActivity;
 import com.zhifeng.cattle.utils.Util;
 
 /**
@@ -107,7 +109,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
         subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               if (Util.isFastDoubleClick()){
+               if (!Util.isFastDoubleClick()){
                    if (model.getGoods_num() == 1){
                        model.setGoods_num(1);
                        editText.setText(model.getGoods_num());
@@ -130,7 +132,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Util.isFastDoubleClick()){
+                if (!Util.isFastDoubleClick()){
                 if (model.getGoods_num() >= inventory){
                     Toast.makeText(context, ResUtil.getString(R.string.cart_tab_8), Toast.LENGTH_SHORT).show();
                 }else {
@@ -153,6 +155,15 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
             @Override
             public void onClick(View view) {
                 onClickListener.selectedListener(model.getCart_id());
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
+                intent.putExtra("goods_id",model.getGoods_id());
+                context.startActivity(intent);
             }
         });
 

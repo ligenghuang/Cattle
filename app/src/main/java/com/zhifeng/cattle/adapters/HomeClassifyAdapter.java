@@ -40,13 +40,13 @@ public class HomeClassifyAdapter extends BaseRecyclerAdapter<Catenav2Bean> {
             @Override
             public void onClick(View v) {
                 //点击事件
-                clickListener.onClick(model.getCat_id());
+                clickListener.onClick(model.getCat_id(),model.getCat_name());
             }
         });
     }
 
     public interface ClickListener{
-        void onClick(int id);
+        void onClick(int id,String name);
     }
 
 

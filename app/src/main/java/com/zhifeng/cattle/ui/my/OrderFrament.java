@@ -3,6 +3,7 @@ package com.zhifeng.cattle.ui.my;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,11 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.OrderAction;
 import com.zhifeng.cattle.adapters.OrderListAdapter;
 import com.zhifeng.cattle.modules.OrderListDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.ui.impl.OrderView;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
+import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
 
 import java.util.List;
 
@@ -139,9 +143,29 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             }
 
             @Override
-            public void Pay(int id) {
+            public void Pay(int id,int payType,String money) {
                 //todo 去付款
-
+                if (payType == 1){
+                    //todo 余额支付
+                    PayPwdDialog bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, Double.parseDouble(money), "余额支付");
+                    bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
+                        @Override
+                        public void inputFinish(String password) {
+                            SubmitOrderPost post = new SubmitOrderPost();
+                            post.setCart_id(id+"");
+                            post.setPay_type(payType + "");
+                            post.setPwd(password);
+                            submitOrder(post);
+                        }
+                    });
+                    bugPwdDialog.show();
+                }else if (payType == 2){
+                    //todo 微信支付
+                    showToast("微信支付");
+                }else if (payType == 3){
+                    //todo 支付宝支付
+                    showToast("支付宝支付");
+                }
             }
 
             @Override
@@ -211,6 +235,29 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
      */
     @Override
     public void editOrderStatusSuccess(String msg, int status) {
+        loadDiss();
+        refreshLayout.autoRefresh();
+    }
+
+    /**
+     * 订单支付
+     *
+     * @param submitOrderPost
+     */
+    @Override
+    public void submitOrder(SubmitOrderPost submitOrderPost) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.submitOrder(submitOrderPost);
+        }
+    }
+
+    /**
+     * 订单支付 成功
+     * @param submitOrderDto
+     */
+    @Override
+    public void submitOrderSuccess(PayOrderDto submitOrderDto) {
         loadDiss();
         refreshLayout.autoRefresh();
     }

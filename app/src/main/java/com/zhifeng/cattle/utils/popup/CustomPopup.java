@@ -56,6 +56,7 @@ public class CustomPopup extends PartShadowPopupView {
                 i.putExtra("cat_id", id);
                 i.putExtra("name", name);
                 context.startActivity(i);
+                dismiss();
             }
         });
 

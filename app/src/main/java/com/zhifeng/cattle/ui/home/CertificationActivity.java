@@ -156,7 +156,8 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
         showNormalToast(certificationDto.getMsg());
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {  finish();
+            public void run() {
+                finish();
             }
         }, 2000);
     }
@@ -318,7 +319,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
                    if (images1 != null) {
                        GlideUtil.setImage(mContext, images1.get(0).path, ivAddPositive, R.drawable.icon_add_idcard_positive);
                        llAddPositive.setVisibility(View.GONE);
-                       pic_front = PicUtils.imageToBase64(images1.get(0).path);
+                       pic_front = "data:image/gif;base64,"+PicUtils.imageToBase64(images1.get(0).path);
                    }
                }else {
                    //todo 背面
@@ -326,7 +327,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
                    if (images2 != null) {
                        GlideUtil.setImage(mContext, images2.get(0).path, ivAddBack, R.drawable.icon_add_idcard_back);
                        llAddBack.setVisibility(View.GONE);
-                       pic_back = PicUtils.imageToBase64(images2.get(0).path);
+                       pic_back = "data:image/gif;base64,"+PicUtils.imageToBase64(images2.get(0).path);
                    }
                }
             }

@@ -67,7 +67,7 @@ public class SalesReturnAction extends BaseAction<SalesReturnView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
-                    case WebUrlUtil.POST_SEND_CODE:
+                    case WebUrlUtil.POST_ORDER_LIST:
 //                        //todo 获取退货列表
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());

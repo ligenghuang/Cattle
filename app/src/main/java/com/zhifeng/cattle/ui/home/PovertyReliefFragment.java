@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,8 +153,12 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
 
         homeClassifyAdapter.setClickListener(new HomeClassifyAdapter.ClickListener() {
             @Override
-            public void onClick(int id) {
-
+            public void onClick(int id,String name) {
+                //todo 跳转页面
+                Intent i = new Intent(mContext, ListPageActivity.class);
+                i.putExtra("cat_id", id);
+                i.putExtra("name", name);
+                startActivity(i);
             }
         });
     }

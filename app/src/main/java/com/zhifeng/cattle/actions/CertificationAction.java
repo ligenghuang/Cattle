@@ -40,6 +40,7 @@ public class CertificationAction extends BaseAction<CertificationView> {
      * @param certificationPost
      */
     public void certification(CertificationPost certificationPost){
+        L.e("lgh_post","post   = "+certificationPost.toString());
         post(WebUrlUtil.POST_UPDATA_IDCARD_PIC,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"name",certificationPost.getName(),
                         "idcard",certificationPost.getIdcard(),"pic_front",certificationPost.getPic_front(),"pic_back",certificationPost.getPic_back()),
@@ -76,7 +77,7 @@ public class CertificationAction extends BaseAction<CertificationView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             CertificationDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CertificationDto>() {
                             }.getType());
-                            if (certificationDto.getStatus() == 200){
+                            if (certificationDto.getStatus() == 1){
                                 //todo 身份认证成功
                                 view.certificationSuccess(certificationDto);
                                 return;

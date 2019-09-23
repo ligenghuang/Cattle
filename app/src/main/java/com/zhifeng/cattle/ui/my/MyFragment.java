@@ -209,13 +209,14 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getUserInfo();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         baseAction.toUnregister();
-        getUserInfo();
+
     }
 
     @OnClick({R.id.ll_my_remainder_money, R.id.ll_my_collection, R.id.ll_my_order,

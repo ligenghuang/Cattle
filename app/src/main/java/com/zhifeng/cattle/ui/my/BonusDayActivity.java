@@ -3,6 +3,7 @@ package com.zhifeng.cattle.ui.my;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,8 @@ public class BonusDayActivity extends UserBaseActivity<BonusDayAction> implement
     RecyclerView recyclerview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.ll_data)
+    LinearLayout llData;
 
     BonusDayListAdapter bonusDayListAdapter;
 
@@ -137,7 +140,7 @@ public class BonusDayActivity extends UserBaseActivity<BonusDayAction> implement
         refreshLayout.finishRefresh();
         tvBonusDay.setText(bonusDayDto.getData().getTotal());
         tvBonusTime.setText(ResUtil.getFormatString(R.string.bonus_day_tab_4,bonusDayDto.getData().getLottery_time()));
-
+        llData.setVisibility(bonusDayDto.getData().getList().size() == 0?View.GONE:View.VISIBLE);
         bonusDayListAdapter.refresh(bonusDayDto.getData().getList());
 
     }
