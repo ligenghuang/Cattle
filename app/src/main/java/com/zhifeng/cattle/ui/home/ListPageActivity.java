@@ -134,7 +134,8 @@ public class ListPageActivity extends UserBaseActivity<ListPageAction> implement
             page++;
             baseAction.getListPage(cat_id, pageSize, page);
         } else {
-            refreshLayout.finishLoadMore();
+            isMore=false;
+            loadSwapTab();
         }
     }
 

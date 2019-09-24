@@ -31,6 +31,8 @@
     <string name="balance_tab_5">提现明细</string>
     <string name="balance_tab_6">充值明细</string>
     <string name="balance_tab_7">账单明细</string>
+    <string name="balance_tab_8">收益</string>
+    <string name="balance_tab_9">支出</string>
 
 
     <string name="collection_tab_1">暂无数据</string>
@@ -245,4 +247,11 @@
     <string name="changeaccount_tab2">轻触账户以登录</string>
     <string name="changeaccount_tab3">当前登录</string>
     <string name="changeaccount_tab4">换个账户登录</string>
+
+    <string name="refund_tab1">退款申请</string>
+    <string name="refund_tab2">退款原因</string>
+    <string name="refund_tab3">退款金额</string>
+    <string name="refund_tab4">提交申请</string>
+    <string name="refund_tab5">请填写退款原因</string>
+    <string name="refund_tab6">提交成功</string>
 </resources>

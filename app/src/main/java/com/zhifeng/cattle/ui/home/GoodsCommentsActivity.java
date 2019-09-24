@@ -143,7 +143,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
             page++;
             baseAction.getComments(goods_id, pageSize, page);
         } else {
-            refreshLayout.finishLoadMore();
+            isMore=false;
+            loadSwapTab();
         }
     }
 

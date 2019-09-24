@@ -209,7 +209,7 @@ public class SearchGoodsActivity extends UserBaseActivity<SearchGoodsAction> imp
 //            }
         } else {
             isMore = false;
-            loadSwapTab();
+//            loadSwapTab();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -21,11 +20,8 @@ import com.zhifeng.cattle.modules.AddressDetailDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.RegionDto;
 import com.zhifeng.cattle.modules.post.AddOrEditAddressPost;
-import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.AddAddressView;
-import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
-import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.AreaPickerView;
 
 import java.lang.ref.WeakReference;
@@ -172,6 +168,7 @@ public class AddAddressActivity extends UserBaseActivity<AddAddressAction> imple
         loadDiss();
         AddressDetailDto.DataBean dataBean = addressDetailDto.getData();
         etConsignee.setText(dataBean.getConsignee());//收货人
+        etConsignee.setSelection(dataBean.getConsignee().length());
         etMobile.setText(dataBean.getMobile());//联系电话
         //收货地址
         Isdistrict = true;

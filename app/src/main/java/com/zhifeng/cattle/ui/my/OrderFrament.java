@@ -52,6 +52,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     OrderListAdapter orderListAdapter;
 
     int type;
+    private boolean isVisible;
 
     public OrderFrament(int type) {
         this.type = type;
@@ -97,9 +98,8 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-        if (isVisible && OrderActivity.Position == type){
-            L.e("lgh_type","OrderActivity.Position   = "+ OrderActivity.Position);
-            L.e("lgh_type","type   = "+ type);
+        this.isVisible = isVisible;
+        if (isVisible&&OrderActivity.Position == type){
             refreshLayout.autoRefresh();
         }
     }
@@ -287,5 +287,8 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+        if (isVisible && OrderActivity.Position == type) {
+            refreshLayout.autoRefresh();
+        }
     }
 }

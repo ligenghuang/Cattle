@@ -20,16 +20,18 @@
         android:theme="@style/activity_theme">
         <activity android:name=".ui.home.ServiceActivity"></activity>
         <activity android:name=".ui.login.InviteCodeActivity" />
+        <activity android:name=".ui.my.RefundActivity"></activity>
+        <activity android:name=".ui.my.CheckDetailActivity" />
         <activity android:name=".ui.home.SearchGoodsActivity" />
         <activity android:name=".ui.home.ListPageActivity" />
         <activity android:name=".ui.my.ChangeAccountActivity" />
-        <activity android:name=".ui.home.TemporaryActivity" />
-        <activity android:name=".ui.home.CertificationActivity" />
+        <activity android:name=".ui.home.TemporaryActivity"/>
+        <activity android:name=".ui.home.CertificationActivity"/>
         <activity
             android:name=".ui.my.RechargeActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".ui.my.OrderCommentActivity" />
-        <activity android:name=".ui.home.GoodsCommentsActivity" />
+        <activity android:name=".ui.home.GoodsCommentsActivity"/>
         <activity android:name=".ui.my.RankingListActivity" />
         <activity android:name=".ui.my.RechargeDetailActivity" />
         <activity android:name=".ui.my.TeamOrderActivity" />

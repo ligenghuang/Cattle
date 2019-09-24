@@ -165,7 +165,9 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     @Override
     public void getTemporary() {
-        baseAction.getTemporary(cartId);
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getTemporary(cartId);
+        }
     }
 
     @Override
