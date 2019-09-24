@@ -323,4 +323,9 @@ public class WebUrlUtil {
      * 我的-提现余额-账单明细
      */
     public static final String POST_CHECK_DETAIL = "user/remainder_list";
+
+    /**
+     * 申请退款
+     */
+    public static final String POST_APPLY_REFUND = "order/apply_refund";
 }

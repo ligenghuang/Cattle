@@ -3,7 +3,6 @@ package com.zhifeng.cattle.ui.my;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +50,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     OrderListAdapter orderListAdapter;
 
     int type;
+    private boolean isVisible;
 
     public OrderFrament(int type) {
         this.type = type;
@@ -96,6 +96,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
+        this.isVisible = isVisible;
         if (isVisible&&OrderActivity.Position == type){
             refreshLayout.autoRefresh();
         }
@@ -171,6 +172,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Refund(int id) {
                 //todo 退款
+                Intent intent = new Intent(mContext, RefundActivity.class);
+                intent.putExtra("order_id", String.valueOf(id));
+                startActivity(intent);
             }
 
             @Override
@@ -284,5 +288,8 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     public void onResume() {
         super.onResume();
         baseAction.toRegister();
+        if (isVisible && OrderActivity.Position == type) {
+            refreshLayout.autoRefresh();
+        }
     }
 }

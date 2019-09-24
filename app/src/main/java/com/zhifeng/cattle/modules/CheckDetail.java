@@ -6,21 +6,21 @@ import java.util.List;
 public class CheckDetail {
 
     /**
-     * status : 200
+     * data : {"total":3,"per_page":"20","current_page":1,"last_page":1,"data":[{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0},{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0},{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0}]}
      * msg : success
-     * data : {"total":0,"per_page":20,"current_page":1,"last_page":0,"data":[{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"平级奖","balance":0.24,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"平级奖","balance":0.48,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0}]}
+     * status : 200
      */
 
-    private int status;
-    private String msg;
     private DataBeanX data;
+    private String msg;
+    private int status;
 
-    public int getStatus() {
-        return status;
+    public DataBeanX getData() {
+        return data;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setData(DataBeanX data) {
+        this.data = data;
     }
 
     public String getMsg() {
@@ -31,25 +31,25 @@ public class CheckDetail {
         this.msg = msg == null ? "" : msg;
     }
 
-    public DataBeanX getData() {
-        return data;
+    public int getStatus() {
+        return status;
     }
 
-    public void setData(DataBeanX data) {
-        this.data = data;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public static class DataBeanX {
         /**
-         * total : 0
+         * total : 3
          * per_page : 20
          * current_page : 1
-         * last_page : 0
-         * data : [{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"平级奖","balance":0.24,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"平级奖","balance":0.48,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0},{"note":"级差奖","balance":12,"source_id":"","create_time":"2019-08-02 21:45:22","old_balance":null,"log_type":0}]
+         * last_page : 1
+         * data : [{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0},{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0},{"note":"下单消费","balance":0.72,"source_id":"","create_time":"2019-08-02 22:21:07","log_type":0}]
          */
 
         private int total;
-        private int per_page;
+        private String per_page;
         private int current_page;
         private int last_page;
         private List<DataBean> data;
@@ -62,12 +62,12 @@ public class CheckDetail {
             this.total = total;
         }
 
-        public int getPer_page() {
-            return per_page;
+        public String getPer_page() {
+            return per_page == null ? "" : per_page;
         }
 
-        public void setPer_page(int per_page) {
-            this.per_page = per_page;
+        public void setPer_page(String per_page) {
+            this.per_page = per_page == null ? "" : per_page;
         }
 
         public int getCurrent_page() {
@@ -99,19 +99,17 @@ public class CheckDetail {
 
         public static class DataBean {
             /**
-             * note : 级差奖
-             * balance : 12
+             * note : 下单消费
+             * balance : 0.72
              * source_id :
-             * create_time : 2019-08-02 21:45:22
-             * old_balance : null
+             * create_time : 2019-08-02 22:21:07
              * log_type : 0
              */
 
             private String note;
-            private int balance;
+            private double balance;
             private String source_id;
             private String create_time;
-            private Object old_balance;
             private int log_type;
 
             public String getNote() {
@@ -122,11 +120,11 @@ public class CheckDetail {
                 this.note = note == null ? "" : note;
             }
 
-            public int getBalance() {
+            public double getBalance() {
                 return balance;
             }
 
-            public void setBalance(int balance) {
+            public void setBalance(double balance) {
                 this.balance = balance;
             }
 
@@ -144,14 +142,6 @@ public class CheckDetail {
 
             public void setCreate_time(String create_time) {
                 this.create_time = create_time == null ? "" : create_time;
-            }
-
-            public Object getOld_balance() {
-                return old_balance;
-            }
-
-            public void setOld_balance(Object old_balance) {
-                this.old_balance = old_balance;
             }
 
             public int getLog_type() {

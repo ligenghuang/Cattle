@@ -4,27 +4,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
-import com.lgh.huanglib.util.CheckNetwork;
-import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.lgh.huanglib.util.data.ResUtil;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zhifeng.cattle.R;
-import com.zhifeng.cattle.actions.CheckDetailAction;
-import com.zhifeng.cattle.adapters.CheckDetailAdapter;
-import com.zhifeng.cattle.modules.CheckDetail;
-import com.zhifeng.cattle.ui.impl.CheckDetailView;
+import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +27,7 @@ import butterknife.OnClick;
  * @Author: Administrator
  * @Date: 2019/9/23 17:09
  */
-public class CheckDetailActivity extends UserBaseActivity<CheckDetailAction> implements CheckDetailView {
+public class CheckDetailActivity extends UserBaseActivity {
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -46,16 +38,8 @@ public class CheckDetailActivity extends UserBaseActivity<CheckDetailAction> imp
     TextView tvIncome;
     @BindView(R.id.tvOutCome)
     TextView tvOutCome;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
-    @BindView(R.id.rv)
-    RecyclerView rv;
-    private final int pageSize = 20;
-    private int page = 1;
-    private boolean isRefresh = true;
-    private boolean isMore = true;
-    private int log_type = 1;
-    private CheckDetailAdapter adapter;
+    @BindView(R.id.vp)
+    ViewPager vp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +54,8 @@ public class CheckDetailActivity extends UserBaseActivity<CheckDetailAction> imp
     }
 
     @Override
-    protected CheckDetailAction initAction() {
-        return new CheckDetailAction(this, this);
+    protected BaseAction initAction() {
+        return null;
     }
 
     @Override
@@ -79,26 +63,38 @@ public class CheckDetailActivity extends UserBaseActivity<CheckDetailAction> imp
         super.init();
         mActicity = this;
         mContext = this;
-        adapter = new CheckDetailAdapter();
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(adapter);
-        tvIncome.setBackgroundColor(ResUtil.getColor(R.color.color_46b29b));
-        refreshLayout.autoRefresh();
+        tvIncome.setSelected(true);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        CheckDetailFragment incomeFragment = new CheckDetailFragment();
+        incomeFragment.setLog_type(1);
+        fragments.add(incomeFragment);
+
+        CheckDetailFragment outcomeFragment = new CheckDetailFragment();
+        outcomeFragment.setLog_type(0);
+        fragments.add(outcomeFragment);
+
+        vp.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         loadView();
     }
 
     @Override
     protected void loadView() {
-        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getCheckDetail();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMoreCheckDetail();
+            public void onPageSelected(int position) {
+                tvIncome.setSelected(position == 0);
+                tvOutCome.setSelected(position == 1);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }
@@ -120,86 +116,9 @@ public class CheckDetailActivity extends UserBaseActivity<CheckDetailAction> imp
         fTitleTv.setText(ResUtil.getString(R.string.balance_tab_7));
     }
 
-    @Override
-    public void getCheckDetail() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            page = 1;
-            isRefresh = true;
-            baseAction.getCheckDetail(log_type, pageSize, page);
-        } else {
-            refreshLayout.finishRefresh();
-        }
-    }
-
-    private void loadMoreCheckDetail() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            isRefresh = false;
-            page++;
-            baseAction.getCheckDetail(log_type, pageSize, page);
-        } else {
-            refreshLayout.finishLoadMore();
-        }
-    }
-
-    @Override
-    public void getCheckDetailSuccess(CheckDetail checkDetail) {
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
-        List<CheckDetail.DataBeanX.DataBean> beans = checkDetail.getData().getData();
-        if (beans.size() > 0) {
-            rv.setVisibility(View.VISIBLE);
-            isMore = page < checkDetail.getData().getLast_page();
-            if (isRefresh) {
-                adapter.refresh(beans);
-            } else {
-                adapter.loadMore(beans);
-            }
-        } else {
-            isMore = false;
-            loadSwapTab();
-        }
-    }
-
-    /**
-     * tab变换 加载更多的显示方式
-     */
-    public void loadSwapTab() {
-        if (!isMore) {
-            L.e("xx", "设置为没有加载更多....");
-            refreshLayout.finishLoadMoreWithNoMoreData();
-            refreshLayout.setNoMoreData(true);
-        } else {
-            L.e("xx", "设置为可以加载更多....");
-            refreshLayout.setNoMoreData(false);
-        }
-    }
-
-    @Override
-    public void onError(String message, int code) {
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMore();
-        showNormalToast(message);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        baseAction.toRegister();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        baseAction.toUnregister();
-    }
-
     @OnClick({R.id.tvIncome, R.id.tvOutCome})
     public void onClick(View v) {
-        isMore = true;
-        page = 1;
-        log_type = v.getId() == R.id.tvIncome ? 1 : 0;
-        tvIncome.setBackgroundColor(v.getId() == R.id.tvIncome ? ResUtil.getColor(R.color.color_46b29b) : ResUtil.getColor(R.color.white));
-        tvOutCome.setBackgroundColor(v.getId() == R.id.tvOutCome ? ResUtil.getColor(R.color.color_46b29b) : ResUtil.getColor(R.color.white));
-        getCheckDetail();
+        int position = v.getId() == R.id.tvIncome ? 0 : 1;
+        vp.setCurrentItem(position);
     }
 }
