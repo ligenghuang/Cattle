@@ -320,6 +320,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
                        GlideUtil.setImage(mContext, images1.get(0).path, ivAddPositive, R.drawable.icon_add_idcard_positive);
                        llAddPositive.setVisibility(View.GONE);
                        pic_front = "data:image/gif;base64,"+PicUtils.imageToBase64(images1.get(0).path);
+                       L.e("lgh_e",pic_front);
                    }
                }else {
                    //todo 背面

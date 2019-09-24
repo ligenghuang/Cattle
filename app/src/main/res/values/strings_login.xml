@@ -12,5 +12,7 @@
     <string name="login_tab_9">请阅读并勾选用户协议</string>
     <string name="login_tab_10">用户协议</string>
 
+    <string name="invite_code_tab_1">邀请码：</string>
+    <string name="invite_code_tab_2">请输入邀请码</string>
 
 </resources>

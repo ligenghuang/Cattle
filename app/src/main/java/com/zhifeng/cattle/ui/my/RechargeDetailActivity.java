@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -44,6 +45,11 @@ public class RechargeDetailActivity extends UserBaseActivity<ReChargeDetailActio
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private RechargeDetailAdapter adapter;
+
+    boolean isRefresh = true;
+    int page =1;
+    //是否加载更多
+    boolean isSlect = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,21 +111,42 @@ public class RechargeDetailActivity extends UserBaseActivity<ReChargeDetailActio
     @Override
     public void getChargeDetail() {
         if (CheckNetwork.checkNetwork2(mContext)) {
-            baseAction.getDetailRecordList();
+            isRefresh = true;
+            page = 1;
+            baseAction.getDetailRecordList(page);
         } else {
             refreshLayout.finishRefresh();
         }
     }
 
     @Override
+    public void moreChargeDetail() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = false;
+            page ++;
+            baseAction.getDetailRecordList(page);
+        } else {
+            refreshLayout.finishLoadMore();
+        }
+    }
+
+    @Override
     public void getChargeDetailSuccess(ReChargeDetail reChargeDetail) {
         refreshLayout.finishRefresh();
-        List<ReChargeDetail.DataBeanX.ListBean.DataBean> beans = reChargeDetail.getData().getList().getData();
-        if (beans.size()>0){
+        ReChargeDetail.DataBeanX dataBean = reChargeDetail.getData();
+        if (dataBean.getList().getData().size() != 0){
             recyclerview.setVisibility(View.VISIBLE);
-            adapter.refresh(beans);
+            isSlect = page < dataBean.getList().getCurrent_page();
+            loadSwapTab();
+            if (isRefresh){
+                adapter.refresh(dataBean.getList().getData());
+            }else {
+                adapter.loadMore(dataBean.getList().getData());
+            }
         }else {
-
+            isSlect = false;
+            loadSwapTab();
+            //todo 添加空布局
         }
     }
 
@@ -139,5 +166,21 @@ public class RechargeDetailActivity extends UserBaseActivity<ReChargeDetailActio
     protected void onPause() {
         super.onPause();
         baseAction.toUnregister();
+    }
+
+    /**
+     * tab变换 加载更多的显示方式
+     */
+    public void loadSwapTab() {
+
+        if (!isSlect) {
+            L.e("xx", "设置为没有加载更多....");
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setNoMoreData(true);
+        } else {
+            L.e("xx", "设置为可以加载更多....");
+            refreshLayout.setNoMoreData(false);
+        }
+
     }
 }

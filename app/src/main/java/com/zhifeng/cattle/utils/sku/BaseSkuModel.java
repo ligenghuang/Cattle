@@ -11,15 +11,35 @@ public class BaseSkuModel {
 
     //base 属性
     private double price;//价格  我这没用到
+    private double groupon_price;//原价
     private long stock;//库存
+    private long virtual_sales;//销量
     private int sku_id;
     private String name;
 
-    public BaseSkuModel(double price, long stock, int sku_id, String name) {
+    public BaseSkuModel(double price, double groupon_price, long stock, long virtual_sales, int sku_id, String name) {
         this.price = price;
+        this.groupon_price = groupon_price;
         this.stock = stock;
+        this.virtual_sales = virtual_sales;
         this.sku_id = sku_id;
         this.name = name;
+    }
+
+    public double getGroupon_price() {
+        return groupon_price;
+    }
+
+    public void setGroupon_price(double groupon_price) {
+        this.groupon_price = groupon_price;
+    }
+
+    public long getVirtual_sales() {
+        return virtual_sales;
+    }
+
+    public void setVirtual_sales(long virtual_sales) {
+        this.virtual_sales = virtual_sales;
     }
 
     public String getName() {

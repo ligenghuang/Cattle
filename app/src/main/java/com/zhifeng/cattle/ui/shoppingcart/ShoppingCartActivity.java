@@ -341,7 +341,7 @@ public class ShoppingCartActivity extends UserBaseActivity<ShoppingCartAction> i
                 if (i == 0){
                     id = list.get(i).getCart_id()+"";
                 }else {
-                    id = ","+list.get(i).getCart_id();
+                    id = id+","+list.get(i).getCart_id();
                 }
             }
         }

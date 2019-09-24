@@ -231,12 +231,20 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         loadDiss();
         //todo 保存登录或注册返回的数据
         L.e("lgh_user", "token  = " + loginDto.getData().getToken());
-        MySp.setAccessToken(mContext, loginDto.getData().getToken());
-        Intent intent = new Intent(mContext, MainActivity.class);
-        intent.putExtra("isLogin", true);
-        startActivity(intent);
+      if (loginDto.getData().getIs_first() == 1){
+          //todo 第一次登录 跳转至填写邀请码页面
+          Intent intent = new Intent(mContext, InviteCodeActivity.class);
+          intent.putExtra("token", loginDto.getData().getToken());
+          startActivity(intent);
+          finish();
+      }else {
+          MySp.setAccessToken(mContext, loginDto.getData().getToken());
+          Intent intent = new Intent(mContext, MainActivity.class);
+          intent.putExtra("isLogin", true);
+          startActivity(intent);
 //        jumpActivity(mContext,MainActivity.class);
-        ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
+          ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
+      }
     }
 
     /**

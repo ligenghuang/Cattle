@@ -14,8 +14,11 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.SecurityAction;
 import com.zhifeng.cattle.modules.SafeInfoDto;
+import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.SecurityView;
+import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -164,6 +167,11 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 break;
             case R.id.tv_logout:
                 //退出
+                MySp.clearAllSP(mContext);
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                MainActivity.Position = 0;
+                ActivityStack.getInstance().exitIsNotHaveMain( LoginActivity.class);
                 break;
         }
     }

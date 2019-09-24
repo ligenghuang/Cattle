@@ -63,8 +63,9 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
         LinearLayout llOrder_3 = holder.itemView.findViewById(R.id.ll_item_order_3);
         LinearLayout llOrder_4 = holder.itemView.findViewById(R.id.ll_item_order_4);
         LinearLayout llOrder_5 = holder.itemView.findViewById(R.id.ll_item_order_5);
+        LinearLayout llOrder_6 = holder.itemView.findViewById(R.id.ll_item_order_6);
         setType(model.getOrder_status(), model.getComment(), model.getPay_status(), model.getShipping_status(),
-                TvType, llOrder_1, llOrder_2, llOrder_3, llOrder_4, llOrder_5);
+                TvType, llOrder_1, llOrder_2, llOrder_3, llOrder_4, llOrder_5,llOrder_6);
 
         setClickListener(holder, model);
 
@@ -90,6 +91,13 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
             public void onClick(View view) {
                 int status = model.getOrder_status() == 2 ? 4 : 5;
                 onClickListener.Delete(model.getOrder_id(), status);
+            }
+        });
+        //删除订单
+        holder.itemView.findViewById(R.id.tv_item_order_delete_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.Delete(model.getOrder_id(), 5);
             }
         });
         /******************************查看物流**************************************/
@@ -169,13 +177,14 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
      */
     private void setType(int Order_status, int comment, int pay_status, int shipping_status, TextView tvType, LinearLayout llOrder_1,
                          LinearLayout llOrder_2, LinearLayout llOrder_3,
-                         LinearLayout llOrder_4, LinearLayout llOrder_5) {
+                         LinearLayout llOrder_4, LinearLayout llOrder_5, LinearLayout llOrder_6) {
         llOrder_1.setVisibility(View.GONE);
         llOrder_2.setVisibility(View.GONE);
         llOrder_3.setVisibility(View.GONE);
         llOrder_4.setVisibility(View.GONE);
         llOrder_5.setVisibility(View.GONE);
-        int text = 0;
+        llOrder_6.setVisibility(View.GONE);
+        int text =  R.string.my_tab_5;
         switch (Order_status) {
             case 0:
                 //todo 未付款
@@ -213,6 +222,7 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
             case 3:
                 //已取消
                 text = R.string.order_tab_32;
+                llOrder_6.setVisibility(View.VISIBLE);
                 break;
             case 4:
                 //todo 交易完成

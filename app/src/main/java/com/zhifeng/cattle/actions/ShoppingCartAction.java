@@ -112,7 +112,7 @@ public class ShoppingCartAction extends BaseAction<ShoppingCartView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 1){
+                            if (generalDto.getStatus() == 1||generalDto.getStatus() == 200){
                                 //todo 获取购物车 删除 成功
                                 view.delCartSuccess();
                                 return;

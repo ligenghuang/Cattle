@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,12 +132,12 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     TextView fTitleTv;
     @BindView(R.id.iv_to_up_top)
     ImageView ivToUpTop;
-    @BindView(R.id.iv_top)
-    ImageView ivTop;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
 
     int inventory;//库存
     int goods_id;
@@ -156,6 +157,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     String content;//图片详情
     String content_param;//产品参数
     String goodsName = "";
+    String service;
     int sku_id;
     int cart_number = 1;
     boolean isCollection = false;
@@ -167,6 +169,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     UiData mUiData;
 
     boolean isBuy = false;
+
+    GoodsDetailDto.DataBean dataBean;
 
     @Override
     public int intiLayout() {
@@ -235,15 +239,15 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 if (state == State.EXPANDED) {
                     //展开状态
                     fTitleTv.setVisibility(View.INVISIBLE);
-//                    ivToUpTop.setVisibility(View.GONE);
+                    ivToUpTop.setVisibility(View.GONE);
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
                     fTitleTv.setVisibility(View.VISIBLE);
-//                    ivToUpTop.setVisibility(View.VISIBLE);
+                    ivToUpTop.setVisibility(View.VISIBLE);
                 } else {
                     //中间状态
                     fTitleTv.setVisibility(View.INVISIBLE);
-//                    ivToUpTop.setVisibility(View.VISIBLE);
+                    ivToUpTop.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -268,7 +272,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void getGoodsDetailSuccess(GoodsDetailDto goodsDetailDto) {
         loadDiss();
-        GoodsDetailDto.DataBean dataBean = goodsDetailDto.getData();
+        dataBean = goodsDetailDto.getData();
         tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
@@ -292,7 +296,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         setSelectedLin(Position);
         //todo 初始化规格
         initUiData(dataBean);
-
+        service = dataBean.getService();
     }
 
     /**
@@ -336,9 +340,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                         L.d("lgh_sku", "goodsSkuBean.getSku_attr1() = " + goodsSkuBean.getSku_attr1());
                         if (String.valueOf(resBean.getAttr_id()).equals(goodsSkuBean.getSku_attr1())) {
                             L.d("lgh_sku", "sku = " + str);
-                            testData.getProductStocks().put(goodsSkuBean.getSku_attr1(), new BaseSkuModel(Double.parseDouble(goodsSkuBean.getPrice()), goodsSkuBean.getInventory(),
-                                    goodsSkuBean.getSku_id(),resBean.getAttr_name()));
-                            group01.getAttributeMembers().add(j, new ProductModel.AttributesEntity.AttributeMembersEntity(1, goodsSkuBean.getSku_id(), resBean.getAttr_name(),goodsSkuBean.getPrice(),goodsSkuBean.getSku_attr1()));
+                            testData.getProductStocks().put(goodsSkuBean.getSku_attr1(), new BaseSkuModel(Double.parseDouble(goodsSkuBean.getPrice()),Double.parseDouble(goodsSkuBean.getGroupon_price()),
+                                    goodsSkuBean.getInventory(),goodsSkuBean.getVirtual_sales(),
+                                    goodsSkuBean.getSku_id(), resBean.getAttr_name()));
+                            group01.getAttributeMembers().add(j, new ProductModel.AttributesEntity.AttributeMembersEntity(1, goodsSkuBean.getSku_id(), resBean.getAttr_name(), goodsSkuBean.getPrice(), goodsSkuBean.getSku_attr1()));
                         }
                     }
                 }
@@ -348,9 +353,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
     }
 
-
-
-    private void showBottomSheetDialog(ProductModel productModel) {
+    /**
+     * @param productModel
+     * @param IsBuy        判断 0加入购物车、1立即购买 、2查看规格
+     */
+    private void showBottomSheetDialog(ProductModel productModel, int IsBuy) {
         if (mUiData.getBottomSheetDialog() == null) {
             mUiData.getSelectedEntities().clear();
             mUiData.getAdapters().clear();
@@ -359,9 +366,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             TextView subtract = view.findViewById(R.id.tv_item_goods_subtract);
             TextView add = view.findViewById(R.id.tv_item_goods_add);
             TextView tvGoodsNum = view.findViewById(R.id.et_item_goods_num);
-            TextView save=view.findViewById(R.id.save);
+            TextView save = view.findViewById(R.id.save);
             LinearLayout llList = (LinearLayout) view.findViewById(R.id.ll_list);//列表
-            tvGoodsNum.setText(cart_number+"");
+            tvGoodsNum.setText(cart_number + "");
             ivClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -376,15 +383,19 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             subtract.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (cart_number == 1){
-                        cart_number = 1;
-                        tvGoodsNum.setText(cart_number+"");
-                        showNormalToast(ResUtil.getString(R.string.cart_tab_7));
-                    }else {
-                        cart_number = cart_number-1;
-                        tvGoodsNum.setText(cart_number+"");
+                    if (inventory == -1) {
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
+                    } else {
+                        if (cart_number == 1) {
+                            cart_number = 1;
+                            tvGoodsNum.setText(cart_number + "");
+                            showNormalToast(ResUtil.getString(R.string.cart_tab_7));
+                        } else {
+                            cart_number = cart_number - 1;
+                            tvGoodsNum.setText(cart_number + "");
+                        }
+                        L.e("lgh_cart", "subtract = " + tvGoodsNum);
                     }
-                    L.e("lgh_cart","subtract = "+tvGoodsNum);
                 }
             });
 
@@ -394,24 +405,36 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (cart_number >= inventory){
-                        showNormalToast(ResUtil.getString(R.string.cart_tab_8));
-                    }else {
-                        cart_number =cart_number+1;
-                        tvGoodsNum.setText(cart_number+"");
-                    }
-                    L.e("lgh_cart","add = "+cart_number);
+                   if (inventory == -1){
+                       showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
+                   }else {
+                       if (cart_number >= inventory) {
+                           showNormalToast(ResUtil.getString(R.string.cart_tab_8));
+                       } else {
+                           cart_number = cart_number + 1;
+                           tvGoodsNum.setText(cart_number + "");
+                       }
+                   }
+                    L.e("lgh_cart", "add = " + cart_number);
                 }
             });
             /***********************************商品数量 end*****************************************/
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isBuy){
-                        buyNow(sku_id,cart_number);
-                    }else {
-                        //关闭
-                        mUiData.getBottomSheetDialog().dismiss();
+                    switch (IsBuy) {
+                        case 0:
+                            //加入购物车
+                            addCart(sku_id, cart_number);
+                            break;
+                        case 1:
+                            //立即购买
+                            buyNow(sku_id, cart_number);
+                            break;
+                        case 2:
+                            //选择规格
+                            mUiData.getBottomSheetDialog().dismiss();
+                            break;
                     }
                 }
             });
@@ -428,19 +451,19 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 recyclerViewBottom.setAdapter(skuAdapter);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                         (RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
-                llList.addView(viewList,params);
+                llList.addView(viewList, params);
 
                 tvTitle.setText(testData.getAttributes().get(i).getName());
             }
             // SKU 计算
             mUiData.setResult(Sku.skuCollection(testData.getProductStocks()));
-            L.d("lgh_sku","mUiData.setResult  = "+mUiData.getResult().toString());
+            L.d("lgh_sku", "mUiData.setResult  = " + mUiData.getResult().toString());
             for (String key : mUiData.getResult().keySet()) {
                 L.d("lgh_sku", "key = " + key + " value = " + mUiData.getResult().get(key));
             }
             //设置点击监听器
             for (SkuAdapter adapter : mUiData.getAdapters()) {
-                ItemClickListener listener = new ItemClickListener(mUiData, adapter,handler);
+                ItemClickListener listener = new ItemClickListener(mUiData, adapter, handler);
                 adapter.setOnClickListener(listener);
             }
             // 初始化按钮
@@ -448,7 +471,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 for (ProductModel.AttributesEntity.AttributeMembersEntity entity : mUiData.getAdapters().get(i).getAttributeMembersEntities()) {
                     if (mUiData.getResult().get(entity.getAttributeMemberId() + "") == null
                             || mUiData.getResult().get(entity.getAttributeMemberId() + "").getStock() <= 0
-                           ) {
+                    ) {
                         entity.setStatus(0);
                     }
                 }
@@ -476,29 +499,41 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             switch (msg.what) {
                 case 1:
 //                    tv_selected.setText("选择的sku组合："+msg.obj.toString());
+                    //原价
+                    tvGoodsOriginalPrice.setText("￥"+msg.obj.toString());
                     break;
                 case 2:
 //                    tv_stock.setText("组合的库存："+msg.obj.toString());
+                    L.d("lgh_sku", "inventory  = " + msg.obj.toString());
                     inventory = Integer.parseInt(msg.obj.toString());
+                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, msg.obj.toString()+""));//库存
                     break;
                 case 3:
 //                    tv_price.setText("按钮的价格："+msg.obj.toString());
-                    L.d("lgh_sku","price  = "+msg.obj.toString());
+                    L.d("lgh_sku", "price  = " + msg.obj.toString());
+                    tvGoodsPrice.setText("￥"+msg.obj.toString());
                     break;
                 case 4:
                     sku_id = Integer.parseInt(msg.obj.toString());
                     break;
                 case 5:
-                    L.d("lgh_sku","tvGoodsSpec  = "+msg.obj.toString());
-                    tvGoodsSpec.setText(ResUtil.getFormatString(R.string.goods_detail_tab_26,msg.obj.toString()));
+                    L.d("lgh_sku", "tvGoodsSpec  = " + msg.obj.toString());
+                    tvGoodsSpec.setText(ResUtil.getFormatString(R.string.goods_detail_tab_26, msg.obj.toString()));
                     break;
-//                case 6:
-//                    //todo 库存不足
-//                    showNormalToast(ResUtil.getString(R.string.goods_detail_tab_27));
-//                    break;
+                case 6:
+                    //todo 销量
+                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, msg.obj.toString()+""));//销量
+                    break;
+                case 7:
+                    tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
+                    tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+                    inventory = -1;
+                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
+                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
+                    break;
             }
-        }};
-
+        }
+    };
 
 
     /**
@@ -522,6 +557,31 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     }
 
     /**
+     * 加入购物车
+     *
+     * @param sku_id
+     * @param cart_number
+     */
+    @Override
+    public void addCart(int sku_id, int cart_number) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.addCart(sku_id, cart_number);
+        }
+    }
+
+    /**
+     * 加入购物车成功
+     *
+     * @param msg
+     */
+    @Override
+    public void addCartSuccess(String msg) {
+        loadDiss();
+        showNormalToast(msg);
+    }
+
+    /**
      * 立即购买
      *
      * @param sku_id
@@ -542,7 +602,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
      */
     @Override
     public void buyNowSuccess(int cartId) {
-        if (mUiData.getBottomSheetDialog() != null){
+        if (mUiData.getBottomSheetDialog() != null) {
             mUiData.getBottomSheetDialog().dismiss();
         }
         loadDiss();
@@ -558,19 +618,20 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
      */
     @Override
     public void getDefaultCity() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.getDefaultCity();
         }
     }
 
     /**
      * 获取默认地址
+     *
      * @param defaultCityDto
      */
     @Override
     public void getDefaultCitySuccess(DefaultCityDto defaultCityDto) {
         DefaultCityDto.DataBean dataBean = defaultCityDto.getData();
-        String address = dataBean.getProvincename()+dataBean.getCityname()+dataBean.getDistrictname();
+        String address = dataBean.getProvincename() + dataBean.getCityname() + dataBean.getDistrictname();
         tvGoodsAddress.setText(address);
     }
 
@@ -740,11 +801,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                                     @Override
                                     public void onSelect(int position, String text) {
                                         //todo 点击事件
-                                        if (position != 2){
+                                        if (position != 2) {
                                             MainActivity.Position = position;
-                                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class,GoodsDetailActivity.class);
+                                            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class, GoodsDetailActivity.class);
                                             finish();
-                                        }else {
+                                        } else {
                                             jumpActivityNotFinish(mContext, ShoppingCartActivity.class);
                                         }
                                     }
@@ -758,13 +819,13 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             case R.id.tv_goods_address:
                 //todo 配送地址
                 Intent intent = new Intent(mContext, AddressListActivity.class);
-                intent.putExtra("isGoods",true);
-                startActivityForResult(intent,200);
+                intent.putExtra("isGoods", true);
+                startActivityForResult(intent, 200);
                 break;
             case R.id.tv_goods_spec:
                 //todo 商品规格
                 isBuy = false;
-                showBottomSheetDialog(testData);
+                showBottomSheetDialog(testData, 2);
                 break;
             case R.id.tv_goods_comment_all:
                 //todo 查看全部评价
@@ -775,6 +836,13 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_service:
                 //todo  客服
+                if (TextUtils.isEmpty(service)) {
+                    showNormalToast("暂未开通客服");
+                } else {
+                    Intent intent1 = new Intent(mContext, ServiceActivity.class);
+                    intent1.putExtra("service", service);
+                    startActivity(intent1);
+                }
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车
@@ -783,7 +851,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             case R.id.tv_goods_buy:
                 //todo 立即购买
                 isBuy = true;
-                showBottomSheetDialog(testData);
+                showBottomSheetDialog(testData, 1);
 //                buyNow(sku_id, cart_number);
                 break;
             case R.id.iv_to_up_top:
@@ -796,8 +864,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 200){
-            if (data != null){
+        if (resultCode == 200) {
+            if (data != null) {
                 //配送地址
                 String address = data.getStringExtra("address");
                 tvGoodsAddress.setText(address);
@@ -816,10 +884,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         if (behavior instanceof AppBarLayout.Behavior) {
             AppBarLayout.Behavior appBarLayoutBehavior = (AppBarLayout.Behavior) behavior;
             //拿到下方tabs的y坐标，即为我要的偏移量
-            float y = ivTop.getY();
-            //注意传递负值
-            appBarLayoutBehavior.setTopAndBottomOffset((int) -y);
-            appBarLayoutBehavior.setTopAndBottomOffset((int) -y);
+            float y = coordinatorLayout.getY();
+            appBarLayoutBehavior.setTopAndBottomOffset(0);
+            appBar.setExpanded(true);
             nestedScrollView.scrollTo(0, (int) y);
         }
     }

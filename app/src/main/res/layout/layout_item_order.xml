@@ -307,6 +307,36 @@
 
 
             </LinearLayout>
+            <!--todo  已取消-->
+            <LinearLayout
+                android:id="@+id/ll_item_order_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right|center_vertical"
+                android:layout_marginRight="14dp"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_item_order_delete_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_tab_2"
+                    android:background="@drawable/shape_order_btn_bg"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="@dimen/text_size13"
+                    android:textColor="@color/color_8"
+                    android:textStyle="bold"
+                    android:layout_marginRight="14dp"
+                    />
+
+
+            </LinearLayout>
+
 
 
         </LinearLayout>

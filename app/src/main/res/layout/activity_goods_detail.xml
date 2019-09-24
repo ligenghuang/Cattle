@@ -9,6 +9,7 @@
 
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/item_height60"
@@ -30,10 +31,6 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
-                <ImageView
-                    android:id="@+id/iv_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp" />
 
                 <!--轮播图-->
                 <cn.bingoogolapple.bgabanner.BGABanner
@@ -48,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:navigationIcon="@drawable/arrow_back"
+                    android:background="@color/transparent"
                     app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/arrow_back"
                     app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -96,7 +94,7 @@
             android:layout_height="match_parent"
             android:background="@color/color_f2"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".ui.home.GoodsDetailActivity"
+           tools:context=".ui.home.GoodsDetailActivity"
             tools:showIn="@layout/activity_goods_detail">
 
 
@@ -444,7 +442,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="100dp"
-        android:visibility="gone"
         android:src="@drawable/icon_to_up_top" />
 
 </RelativeLayout>

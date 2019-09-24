@@ -110,32 +110,32 @@ public class ItemClickListener implements SkuAdapter.OnClickListener {
                     selecPrice += price;
                 }
 
-                L.d("lgh_sku","buffer  = "+buffer);
-                L.d("lgh_sku","buffer.substring(0, buffer.length() - 1)  = "+buffer.substring(0, buffer.length() - 1));
+
                 //TODO 检查数据
                 if (mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)) != null ) {
-                    L.d("lgh_sku","entity.getStatus()  = "+entity.getStatus());
                     entity.setStatus(entity.getStatus() == 1 ? 1 : 0);
                     if(entity.getStatus() == 1){
                         sendSuccess(handler,selecPrice,3);
-                        L.d("lgh_sku","getSkuSize(buffer.substring(0, buffer.length() - 1))  = "+getSkuSize(buffer.substring(0, buffer.length() - 1)));
-                        L.d("lgh_sku","skuid  = "+mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getSku_id());
                         if(getSkuSize(buffer.substring(0, buffer.length() - 1))==mUiData.getAdapters().size()){//选完所有更新
-                            sendSuccess(handler,buffer.substring(0, buffer.length() - 1),1);
-                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getStock(),2);
-                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getSku_id(),4);
+                            L.e("lgh_sku","lgh_sku  = "+1);
+                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getGroupon_price(),1);//原价
+                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getStock(),2);//库存
+                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getSku_id(),4);//
                             sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getName(),5);
+                            sendSuccess(handler,mUiData.getResult().get(buffer.substring(0, buffer.length() - 1)).getVirtual_sales(),61);//销量
 
                         }else {
                             sendSuccess(handler,"0",1);
                             sendSuccess(handler,"0",2);
-
+                            L.e("lgh_sku","lgh_sku  = "+2);
                         }
                         break;
                     }else {//未选完所有更新
                         float unPirce = Float.valueOf(entity.getPrice());
                         unSelecPrice = selecPrice - unPirce;
                         sendSuccess(handler,unSelecPrice,3);
+                        sendSuccess(handler,"0",7);
+                        L.e("lgh_sku","lgh_sku  = "+3);
                     }
 
                 } else {

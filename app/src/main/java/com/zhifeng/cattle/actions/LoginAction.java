@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
@@ -95,15 +96,21 @@ public class LoginAction extends BaseAction<LoginView> {
 //                        //todo 登录或注册
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            LoginDto loginDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<LoginDto>() {
-                            }.getType());
-                            if (loginDto.getStatus() == 200){
-                                //todo 登录或注册成功
-                                view.loginOrRegisteredSuccess(loginDto);
-                                return;
-                            }
-                            view.onError(loginDto.getMsg(),action.getErrorType());
-                            return;
+                           try{
+                               LoginDto loginDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<LoginDto>() {
+                               }.getType());
+                               if (loginDto.getStatus() == 200){
+                                   //todo 登录或注册成功
+                                   view.loginOrRegisteredSuccess(loginDto);
+                                   return;
+                               }
+                               view.onError(loginDto.getMsg(),action.getErrorType());
+                               return;
+                           }catch (JsonSyntaxException e){
+                               GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                               }.getType());
+                               view.onError(generalDto.getMsg(),action.getErrorType());
+                           }
                         }
                         view.onError(msg,action.getErrorType());
                         break;

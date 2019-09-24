@@ -43,6 +43,7 @@
     <string name="goods_detail_tab_25">确定</string>
     <string name="goods_detail_tab_26">已选\" %0$s \"</string>
     <string name="goods_detail_tab_27">库存不足</string>
+    <string name="goods_detail_tab_28">请先选择规格</string>
 
     <string name="certification_tab_1">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
     <string name="certification_tab_2">请输入姓名</string>

@@ -5,6 +5,6 @@ import com.zhifeng.cattle.modules.ReChargeDetail;
 
 public interface ReChargeDetailView extends BaseView {
     void getChargeDetail();
-
+    void moreChargeDetail();
     void getChargeDetailSuccess(ReChargeDetail reChargeDetail);
 }

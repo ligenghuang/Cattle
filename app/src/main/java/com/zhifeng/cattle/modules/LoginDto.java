@@ -54,6 +54,15 @@ public class LoginDto {
         private String token;
         private String mobile;
         private String id;
+        private int is_first;
+
+        public int getIs_first() {
+            return is_first;
+        }
+
+        public void setIs_first(int is_first) {
+            this.is_first = is_first;
+        }
 
         public String getToken() {
             return token == null ? "" : token;

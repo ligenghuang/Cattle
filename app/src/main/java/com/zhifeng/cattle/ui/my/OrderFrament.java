@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -96,7 +97,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-        if (isVisible&&OrderActivity.Position == type){
+        if (isVisible && OrderActivity.Position == type){
+            L.e("lgh_type","OrderActivity.Position   = "+ OrderActivity.Position);
+            L.e("lgh_type","type   = "+ type);
             refreshLayout.autoRefresh();
         }
     }

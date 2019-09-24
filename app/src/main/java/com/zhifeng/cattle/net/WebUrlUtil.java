@@ -319,4 +319,14 @@ public class WebUrlUtil {
      */
     public static final String POST_PAY_ORDER = "pay/payment";
 
+    /**
+     * 加入购物车
+     */
+    public static final String POST_ADDCART = "cart/addCart";
+
+    /**
+     * 首次登陆填写邀请码 user/invitation_code
+     */
+    public static final String POST_INVITATION_CODE = "user/invitation_code";
+
 }

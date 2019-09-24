@@ -131,7 +131,7 @@ public class Sku {
             result.get(key).setStock(result.get(key).getStock() + skuModel.getStock());
             result.get(key).setPrice(skuModel.getPrice());
         } else {
-            result.put(key, new BaseSkuModel(skuModel.getPrice(), skuModel.getStock(),skuModel.getSku_id(),skuModel.getName()));
+            result.put(key, new BaseSkuModel(skuModel.getPrice(),skuModel.getGroupon_price(), skuModel.getStock(),skuModel.getVirtual_sales(),skuModel.getSku_id(),skuModel.getName()));
         }
     }
 

@@ -128,6 +128,7 @@ public class OrderActivity extends UserBaseActivity {
         for (int i = 0; i < fragmentSize; i++) {
             switch (i) {
                 case POIONTONE://
+                    //全部
                     orderFrament1 = new OrderFrament(POIONTONE);
                     if (Position != POIONTONE) {
                         orderFrament1.setUserVisibleHint(false);//
@@ -136,6 +137,7 @@ public class OrderActivity extends UserBaseActivity {
                     fragments.add(orderFrament1);
                     break;
                 case POIONTTWO://
+                    //待付款
                     orderFrament2 = new OrderFrament(POIONTTWO);
                     if (Position != POIONTTWO) {
                         orderFrament2.setUserVisibleHint(false);//
@@ -143,6 +145,7 @@ public class OrderActivity extends UserBaseActivity {
                     fragments.add(orderFrament2);
                     break;
                 case POIONTTHREE://
+                    //待发货
                     orderFrament3 = new OrderFrament(POIONTTHREE);
                     if (Position != POIONTTHREE) {
                         orderFrament3.setUserVisibleHint(false);//
@@ -150,13 +153,15 @@ public class OrderActivity extends UserBaseActivity {
                     fragments.add(orderFrament3);
                     break;
                 case POIONTFOUR://
-                    orderFrament4 = new OrderFrament(POIONTTHREE);
+                    //待收货
+                    orderFrament4 = new OrderFrament(POIONTFOUR);
                     if (Position != POIONTFOUR) {
                         orderFrament4.setUserVisibleHint(false);
                     }
                     fragments.add(orderFrament4);
                     break;
                 case POIONTFIVE://
+                    //待评价
                     orderFrament5 = new OrderFrament(POIONTFIVE);
                     if (Position != POIONTFIVE) {
                         orderFrament5.setUserVisibleHint(false);

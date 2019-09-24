@@ -23,8 +23,8 @@ public class ReChargeDetailAction extends BaseAction<ReChargeDetailView> {
         attachView(reChargeDetailView);
     }
 
-    public void   getDetailRecordList(){
-        post(WebUrlUtil.POST_RechargeDetail_LIST,false,service ->manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_RechargeDetail_LIST)));
+    public void   getDetailRecordList(int page){
+        post(WebUrlUtil.POST_RechargeDetail_LIST,false,service ->manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"page",page),WebUrlUtil.POST_RechargeDetail_LIST)));
     }
 
     /**

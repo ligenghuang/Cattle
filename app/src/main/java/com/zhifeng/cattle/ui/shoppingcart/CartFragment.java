@@ -284,7 +284,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
             case R.id.f_right_iv:
                 //todo 返回首页
                 MainActivity.Position = 0;
-                ((MainActivity)mActivity).setSelectedLin(MainActivity.Position);
+                ((MainActivity)mActivity).setSelectedLin();
                 break;
         }
     }
@@ -331,7 +331,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
                 if (i == 0){
                     id = list.get(i).getCart_id()+"";
                 }else {
-                    id = ","+list.get(i).getCart_id();
+                    id = id+","+list.get(i).getCart_id();
                 }
             }
         }

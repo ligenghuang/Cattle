@@ -254,7 +254,7 @@ public class CollectionActivity extends UserBaseActivity<CollectionAction> imple
                 if (i == 0){
                     id = list.get(i).getGoods_id()+"";
                 }else {
-                    id = ","+list.get(i).getGoods_id();
+                    id = id+","+list.get(i).getGoods_id();
                 }
             }
         }

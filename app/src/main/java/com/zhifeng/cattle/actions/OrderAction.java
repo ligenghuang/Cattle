@@ -150,7 +150,7 @@ public class OrderAction extends BaseAction<OrderView> {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-                            if (generalDto.getStatus() == 1) {
+                            if (generalDto.getStatus() == 1 || generalDto.getStatus() == 200) {
                                 //todo 修改订单状态成功
                                 String text = "";
                                 switch (status) {

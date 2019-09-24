@@ -81,6 +81,18 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
     }
 
     /**
+     * 加入购物车
+     * @param sku_id
+     * @param cart_number
+     */
+    public void addCart(int sku_id,int cart_number){
+        post(WebUrlUtil.POST_ADDCART,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),"sku_id",sku_id,"cart_number",cart_number),
+                        WebUrlUtil.POST_ADDCART)
+        ));
+    }
+
+    /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
      *
      * @param action
@@ -184,6 +196,22 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                             }
                         }
 //                        view.onError(msg, action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_ADDCART:
+                        //todo 加入购物车
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+                            if (generalDto.getStatus() == 1||generalDto.getStatus() == 200) {
+                                //todo 加入购物车成功
+                                view.addCartSuccess(generalDto.getMsg());
+                                return;
+                            }
+                            view.onError(generalDto.getMsg(), action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg, action.getErrorType());
                         break;
                 }
 

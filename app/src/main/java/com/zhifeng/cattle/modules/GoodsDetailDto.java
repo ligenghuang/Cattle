@@ -163,6 +163,15 @@ public class GoodsDetailDto {
         private List<CommentlistBean> commentlist;
         private List<ProductAttrBean> productAttr;
         private List<ProductSkuBean> productSku;
+        private String service;
+
+        public String getService() {
+            return service == null ? "" : service;
+        }
+
+        public void setService(String service) {
+            this.service = service == null ? "" : service;
+        }
 
         public void setGoods_id(int goods_id) {
             this.goods_id = goods_id;

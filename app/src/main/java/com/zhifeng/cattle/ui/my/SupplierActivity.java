@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.lgh.huanglib.util.data.ValidateUtils;
@@ -98,13 +100,22 @@ public class SupplierActivity extends UserBaseActivity<SupplierAction> implement
             showNormalToast(R.string.supplier_tab_6);
             return;
         }
-        baseAction.postSupplier(name, phone);
+      if (CheckNetwork.checkNetwork2(mContext)){
+          loadDialog();
+          baseAction.postSupplier(name, phone);
+      }
     }
 
     @Override
     public void postSupplierSuccess(Supplier supplier) {
+        loadDiss();
         showNormalToast(R.string.supplier_tab_7);
-        finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 2000);
     }
 
     @Override
