@@ -47,7 +47,7 @@ public class TeamListActivity extends UserBaseActivity<TeamListAction> implement
     private TeamListAdapter adapter;
     private int page = 1;
     private boolean isRefresh = true;
-    private boolean isSelect = true;
+    private boolean isMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,14 +124,15 @@ public class TeamListActivity extends UserBaseActivity<TeamListAction> implement
         List<TeamList.DataBeanX.DataBean> dataBeans = teamList.getData().getData();
         if (dataBeans.size() != 0) {
             recyclerview.setVisibility(View.VISIBLE);
-            isSelect = page > teamList.getData().getLast_page();
+            isMore = page > teamList.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(dataBeans);
             } else {
                 adapter.loadMore(dataBeans);
             }
         } else {
-            isSelect = false;
+            isMore = false;
             loadSwapTab();
         }
     }
@@ -140,7 +141,7 @@ public class TeamListActivity extends UserBaseActivity<TeamListAction> implement
      * tab变换 加载更多的显示方式
      */
     public void loadSwapTab() {
-        if (!isSelect) {
+        if (!isMore) {
             L.e("xx", "设置为没有加载更多....");
             refreshLayout.finishLoadMoreWithNoMoreData();
             refreshLayout.setNoMoreData(true);

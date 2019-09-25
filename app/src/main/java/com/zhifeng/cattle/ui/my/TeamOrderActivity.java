@@ -47,7 +47,7 @@ public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> impleme
     private TeamOrderAdapter adapter;
     private int page = 1;
     private boolean isRefresh = true;
-    private boolean isSelect = true;
+    private boolean isMore = true;
     private String team_member_id;
 
     @Override
@@ -123,14 +123,15 @@ public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> impleme
         List<TeamOrder.DataBeanX.DataBean> dataBeans = teamOrder.getData().getData();
         if (dataBeans.size() != 0) {
             recyclerview.setVisibility(View.VISIBLE);
-            isSelect = page > teamOrder.getData().getLast_page();
+            isMore = page > teamOrder.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(dataBeans);
             } else {
                 adapter.loadMore(dataBeans);
             }
         } else {
-            isSelect = false;
+            isMore = false;
             loadSwapTab();
         }
     }
@@ -139,7 +140,7 @@ public class TeamOrderActivity extends UserBaseActivity<TeamOrderAction> impleme
      * tab变换 加载更多的显示方式
      */
     public void loadSwapTab() {
-        if (!isSelect) {
+        if (!isMore) {
             L.e("xx", "设置为没有加载更多....");
             refreshLayout.finishLoadMoreWithNoMoreData();
             refreshLayout.setNoMoreData(true);
