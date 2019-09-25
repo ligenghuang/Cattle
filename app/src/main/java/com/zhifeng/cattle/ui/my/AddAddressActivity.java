@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.AddAddressAction;
 import com.zhifeng.cattle.modules.AddressDetailDto;
@@ -305,6 +306,12 @@ public class AddAddressActivity extends UserBaseActivity<AddAddressAction> imple
             showNormalToast(ResUtil.getString(R.string.add_address_tab_4));
             return;
         }
+
+        if (!ValidateUtils.isPhone2(etMobile.getText().toString())){
+            showNormalToast(ResUtil.getString(R.string.modify_mobile_tab_17));
+            return;
+        }
+
         post.setMobile(etMobile.getText().toString());
 
         //判断是否选择收货地址

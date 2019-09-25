@@ -86,11 +86,15 @@ public class ActivityStack extends MyApplication {
      */
     public  void removeAll() {
         //finish所有的Activity
-        for (WeakReference<Activity> task : activitys) {
-            if (!task.get().isFinishing()) {
-                task.get().finish();
-            }
-        }
+       try{
+           for (WeakReference<Activity> task : activitys) {
+               if (!task.get().isFinishing()) {
+                   task.get().finish();
+               }
+           }
+       }catch (NullPointerException e){
+
+       }
         activitys.clear();
     }
 

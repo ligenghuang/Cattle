@@ -150,6 +150,7 @@
     <string name="modify_mobile_tab_14">提交</string>
     <string name="modify_mobile_tab_15">修改手机号码成功</string>
     <string name="modify_mobile_tab_16">请输入短信验证码</string>
+    <string name="modify_mobile_tab_17">请输入有效的手机号码</string>
 
     <string name="pay_pwd_tab_1">修改支付密码</string>
     <string name="pay_pwd_tab_2">忘记支付密码</string>

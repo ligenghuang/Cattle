@@ -129,9 +129,9 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
                     taxfee = money * rate;
                     actual = money - taxfee;
                 }
-
-                tvWithdrawalTaxfee.setText(ResUtil.getFormatString(R.string.withdrawal_tab_6,taxfee+""));//手续费
-                tvWithdrawalActual.setText(ResUtil.getFormatString(R.string.withdrawal_tab_7,actual+""));//实际到账
+                DecimalFormat df = new DecimalFormat("#0.00");
+                tvWithdrawalTaxfee.setText(ResUtil.getFormatString(R.string.withdrawal_tab_6,df.format(taxfee)));//手续费
+                tvWithdrawalActual.setText(ResUtil.getFormatString(R.string.withdrawal_tab_7,df.format(actual)));//实际到账
             }
 
             @Override
@@ -162,7 +162,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
     public void getBalanceSuccess(BalanceDto balanceDto) {
         loadDiss();
         money = Double.parseDouble(balanceDto.getData().getRemainder_money());
-        DecimalFormat df = new DecimalFormat("#0.00000");
+        DecimalFormat df = new DecimalFormat("#0.00");
         tvBalanceMoney.setText("￥" + df.format(money));
         tvAlipayName.setText(balanceDto.getData().getAlipay());
         rate = balanceDto.getData().getRate();
@@ -238,7 +238,8 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
                 break;
             case R.id.tv_withdrawal_money_all:
                 //todo 全部提现
-                etWithdrawalMoney.setText(money + "");
+                DecimalFormat df = new DecimalFormat("#0.00");
+                etWithdrawalMoney.setText(df.format(money));
                 break;
         }
     }

@@ -32,7 +32,7 @@ public class BonusMonListAdapter extends BaseRecyclerAdapter<BonusMonDto.DataBea
             case 1:
                 res = R.color.color_A8ACAC;
                 break;
-            case 3:
+            case 2:
                 res = R.color.color_B06A31;
                 break;
             default:

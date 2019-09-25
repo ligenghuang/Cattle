@@ -25,7 +25,8 @@ public class GoodsCommentsAdapter extends BaseRecyclerAdapter<GoodsComment.DataB
         ImageView ivAvatar = holder.itemView.findViewById(R.id.ivAvatar);
         GlideUtil.setImageCircle(context, model.getAvatar(), ivAvatar, R.mipmap.touxiang);
         holder.text(R.id.tv_Mobile, model.getMobile());
-        holder.text(R.id.tv_AddTime, DynamicTimeFormat.LongToString5(model.getAdd_time()));
+        long time = model.getAdd_time() * (long) 1000;
+        holder.text(R.id.tv_AddTime, DynamicTimeFormat.LongToString5(time));
         holder.text(R.id.tv_Comment, model.getContent());
         RecyclerView rv=holder.itemView.findViewById(R.id.rv);
         rv.setLayoutManager(new GridLayoutManager(context,4));

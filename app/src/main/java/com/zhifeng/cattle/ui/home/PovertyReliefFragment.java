@@ -79,6 +79,7 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
     List<String> imgs = new ArrayList<>();
     List<String> tips = new ArrayList<>();
     List<String> url = new ArrayList<>();
+    List<String> titles = new ArrayList<>();
 
     HomeClassifyAdapter homeClassifyAdapter;//分类列表
     HomeSpreeAdapter recommendSpreeAdapter;//优选单品列表
@@ -167,7 +168,7 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
                 L.e("lghl", url.get(position));
                 bannerRecomment.stopAutoPlay();
-                jumpAdvertisingActivity(url.get(position));
+                jumpAdvertisingActivity(url.get(position),titles.get(position));
             }
         });
     }
@@ -176,9 +177,10 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
      * 跳转至广告详情页
      * @param url
      */
-    private void jumpAdvertisingActivity(String url){
+    private void jumpAdvertisingActivity(String url,String title){
         Intent intent = new Intent(mContext,AdvertisingActivity.class);
         intent.putExtra("url",url);
+        intent.putExtra("title",title);
         startActivity(intent);
     }
 
@@ -258,11 +260,13 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
             imgs = new ArrayList<>();
             tips = new ArrayList<>();
             url = new ArrayList<>();
+            titles = new ArrayList<>();
             for (int i = 0; i < banners.size(); i++) {
                 PovertyReliefDto.DataBean.BannersBean bannersBean = banners.get(i);
                 imgs.add(bannersBean.getPicture());
                 tips.add("");
                 url.add(bannersBean.getUrl());
+                titles.add(bannersBean.getTitle());
             }
             bannerRecomment.setAutoPlayAble(true);
             bannerRecomment.setData(imgs, tips);
@@ -292,7 +296,7 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
             imgs.get(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    jumpAdvertisingActivity(selfnav.get(finalI).getUrl());
+                    jumpAdvertisingActivity(selfnav.get(finalI).getUrl(),selfnav.get(finalI).getTitle());
                 }
             });
         }

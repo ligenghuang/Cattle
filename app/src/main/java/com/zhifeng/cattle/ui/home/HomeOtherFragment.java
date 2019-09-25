@@ -78,6 +78,7 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
 
     List<String> imgs = new ArrayList<>();
     List<String> tips = new ArrayList<>();
+    List<String> titles = new ArrayList<>();
     List<String> url = new ArrayList<>();
     HomeClassifyAdapter homeClassifyAdapter;//分类列表
     HomeOtherSelfnavAdapter homeOtherSelfnavAdapter;//广告列表
@@ -172,7 +173,7 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
             public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
                 L.e("lghl", url.get(position));
                 bannerRecomment.stopAutoPlay();
-                jumpAdvertisingActivity(url.get(position));
+                jumpAdvertisingActivity(url.get(position),titles.get(position));
             }
         });
     }
@@ -181,9 +182,10 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
      * 跳转至广告详情页
      * @param url
      */
-    private void jumpAdvertisingActivity(String url){
+    private void jumpAdvertisingActivity(String url,String title){
         Intent intent = new Intent(mContext,AdvertisingActivity.class);
         intent.putExtra("url",url);
+        intent.putExtra("title",title);
         startActivity(intent);
     }
 
@@ -297,11 +299,13 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
             imgs = new ArrayList<>();
             tips = new ArrayList<>();
             url = new ArrayList<>();
+            titles = new ArrayList<>();
             for (int i = 0; i < banners.size(); i++) {
                 BannersBean bannersBean = banners.get(i);
                 imgs.add(bannersBean.getPicture());
                 tips.add("");
                 url.add(bannersBean.getUrl());
+                titles.add(bannersBean.getTitle());
             }
             bannerRecomment.setAutoPlayAble(true);
             bannerRecomment.setData(imgs, tips);

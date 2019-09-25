@@ -1,6 +1,8 @@
 package com.zhifeng.cattle.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -118,14 +120,21 @@ public class RefundActivity extends UserBaseActivity<RefundAction> implements Re
                 showNormalToast(ResUtil.getString(R.string.refund_tab5));
                 return;
             }
+            loadDialog();
             baseAction.applyRefund(order_id, 0, remark);
         }
     }
 
     @Override
     public void applyRefundSuccess(RefundDto refundDto) {
+        loadDiss();
         showNormalToast(ResUtil.getString(R.string.refund_tab6));
-        finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 2000);
     }
 
     @Override

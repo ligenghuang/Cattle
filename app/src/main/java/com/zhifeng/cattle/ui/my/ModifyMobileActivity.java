@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lgh.huanglib.util.data.ValidateUtils;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.ModifyMoblieAction;
 import com.zhifeng.cattle.modules.BaseDto;
@@ -144,6 +145,11 @@ public class ModifyMobileActivity extends UserBaseActivity<ModifyMoblieAction> i
                     showNormalToast(ResUtil.getString(R.string.modify_mobile_tab_2));
                     return;
                 }
+                if (!ValidateUtils.isPhone2(etModifyMoblie.getText().toString())){
+                    showNormalToast(ResUtil.getString(R.string.modify_mobile_tab_17));
+                    return;
+                }
+
                 moblie = etModifyMoblie.getText().toString();
                 verifyPhone(moblie);
                 break;

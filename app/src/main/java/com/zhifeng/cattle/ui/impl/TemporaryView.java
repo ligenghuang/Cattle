@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -26,4 +27,11 @@ public interface TemporaryView extends BaseView {
      */
     void submitOrder(SubmitOrderPost submitOrderPost);
     void submitOrderSuccess(SubmitOrderDto submitOrderDto);
+
+    /**
+     * 支付
+     */
+    void payOrder(SubmitOrderPost submitOrderPost);
+    void payOrderSuccess(PayOrderDto submitOrderDto);
+    void payOrderError(String msg);
 }

@@ -158,7 +158,7 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/color_fd69a5</item>
-        <item name="colorPrimaryDark">@color/color_fd69a5</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
         <item name="colorAccent">@color/color_fd69a5</item>
     </style>
 

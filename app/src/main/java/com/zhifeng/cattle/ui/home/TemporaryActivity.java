@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.TemporaryAction;
 import com.zhifeng.cattle.adapters.GoodsResAdapter;
 import com.zhifeng.cattle.adapters.PayTypeAdapter;
+import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -36,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * @ClassName:
  * @Description: 提交订单
@@ -165,7 +169,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     @Override
     public void getTemporary() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.getTemporary(cartId);
         }
     }
@@ -196,10 +200,82 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     public void submitOrderSuccess(SubmitOrderDto submitOrderDto) {
         loadDiss();
-        Intent intent = new Intent(mContext, OrderDetailActivity.class);
-        intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
-        startActivity(intent);
-        finish();
+        switch (payType) {
+            case 1:
+                //余额支付
+                bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
+                bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
+                    @Override
+                    public void inputFinish(String password) {
+                        //支付订单
+                        SubmitOrderPost post = new SubmitOrderPost();
+                        post.setCart_id(submitOrderDto.getData());
+                        post.setPay_type(payType + "");
+                        post.setPwd(password);
+                        payOrder(post);
+                    }
+
+                    @Override
+                    public void close() {
+                        //取消支付  跳转至订单详情页
+                        Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                        intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                bugPwdDialog.show();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+
+    }
+
+    /**
+     * 支付
+     *
+     * @param submitOrderPost
+     */
+    @Override
+    public void payOrder(SubmitOrderPost submitOrderPost) {
+       if (CheckNetwork.checkNetwork2(mContext)){
+           loadDialog();
+           baseAction.payOrder(submitOrderPost);
+       }
+    }
+
+    /**
+     * 支付成功
+     *
+     * @param submitOrderDto
+     */
+    @Override
+    public void payOrderSuccess(PayOrderDto submitOrderDto) {
+        loadDiss();
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                intent.putExtra("order_id", submitOrderDto.getData().getOrder_id());
+                startActivity(intent);
+                finish();
+            }
+        }, 2000);
+    }
+
+    /**
+     * 支付失败
+     *
+     * @param msg
+     */
+    @Override
+    public void payOrderError(String msg) {
+        L.e("lgh_pay", "输出返回结果4" + msg);
+        showNormalToast(msg);
     }
 
     private void bindView(Temporary temporary) {
@@ -250,7 +326,6 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     @Override
     public void onError(String message, int code) {
-
         loadDiss();
         showNormalToast(message);
     }
@@ -264,22 +339,15 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             showNormalToast(ResUtil.getString(R.string.cart_tab_36));
             return;
         }
-        bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
-        bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
-            @Override
-            public void inputFinish(String password) {
-                SubmitOrderPost post = new SubmitOrderPost();
-                post.setCart_id(cartId);
-                post.setAddress_id(addressId + "");
-                post.setPay_type(payType + "");
-                if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
-                    post.setUser_note(etOrderNote.getText().toString());
-                }
-                post.setPwd(password);
-                submitOrder(post);
-            }
-        });
-        bugPwdDialog.show();
+        SubmitOrderPost post = new SubmitOrderPost();
+        post.setCart_id(cartId);
+        post.setAddress_id(addressId + "");
+        post.setPay_type(payType + "");
+        if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
+            post.setUser_note(etOrderNote.getText().toString());
+        }
+        submitOrder(post);
+
     }
 
     @OnClick({R.id.ll, R.id.tvCertificate, R.id.ll_order_address, R.id.btnPay})
@@ -310,8 +378,8 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 String address_info = data.getStringExtra("address");
                 String phone = data.getStringExtra("phone");
                 String consignee = data.getStringExtra("consignee");
-                addressId = data.getIntExtra("address_id",-1);
-                tvAddress.setText(address_info+" "+address);
+                addressId = data.getIntExtra("address_id", -1);
+                tvAddress.setText(address_info + " " + address);
                 tvUser.setText(consignee);
                 tvMoblie.setText(phone);
                 llAddress.setVisibility(View.VISIBLE);

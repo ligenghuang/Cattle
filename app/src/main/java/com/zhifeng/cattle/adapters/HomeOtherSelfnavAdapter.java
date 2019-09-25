@@ -37,6 +37,7 @@ public class HomeOtherSelfnavAdapter extends BaseRecyclerAdapter<HomeOtherSelfna
                 //todo 跳转至广告页
                 Intent intent = new Intent(context, AdvertisingActivity.class);
                 intent.putExtra("url",model.getUrl());
+                intent.putExtra("title",model.getTitle());
                 context.startActivity(intent);
             }
         });

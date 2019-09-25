@@ -156,6 +156,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         if (beans.size() > 0) {
             recyclerview.setVisibility(View.VISIBLE);
             isMore = page < goodsComment.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(beans);
             } else {

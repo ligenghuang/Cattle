@@ -105,7 +105,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
 
         //todo 2019/09/20 12:00 获取银行卡接口暂无 先注释
 //        getBank();
-        loadView();
+//        loadView();
     }
 
     /**

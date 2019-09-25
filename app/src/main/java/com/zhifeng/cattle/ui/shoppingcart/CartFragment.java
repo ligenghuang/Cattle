@@ -186,6 +186,17 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
             llNull.setVisibility(View.GONE);
             cartListAdapter.refresh(cartListDto.getData());
             fTitleTv.setText(ResUtil.getFormatString(R.string.cart_tab_9,cartListDto.getData().size()+""));
+            double total = 0;
+            int num = 0;
+            for (int i = 0; i <cartListDto.getData().size() ; i++) {
+                if (cartListDto.getData().get(i).getSelected() == 1){
+                    double totalPrice = Double.parseDouble(cartListDto.getData().get(i).getGoods_price()) * cartListDto.getData().get(i).getGoods_num();
+                    total = total+totalPrice;
+                    num++;
+                }
+            }
+            tvCartPrice.setText(ResUtil.getFormatString(R.string.cart_tab_5,total+""));
+            ivCartTotal.setSelected(num == cartListDto.getData().size());
         }else {
             llData.setVisibility(View.GONE);
             llNull.setVisibility(View.VISIBLE);

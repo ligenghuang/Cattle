@@ -55,6 +55,7 @@ public class AdvertisingActivity extends UserBaseActivity {
     ProgressBar progressBar;
 
     String service;
+    String title;
 
     @Override
     public int intiLayout() {
@@ -87,7 +88,6 @@ public class AdvertisingActivity extends UserBaseActivity {
                 .navigationBarWithKitkatEnable(false)
                 .init();
         toolbar.setNavigationOnClickListener(view -> finish());
-        fTitleTv.setText(ResUtil.getString(R.string.main_tab_5));
     }
 
     @Override
@@ -97,6 +97,8 @@ public class AdvertisingActivity extends UserBaseActivity {
         mContext = this;
 
         service = getIntent().getStringExtra("url");
+        title = getIntent().getStringExtra("title");
+        fTitleTv.setText(title);
 
         webView.loadUrl(service);
     }

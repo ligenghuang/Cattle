@@ -210,7 +210,7 @@ public class AreaPickerView extends Dialog {
                 oldCitySelected = -1;
                 oldAreaSelected = -1;
                 strings.set(0, addressBeans.get(position).getArea_name());
-
+                Code = addressBeans.get(position).getCode();
 
             }
         });

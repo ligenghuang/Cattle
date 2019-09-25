@@ -55,6 +55,7 @@ public class AddAddressAction extends BaseAction<AddAddressView>{
      * @param addOrEditAddressPost
      */
     public void AddOrEditAddress(AddOrEditAddressPost addOrEditAddressPost){
+        L.e("lgh_address","address = "+addOrEditAddressPost.toString());
         Map<Object, Object> map = new HashMap<>();
         map = CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
                 "consignee",addOrEditAddressPost.getConsignee(),"district",Integer.parseInt(addOrEditAddressPost.getDistrict()),"address",addOrEditAddressPost.getAddress(),

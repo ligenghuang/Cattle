@@ -53,6 +53,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
 
     int type;
     private boolean isVisible;
+    PayPwdDialog bugPwdDialog;
 
     public OrderFrament(int type) {
         this.type = type;
@@ -150,7 +151,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
                 //todo 去付款
                 if (payType == 1){
                     //todo 余额支付
-                    PayPwdDialog bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, Double.parseDouble(money), "余额支付");
+                    bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, Double.parseDouble(money), "余额支付");
                     bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
                         @Override
                         public void inputFinish(String password) {
@@ -159,6 +160,11 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
                             post.setPay_type(payType + "");
                             post.setPwd(password);
                             submitOrder(post);
+                        }
+
+                        @Override
+                        public void close() {
+                            bugPwdDialog.dismiss();
                         }
                     });
                     bugPwdDialog.show();
@@ -174,6 +180,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Refund(int id) {
                 //todo 退款
+                Intent intent = new Intent(mContext, RefundActivity.class);
+                intent.putExtra("order_id", String.valueOf(id));
+                startActivity(intent);
             }
 
             @Override
@@ -239,7 +248,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     @Override
     public void editOrderStatusSuccess(String msg, int status) {
         loadDiss();
-        refreshLayout.autoRefresh();
+        if (isVisible && OrderActivity.Position == type) {
+            refreshLayout.autoRefresh();
+        }
     }
 
     /**
@@ -262,7 +273,13 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     @Override
     public void submitOrderSuccess(PayOrderDto submitOrderDto) {
         loadDiss();
-        refreshLayout.autoRefresh();
+        if (bugPwdDialog != null){
+            //todo 关闭密码输入框
+            bugPwdDialog.dismiss();
+        }
+        if (isVisible && OrderActivity.Position == type) {
+            refreshLayout.autoRefresh();
+        }
     }
 
     /**

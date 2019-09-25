@@ -16,6 +16,17 @@ public class AddOrEditAddressPost {
     private String mobile;
     private int is_default;
 
+    @Override
+    public String toString() {
+        return "AddOrEditAddressPost{" +
+                "address_id=" + address_id +
+                ", consignee='" + consignee + '\'' +
+                ", district='" + district + '\'' +
+                ", address='" + address + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", is_default=" + is_default +
+                '}';
+    }
 
     public int getAddress_id() {
         return address_id;
@@ -34,7 +45,7 @@ public class AddOrEditAddressPost {
     }
 
     public String getDistrict() {
-        return district == null ? "" : district;
+        return district == null ? "0" : district;
     }
 
     public void setDistrict(String district) {

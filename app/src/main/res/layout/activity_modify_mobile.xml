@@ -101,6 +101,7 @@
                     android:textColorHint="@color/color_9"
                     android:textSize="@dimen/text_size12"
                     android:inputType="phone"
+                    android:maxLength="11"
                     android:hint="@string/modify_mobile_tab_7"/>
 
 

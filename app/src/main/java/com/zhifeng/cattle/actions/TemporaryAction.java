@@ -1,11 +1,14 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.GeneralDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -29,11 +32,27 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
         post(WebUrlUtil.POST_TEMPORARY, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "cart_id", cart_id), WebUrlUtil.POST_TEMPORARY)));
     }
 
+    /**
+     * 提交订单
+     * @param submitOrderPost
+     */
     public void submitOrder(SubmitOrderPost submitOrderPost){
         post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
                         "cart_id",submitOrderPost.getCart_id(),"address_id",submitOrderPost.getAddress_id(),"pay_type",submitOrderPost.getPay_type()
                 ,"user_note",submitOrderPost.getUser_note(),"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_SUBMITORDER)
+        ));
+    }
+
+    /**
+     * 支付
+     * @param submitOrderPost
+     */
+    public void payOrder(SubmitOrderPost submitOrderPost){
+        post(WebUrlUtil.POST_PAY_ORDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
+                        "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
+                        ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
         ));
     }
 
@@ -81,6 +100,32 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                         view.onError(submitOrderDto.getMsg(), action.getErrorType());
                         return;
                     }
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_PAY_ORDER:
+                    //todo 订单支付
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                      try{
+                          L.e("lgh_pay", "输出返回结果1 " + action.getUserData().toString());
+                          PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
+                          }.getType());
+                          if (payOrderDto.getStatus() == 200) {
+                              //todo 订单支付成功
+                              view.payOrderSuccess(payOrderDto);
+                              return;
+                          }
+                          view.onError(payOrderDto.getMsg(), action.getErrorType());
+                          return;
+                      }catch (JsonSyntaxException e){
+                          L.e("lgh_pay", "输出返回结果2 " + action.getUserData().toString());
+                          GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                          }.getType());
+                          view.payOrderError(generalDto.getMsg());
+                          return;
+                      }
+                    }
+                    L.e("lgh_pay", "输出返回结果3 " + action.getUserData().toString());
                     view.onError(msg, action.getErrorType());
                     break;
             }

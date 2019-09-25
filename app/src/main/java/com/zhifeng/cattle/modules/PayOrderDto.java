@@ -47,7 +47,7 @@ public class PayOrderDto {
 
         private int order_id;
         private double order_amount;
-        private int goods_name;
+        private String goods_name;
         private String order_sn;
 
         public int getOrder_id() {
@@ -66,12 +66,12 @@ public class PayOrderDto {
             this.order_amount = order_amount;
         }
 
-        public int getGoods_name() {
-            return goods_name;
+        public String getGoods_name() {
+            return goods_name == null ? "" : goods_name;
         }
 
-        public void setGoods_name(int goods_name) {
-            this.goods_name = goods_name;
+        public void setGoods_name(String goods_name) {
+            this.goods_name = goods_name == null ? "" : goods_name;
         }
 
         public String getOrder_sn() {

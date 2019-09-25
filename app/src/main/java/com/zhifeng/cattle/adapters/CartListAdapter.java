@@ -112,7 +112,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                if (!Util.isFastDoubleClick()){
                    if (model.getGoods_num() == 1){
                        model.setGoods_num(1);
-                       editText.setText(model.getGoods_num());
+                       editText.setText(model.getGoods_num()+"");
                        Toast.makeText(context, ResUtil.getString(R.string.cart_tab_7), Toast.LENGTH_SHORT).show();
                    }else {
                        int num = model.getGoods_num()-1;

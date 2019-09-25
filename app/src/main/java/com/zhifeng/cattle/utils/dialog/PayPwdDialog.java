@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -123,6 +124,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
         loadView();
         setOnDismissListener(this);
     }
+
 
     // 这里，我们没有使用默认的数字键盘，因为第10个数字不显示.而是空白
     private void initValueList() {
@@ -254,7 +256,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
     void Onclick(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
-                dismiss();
+               onFinishInput.close();
                 break;
         }
     }
@@ -295,6 +297,6 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
     public interface OnFinishInput {
         void inputFinish(String password);
-
+        void close();
     }
 }
