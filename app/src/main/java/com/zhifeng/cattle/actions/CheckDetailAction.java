@@ -45,14 +45,14 @@ public class CheckDetailAction extends BaseAction<CheckDetailView> {
                     //todo 获取账单明细
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        CheckDetail detailRecord = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CheckDetail>() {
+                        CheckDetail checkDetail = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CheckDetail>() {
                         }.getType());
-                        if (detailRecord.getStatus() == 200) {
+                        if (checkDetail.getStatus() == 200) {
                             //todo 获取账单明细 成功
-                            view.getCheckDetailSuccess(detailRecord);
+                            view.getCheckDetailSuccess(checkDetail);
                             return;
                         }
-                        view.onError(detailRecord.getMsg(), action.getErrorType());
+                        view.onError(checkDetail.getMsg(), action.getErrorType());
                         return;
                     }
                     view.onError(msg, action.getErrorType());

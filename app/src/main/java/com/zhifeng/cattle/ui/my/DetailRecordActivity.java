@@ -49,7 +49,7 @@ public class DetailRecordActivity extends UserBaseActivity<DetailRecordAction> i
     private int page = 1;
     private boolean isRefresh = true;
     //是否加载更多
-    private boolean isSlect = true;
+    private boolean isMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,14 +142,15 @@ public class DetailRecordActivity extends UserBaseActivity<DetailRecordAction> i
         List<DetailRecord.DataBeanX.DataBean> dataBeans = detailRecord.getData().getData();
         if (dataBeans.size() != 0) {
             recyclerview.setVisibility(View.VISIBLE);
-            isSlect = page < detailRecord.getData().getLast_page();
+            isMore = page < detailRecord.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(dataBeans);
             } else {
                 adapter.loadMore(dataBeans);
             }
         } else {
-            isSlect = false;
+            isMore = false;
             loadSwapTab();
         }
     }
@@ -158,7 +159,7 @@ public class DetailRecordActivity extends UserBaseActivity<DetailRecordAction> i
      * tab变换 加载更多的显示方式
      */
     public void loadSwapTab() {
-        if (!isSlect) {
+        if (!isMore) {
             L.e("xx", "设置为没有加载更多....");
             refreshLayout.finishLoadMoreWithNoMoreData();
             refreshLayout.setNoMoreData(true);

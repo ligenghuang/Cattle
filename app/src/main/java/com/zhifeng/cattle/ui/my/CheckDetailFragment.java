@@ -67,6 +67,39 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
     }
 
     @Override
+    protected void initialize() {
+        adapter = new CheckDetailAdapter();
+        rv.addItemDecoration(new DividerItemDecoration(mContext, RecyclerView.VERTICAL));
+        rv.setLayoutManager(new LinearLayoutManager(mContext));
+        rv.setAdapter(adapter);
+        loadView();
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        rv.setVisibility(View.GONE);
+        if (isVisible && ((CheckDetailActivity) mActivity).mLogType == log_type) {
+            refreshLayout.autoRefresh();
+        }
+    }
+
+    @Override
+    protected void loadView() {
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getCheckDetail();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                loadMoreCheckDetail();
+            }
+        });
+    }
+
+    @Override
     public void getCheckDetail() {
         if (CheckNetwork.checkNetwork2(mContext)) {
             page = 1;
@@ -74,6 +107,16 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
             baseAction.getCheckDetail(log_type, pageSize, page);
         } else {
             refreshLayout.finishRefresh();
+        }
+    }
+
+    private void loadMoreCheckDetail() {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            isRefresh = false;
+            page++;
+            baseAction.getCheckDetail(log_type, pageSize, page);
+        } else {
+            refreshLayout.finishLoadMore();
         }
     }
 
@@ -85,12 +128,14 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
         if (beans.size() > 0) {
             rv.setVisibility(View.VISIBLE);
             isMore = page < checkDetail.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(beans);
             } else {
                 adapter.loadMore(beans);
             }
         } else {
+            rv.setVisibility(View.GONE);
             isMore = false;
             loadSwapTab();
         }
@@ -114,42 +159,6 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-    }
-
-    @Override
-    protected void initialize() {
-        adapter = new CheckDetailAdapter();
-        rv.addItemDecoration(new DividerItemDecoration(mContext, RecyclerView.VERTICAL));
-        rv.setLayoutManager(new LinearLayoutManager(mContext));
-        rv.setAdapter(adapter);
-        refreshLayout.autoRefresh();
-        loadView();
-    }
-
-    @Override
-    protected void loadView() {
-        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getCheckDetail();
-            }
-
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMoreCheckDetail();
-            }
-        });
-    }
-
-    private void loadMoreCheckDetail() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            isRefresh = false;
-            page++;
-            baseAction.getCheckDetail(log_type, pageSize, page);
-        } else {
-            refreshLayout.finishLoadMore();
-        }
     }
 
     void setLog_type(int log_type) {

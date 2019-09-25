@@ -40,6 +40,7 @@ public class CheckDetailActivity extends UserBaseActivity {
     TextView tvOutCome;
     @BindView(R.id.vp)
     ViewPager vp;
+    public int mLogType = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,28 +76,6 @@ public class CheckDetailActivity extends UserBaseActivity {
         fragments.add(outcomeFragment);
 
         vp.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
-        loadView();
-    }
-
-    @Override
-    protected void loadView() {
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                tvIncome.setSelected(position == 0);
-                tvOutCome.setSelected(position == 1);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     /**
@@ -118,7 +97,9 @@ public class CheckDetailActivity extends UserBaseActivity {
 
     @OnClick({R.id.tvIncome, R.id.tvOutCome})
     public void onClick(View v) {
-        int position = v.getId() == R.id.tvIncome ? 0 : 1;
-        vp.setCurrentItem(position);
+        mLogType = v.getId() == R.id.tvIncome ? 1 : 0;
+        tvIncome.setSelected(mLogType == 1);
+        tvOutCome.setSelected(mLogType == 0);
+        vp.setCurrentItem(v.getId() == R.id.tvIncome ? 0 : 1);
     }
 }

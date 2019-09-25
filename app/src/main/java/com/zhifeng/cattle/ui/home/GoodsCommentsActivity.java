@@ -27,7 +27,6 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @ClassName:
@@ -156,6 +155,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         if (beans.size() > 0) {
             recyclerview.setVisibility(View.VISIBLE);
             isMore = page < goodsComment.getData().getLast_page();
+            loadSwapTab();
             if (isRefresh) {
                 adapter.refresh(beans);
             } else {
@@ -200,8 +200,8 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         baseAction.toUnregister();
     }
 
-    @OnClick(R.id.tvLookUpAll)
-    public void onViewClicked(View view) {
-
-    }
+//    @OnClick(R.id.tvLookUpAll)
+//    public void onViewClicked(View view) {
+//
+//    }
 }
