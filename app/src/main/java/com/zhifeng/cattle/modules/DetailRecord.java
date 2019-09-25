@@ -6,21 +6,21 @@ import java.util.List;
 public class DetailRecord {
 
     /**
-     * status : 200
+     * data : {"total":1,"per_page":20,"current_page":1,"last_page":1,"data":[{"id":2275,"source_type":0,"balance":0.01,"note":"余额充值","create_time":"20190925"}]}
      * msg : 成功！
-     * data : {"total":24,"per_page":"1","current_page":1,"last_page":24,"data":[{"id":2249,"source_type":10,"balance":"0.72000000","note":"平级奖","create_time":1564755667}]}
+     * status : 200
      */
 
-    private int status;
-    private String msg;
     private DataBeanX data;
+    private String msg;
+    private int status;
 
-    public int getStatus() {
-        return status;
+    public DataBeanX getData() {
+        return data;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setData(DataBeanX data) {
+        this.data = data;
     }
 
     public String getMsg() {
@@ -31,25 +31,25 @@ public class DetailRecord {
         this.msg = msg == null ? "" : msg;
     }
 
-    public DataBeanX getData() {
-        return data;
+    public int getStatus() {
+        return status;
     }
 
-    public void setData(DataBeanX data) {
-        this.data = data;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public static class DataBeanX {
         /**
-         * total : 24
-         * per_page : 1
+         * total : 1
+         * per_page : 20
          * current_page : 1
-         * last_page : 24
-         * data : [{"id":2249,"source_type":10,"balance":"0.72000000","note":"平级奖","create_time":1564755667}]
+         * last_page : 1
+         * data : [{"id":2275,"source_type":0,"balance":0.01,"note":"余额充值","create_time":"20190925"}]
          */
 
         private int total;
-        private String per_page;
+        private int per_page;
         private int current_page;
         private int last_page;
         private List<DataBean> data;
@@ -62,11 +62,11 @@ public class DetailRecord {
             this.total = total;
         }
 
-        public String getPer_page() {
+        public int getPer_page() {
             return per_page;
         }
 
-        public void setPer_page(String per_page) {
+        public void setPer_page(int per_page) {
             this.per_page = per_page;
         }
 
@@ -99,37 +99,57 @@ public class DetailRecord {
 
         public static class DataBean {
             /**
-             * id : 2249
-             * source_type : 10
-             * balance : 0.72000000
-             * note : 平级奖
-             * create_time : 1564755667
+             * id : 2275
+             * source_type : 0
+             * balance : 0.01
+             * note : 余额充值
+             * create_time : 20190925
              */
 
             private int id;
             private int source_type;
-            private String balance;
+            private double balance;
             private String note;
-            private int create_time;
+            private String create_time;
 
             public int getId() {
                 return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
             }
 
             public int getSource_type() {
                 return source_type;
             }
 
-            public String getBalance() {
-                return balance == null ? "" : balance;
+            public void setSource_type(int source_type) {
+                this.source_type = source_type;
+            }
+
+            public double getBalance() {
+                return balance;
+            }
+
+            public void setBalance(double balance) {
+                this.balance = balance;
             }
 
             public String getNote() {
                 return note == null ? "" : note;
             }
 
-            public int getCreate_time() {
-                return create_time;
+            public void setNote(String note) {
+                this.note = note == null ? "" : note;
+            }
+
+            public String getCreate_time() {
+                return create_time == null ? "" : create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time == null ? "" : create_time;
             }
         }
     }
