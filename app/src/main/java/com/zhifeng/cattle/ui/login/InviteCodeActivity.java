@@ -23,6 +23,7 @@ import com.zhifeng.cattle.utils.data.MySp;
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @ClassName: 填写邀请码
@@ -81,19 +82,6 @@ public class InviteCodeActivity extends UserBaseActivity<InviteCodeAction> imple
     @Override
     protected void loadView() {
         super.loadView();
-        etInviteCode.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_PREVIOUS) {
-                    if (TextUtils.isEmpty(etInviteCode.getText().toString())) {
-                        showNormalToast(ResUtil.getString(R.string.invite_code_tab_2));
-                        return false;
-                    }
-                    inviteCode(etInviteCode.getText().toString());
-                }
-                return false;
-            }
-        });
     }
 
     @Override
@@ -103,6 +91,7 @@ public class InviteCodeActivity extends UserBaseActivity<InviteCodeAction> imple
 
     /**
      * 填写邀请码
+     *
      * @param code
      */
     @Override
@@ -115,6 +104,7 @@ public class InviteCodeActivity extends UserBaseActivity<InviteCodeAction> imple
 
     /**
      * 填写邀请码 成功
+     *
      * @param msg
      */
     @Override
@@ -131,6 +121,7 @@ public class InviteCodeActivity extends UserBaseActivity<InviteCodeAction> imple
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
@@ -150,5 +141,14 @@ public class InviteCodeActivity extends UserBaseActivity<InviteCodeAction> imple
     protected void onPause() {
         super.onPause();
         baseAction.toUnregister();
+    }
+
+    @OnClick(R.id.save)
+    public void onViewClicked() {
+        if (TextUtils.isEmpty(etInviteCode.getText().toString())) {
+            showNormalToast(ResUtil.getString(R.string.invite_code_tab_2));
+            return;
+        }
+        inviteCode(etInviteCode.getText().toString());
     }
 }

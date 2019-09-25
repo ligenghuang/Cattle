@@ -71,6 +71,8 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
      */
     boolean isReadAgreement = false;
 
+    String phone;
+
 
     @Override
     public int intiLayout() {
@@ -109,7 +111,8 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         super.init();
         mActicity = this;
         mContext = this;
-
+        phone = getIntent().getStringExtra("phone");
+        etLoginPhone.setText(phone);
         timer = new MyCountDownTimer(60000, 1000);
         loadView();
 
