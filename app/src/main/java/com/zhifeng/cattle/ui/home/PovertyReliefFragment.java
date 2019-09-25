@@ -161,6 +161,25 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
                 startActivity(i);
             }
         });
+
+        bannerRecomment.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                L.e("lghl", url.get(position));
+                bannerRecomment.stopAutoPlay();
+                jumpAdvertisingActivity(url.get(position));
+            }
+        });
+    }
+
+    /**
+     * 跳转至广告详情页
+     * @param url
+     */
+    private void jumpAdvertisingActivity(String url){
+        Intent intent = new Intent(mContext,AdvertisingActivity.class);
+        intent.putExtra("url",url);
+        startActivity(intent);
     }
 
     /**
@@ -269,6 +288,13 @@ public class PovertyReliefFragment extends UserBaseFragment<PovertyReliefAction>
             imgs.get(i).setVisibility(View.VISIBLE);
             GlideUtil.setImage(mContext, selfnav.get(i).getImage(), imgs.get(i), R.drawable.icon_selfnav_banner);
             L.e("lgh_selfnav","selfnav_img  = "+selfnav.get(i).getImage());
+            int finalI = i;
+            imgs.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    jumpAdvertisingActivity(selfnav.get(finalI).getUrl());
+                }
+            });
         }
     }
 

@@ -108,12 +108,14 @@ public class ChangeAccountActivity extends UserBaseActivity {
             public void OnClick(LoginUser dto) {
 //                MySp.setAccessToken(mContext,dto.getToken());
 //                MySp.setUserName(mContext,dto.getRealname());
-                MySp.clearAllSP(mContext);
-                MainActivity.isLogin2 = true;
-                Intent intent = new Intent(mContext,LoginActivity.class);
-                intent.putExtra("phone",dto.getMobile());
-                startActivity(intent);
-                ActivityStack.getInstance().exitIsNotHaveMain(LoginActivity.class);
+                if (!dto.getToken().equals(MySp.getAccessToken(mContext))) {
+                    MySp.clearAllSP(mContext);
+                    MainActivity.isLogin2 = true;
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.putExtra("phone", dto.getMobile());
+                    startActivity(intent);
+                    ActivityStack.getInstance().exitIsNotHaveMain(LoginActivity.class);
+                }
                 finish();
             }
         });

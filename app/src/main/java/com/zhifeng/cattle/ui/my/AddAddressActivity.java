@@ -140,7 +140,7 @@ public class AddAddressActivity extends UserBaseActivity<AddAddressAction> imple
             public void callback(String code,String name) {
                 Isdistrict = true;
                 district = code;
-                tvDistrict.setText(name);
+                tvDistrict.setText(name.replaceFirst("请选择",""));
             }
         });
     }
@@ -233,7 +233,11 @@ public class AddAddressActivity extends UserBaseActivity<AddAddressAction> imple
     @Override
     public void getRegionError() {
         loadDiss();
-        areaPickerView.setAreas(new ArrayList<>());
+       if (isCity){
+           areaPickerView.setCityBeans(new ArrayList<>());
+       }else if (isArea){
+           areaPickerView.setAreas(new ArrayList<>());
+       }
     }
 
     /**

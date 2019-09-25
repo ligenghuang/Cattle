@@ -38,5 +38,6 @@
     <string name="cart_tab_36">请选择收货地址</string>
     <string name="cart_tab_37">操作频繁，请稍等</string>
     <string name="cart_tab_38">请选择商品</string>
+    <string name="cart_tab_39">删除成功！</string>
 
 </resources>

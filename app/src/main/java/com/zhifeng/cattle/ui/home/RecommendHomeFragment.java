@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lgh.huanglib.util.CheckNetwork;
+import com.lgh.huanglib.util.L;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -159,6 +160,32 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
                 startActivity(i);
             }
         });
+        bannerRecomment.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                L.e("lghl", url.get(position));
+                bannerRecomment.stopAutoPlay();
+                jumpAdvertisingActivity(url.get(position));
+            }
+        });
+        bannerSelfnav.setDelegate(new BGABanner.Delegate() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+                L.e("lghl", urlSelfnav.get(position));
+                bannerSelfnav.stopAutoPlay();
+                jumpAdvertisingActivity(urlSelfnav.get(position));
+            }
+        });
+    }
+
+    /**
+     * 跳转至广告详情页
+     * @param url
+     */
+    private void jumpAdvertisingActivity(String url){
+        Intent intent = new Intent(mContext,AdvertisingActivity.class);
+        intent.putExtra("url",url);
+        startActivity(intent);
     }
 
     /**
