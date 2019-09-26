@@ -1,6 +1,11 @@
 package com.zhifeng.cattle.ui.my;
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,11 +20,19 @@ import com.zhifeng.cattle.actions.InvitationAction;
 import com.zhifeng.cattle.modules.SharePoster;
 import com.zhifeng.cattle.ui.impl.InvitationView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.photo.BitmapUtil;
+import com.zhifeng.cattle.utils.photo.PicUtils;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.zhifeng.cattle.utils.photo.PicUtils.GetImageInputStream;
 
 /**
  * @ClassName: 邀请页面
@@ -41,6 +54,10 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
     ImageView ivQcCode;
     @BindView(R.id.tv_invitation_code)
     TextView tvInvitationCode;
+
+    String path;
+
+    Bitmap bitmap;
 
     @Override
     public int intiLayout() {
@@ -91,8 +108,10 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
 
     @Override
     public void getSharePosterSuccess(SharePoster sharePoster) {
-        GlideUtil.setImage(mContext, sharePoster.getData().getAvatar(), ivQcCode, R.drawable.erweima);
-        tvInvitationCode.setText(String.valueOf(sharePoster.getData().getInvitation_code()));
+       path = sharePoster.getData().getQrcode();
+//       path = "http://pic21.nipic.com/20120508/10020937_124825449172_2.jpg";
+        GlideUtil.setImage(mContext,sharePoster.getData().getQrcode(),ivQcCode,R.drawable.erweima);
+        tvInvitationCode.setText(sharePoster.getData().getInvitation_code()+"");
     }
 
     @Override
@@ -119,8 +138,64 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
 
                 break;
             case R.id.tv_save:
-
+                getPhotoDir();
                 break;
         }
+    }
+
+    /**
+     * 获取路径
+     *
+     */
+    private void getPhotoDir() {
+
+//加入网络图片地址
+        new Task().execute(path);
+
+    }
+
+    Handler handler=new Handler(){
+        public void handleMessage(android.os.Message msg) {
+            if(msg.what==0x123){
+                PicUtils.saveBmp2Gallery(bitmap, getFileName(),mContext);
+            }
+        };
+    };
+
+    /**
+     * 异步线程下载图片
+     *
+     */
+    class Task extends AsyncTask<String, Integer, Void> {
+
+        protected Void doInBackground(String... params) {
+            bitmap=GetImageInputStream((String)params[0]);
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            Message message=new Message();
+            message.what=0x123;
+            handler.sendMessage(message);
+        }
+
+    }
+
+
+    private static String getFileName() {
+        return "zhifeng" + "_" + getTimeName();
+    }
+
+    /**
+     * 获取当前时间来命名，以免有重复的文件名,再加上3位的随机数
+     *
+     * @return
+     */
+    public static String getTimeName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_hhmmssSSS");
+        String timeName = dateFormat.format(date) + "_" + new Random().nextInt(99999);
+        return timeName;
     }
 }

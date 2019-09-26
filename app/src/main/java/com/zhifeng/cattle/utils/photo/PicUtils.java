@@ -2,12 +2,14 @@ package com.zhifeng.cattle.utils.photo;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -15,6 +17,7 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+import com.hjq.toast.ToastUtils;
 import com.lgh.huanglib.util.L;
 import com.zhifeng.cattle.utils.Constanst;
 import com.zhifeng.cattle.utils.photo.utilFixSevent.PhotoFitSevent;
@@ -26,6 +29,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Collections;
 
 import static com.zhifeng.cattle.utils.photo.BitmapUtil.PHOTO_DIR2;
@@ -163,6 +168,7 @@ public class PicUtils {
         }
         return baos;
     }
+
     /**
      * 复制单个文件
      *
@@ -191,12 +197,15 @@ public class PicUtils {
                 inStream.close();
             }
         } catch (Exception e) {
-            System.out.println("复制单个文件操作出错");
+//            System.out.println("复制单个文件操作出错");
+            L.d("lgh_pic", "复制单个文件操作出错");
+            L.d("lgh_pic", e.getMessage());
             e.printStackTrace();
 
         }
 
     }
+
     /**
      * 裁剪方法
      */
@@ -219,7 +228,7 @@ public class PicUtils {
             intent.putExtra("outputY", 200);
             intent.putExtra("return-data", true);
 
-            activity.startActivityForResult(intent,  PhotoFitSevent.SELECT_CUT_PICK_PHOTO);
+            activity.startActivityForResult(intent, PhotoFitSevent.SELECT_CUT_PICK_PHOTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,13 +442,13 @@ public class PicUtils {
     }
 
     //计算图片的缩放值
-    public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height/ (float) reqHeight);
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
             final int widthRatio = Math.round((float) width / (float) reqWidth);
             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
         }
@@ -456,7 +465,7 @@ public class PicUtils {
         bm.compress(CompressFormat.JPEG, 10, baos);
         byte[] b = baos.toByteArray();
         Log.d("lgh_b", "压缩后的大小=" + b.length);
-        L.e("lgh_b","b  = "+Base64.encodeToString(b, Base64.NO_WRAP));
+        L.e("lgh_b", "b  = " + Base64.encodeToString(b, Base64.NO_WRAP));
         return Base64.encodeToString(b, Base64.NO_WRAP);
     }
 
@@ -464,25 +473,25 @@ public class PicUtils {
     /**
      * 将图片转换成Base64编码的字符串
      */
-    public static String imageToBase64(String path){
-        if(TextUtils.isEmpty(path)){
+    public static String imageToBase64(String path) {
+        if (TextUtils.isEmpty(path)) {
             return null;
         }
         InputStream is = null;
         byte[] data = null;
         String result = null;
-        try{
+        try {
             is = new FileInputStream(path);
             //创建一个字符流大小的数组。
             data = new byte[is.available()];
             //写入数组
             is.read(data);
             //用默认的编码格式进行编码
-            result = Base64.encodeToString(data,Base64.DEFAULT);
-        }catch (Exception e){
+            result = Base64.encodeToString(data, Base64.DEFAULT);
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(null !=is){
+        } finally {
+            if (null != is) {
                 try {
                     is.close();
                 } catch (IOException e) {
@@ -491,7 +500,88 @@ public class PicUtils {
             }
 
         }
-        L.e("lgh_b","b  = "+result);
+        L.e("lgh_b", "b  = " + result);
         return result;
     }
+
+    /**
+     * 获取网络图片
+     * @param imageurl 图片网络地址
+     * @return Bitmap 返回位图
+     */
+    public static Bitmap GetImageInputStream(String imageurl){
+        URL url;
+        HttpURLConnection connection=null;
+        Bitmap bitmap=null;
+        try {
+            url = new URL(imageurl);
+            connection=(HttpURLConnection)url.openConnection();
+            connection.setConnectTimeout(6000); //超时设置
+            connection.setDoInput(true);
+            connection.setUseCaches(false); //设置不使用缓存
+            InputStream inputStream=connection.getInputStream();
+            bitmap=BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (Exception e) {
+            L.d("lgh_pic",e.toString());
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+
+    /**
+     * @param picName 自定义的图片名
+     */
+    public static void saveBmp2Gallery(Bitmap bmp, String picName, Context mContext) {;
+        String fileName = null;
+        //系统相册目录
+        String galleryPath = Environment.getExternalStorageDirectory()
+                + File.separator + Environment.DIRECTORY_DCIM
+                + File.separator + "Camera" + File.separator;
+
+
+        // 声明文件对象
+        File file = null;
+        // 声明输出流
+        FileOutputStream outStream = null;
+
+        try {
+            // 如果有目标文件，直接获得文件对象，否则创建一个以filename为名称的文件
+            file = new File(galleryPath, picName + ".jpg");
+            L.d("lgh_pic",file.getPath());
+            // 获得文件相对路径
+            fileName = file.toString();
+            // 获得输出流，如果文件中有内容，追加内容
+            outStream = new FileOutputStream(fileName);
+            if (null != outStream) {
+                bmp.compress(CompressFormat.JPEG, 90, outStream);
+            }
+
+        } catch (Exception e) {
+            L.d("lgh_pic",e.getMessage());
+            e.getStackTrace();
+        } finally {
+            try {
+                if (outStream != null) {
+                    outStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //通知相册更新
+
+        MediaStore.Images.Media.insertImage(mContext.getContentResolver(),
+                bmp, fileName, null);
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        mContext.sendBroadcast(intent);
+        ToastUtils.getToast().cancel();
+        ToastUtils.show("图片保存成功");
+
+    }
+
+
 }
