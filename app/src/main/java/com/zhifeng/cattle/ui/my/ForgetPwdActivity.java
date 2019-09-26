@@ -247,33 +247,41 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
         }
 
        //todo 判断是否输入密码
-        if (TextUtils.isEmpty(etForgetPwd.getText().toString())){
+        String pwd = etForgetPwd.getText().toString();
+        if (TextUtils.isEmpty(pwd)){
             showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_13));
             return;
         }
+        //todo 判断密码是否少于6位
+        if (pwd.length() < 6) {
+            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_18));
+            return;
+        }
         //todo 判断是否再次输入密码
-        if (TextUtils.isEmpty(etForgetConfirmPwd.getText().toString())){
+        String confirmPwd = etForgetConfirmPwd.getText().toString();
+        if (TextUtils.isEmpty(confirmPwd)){
             showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_14));
             return;
         }
-
+        //todo 判断确认密码是否少于6位
+        if (confirmPwd.length() < 6) {
+            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_19));
+            return;
+        }
         //todo 判断两次密码是否一致
-        if (!etForgetPwd.getText().toString().equals(etForgetConfirmPwd.getText().toString())){
+        if (!pwd.equals(confirmPwd)){
             showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_15));
             return;
         }
-
         if (type == 0){
             //重置支付密码
-            ForgetPwdPost forgetPwdPost = new ForgetPwdPost(phone,etForgetPwdCode.getText().toString(),etForgetPwd.getText().toString());
+            ForgetPwdPost forgetPwdPost = new ForgetPwdPost(phone,confirmPwd, pwd);
             forgetPwd(forgetPwdPost);
         }else {
             //设置支付密码
-            SetPayPwdPost setPayPwdPost = new SetPayPwdPost(phone,etForgetPwdCode.getText().toString(),etForgetPwd.getText().toString());
+            SetPayPwdPost setPayPwdPost = new SetPayPwdPost(phone,confirmPwd, pwd);
             setPayPwd(setPayPwdPost);
         }
-
-
     }
 
     /**************************************计时器 start*******************************************/

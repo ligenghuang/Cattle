@@ -82,8 +82,7 @@ public class GoodsCommentsActivity extends UserBaseActivity<GoodsCommentsAction>
         mContext = this;
         mActicity = this;
 
-        String text = "(" + goods_comment_num + ")";
-        tvCommentsNum.setText(text);
+        tvCommentsNum.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, String.valueOf(goods_comment_num)));
         adapter = new GoodsCommentsAdapter(mContext);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         recyclerview.setAdapter(adapter);

@@ -157,17 +157,25 @@ public class ModifyPayPwdActivity extends UserBaseActivity<ModifyPayPwdAction> i
      */
     private void save() {
         //判断是否输入原密码
-        if(TextUtils.isEmpty(etOldPwd.getText().toString())){
+        String oldPwd = etOldPwd.getText().toString();
+        if(TextUtils.isEmpty(oldPwd)){
             showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_7));
             return;
         }
-
+        if (oldPwd.length() < 6) {
+            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_16));
+            return;
+        }
         //判断是否输入新密码
-        if (TextUtils.isEmpty(etNewPwd.getText().toString())){
-            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_7));
+        String newPwd = etNewPwd.getText().toString();
+        if (TextUtils.isEmpty(newPwd)){
+            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_8));
             return;
         }
-
-        modifyPayPwd(etOldPwd.getText().toString(),etNewPwd.getText().toString());
+        if (newPwd.length() < 6) {
+            showNormalToast(ResUtil.getString(R.string.pay_pwd_tab_17));
+            return;
+        }
+        modifyPayPwd(oldPwd, newPwd);
     }
 }
