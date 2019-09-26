@@ -305,7 +305,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void onLoginNo() {
         loadDiss();
-        Toast.makeText(mContext, "登录过期，请重新登录！", Toast.LENGTH_SHORT).show();
+        showNormalToast("登录过期，请重新登录！");
         MainActivity.Position = 0;
         MySp.clearAllSP(mContext);
         jumpActivity(mContext, LoginActivity.class);

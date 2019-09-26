@@ -257,6 +257,17 @@ public abstract class BaseFragment extends RootFragment {
         ToastUtils.getToast().cancel();
         ToastUtils.show(text);
     }
+    protected void showNormalToast(String text) {
+
+        ToastUtils.getToast().cancel();
+        ToastUtils.show(text);
+    }
+
+    protected void showNormalToast(int text) {
+
+        ToastUtils.getToast().cancel();
+        ToastUtils.show(text);
+    }
 
 
 }

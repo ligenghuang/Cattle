@@ -170,10 +170,10 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
                     bugPwdDialog.show();
                 }else if (payType == 2){
                     //todo 微信支付
-                    showToast("微信支付");
+                    showNormalToast("微信支付");
                 }else if (payType == 3){
                     //todo 支付宝支付
-                    showToast("支付宝支付");
+                    showNormalToast("支付宝支付");
                 }
             }
 
@@ -291,7 +291,7 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
     public void onError(String message, int code) {
         refreshLayout.finishRefresh();
         loadDiss();
-        showToast(message);
+        showNormalToast(message);
     }
 
     @Override

@@ -34,6 +34,8 @@ import android.widget.Toast;
 import androidx.core.content.FileProvider;
 
 
+import com.hjq.toast.ToastUtils;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.utils.Constanst;
 
@@ -252,7 +254,8 @@ public class BitmapUtil {
         } else {
             bitmap = null;
             fileName = "";
-            Toast.makeText(activity, R.string.more_user_management_add_user_sd, Toast.LENGTH_LONG).show();
+            ToastUtils.getToast().cancel();
+            ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_sd));
         }
     }
 
@@ -287,7 +290,8 @@ public class BitmapUtil {
         } else {
 //            bitmap = null;
             fileName = "";
-            Toast.makeText(activity, R.string.more_user_management_add_user_sd, Toast.LENGTH_LONG).show();
+            ToastUtils.getToast().cancel();
+            ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_sd));
         }
     }
 
@@ -319,11 +323,12 @@ public class BitmapUtil {
                 e.printStackTrace();
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(activity, R.string.more_user_management_add_user_no_photo_ablbum,
-                        Toast.LENGTH_LONG).show();
+                ToastUtils.getToast().cancel();
+                ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_no_photo_ablbum));
             }
         } else {
-            Toast.makeText(activity, R.string.more_user_management_add_user_sd, Toast.LENGTH_LONG).show();
+            ToastUtils.getToast().cancel();
+            ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_sd));
         }
     }
 
@@ -355,11 +360,12 @@ public class BitmapUtil {
                 e.printStackTrace();
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(activity, R.string.more_user_management_add_user_no_photo_ablbum,
-                        Toast.LENGTH_LONG).show();
+                ToastUtils.getToast().cancel();
+                ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_no_photo_ablbum));
             }
         } else {
-            Toast.makeText(activity, R.string.more_user_management_add_user_sd, Toast.LENGTH_LONG).show();
+            ToastUtils.getToast().cancel();
+            ToastUtils.show(ResUtil.getString(R.string.more_user_management_add_user_sd));
         }
     }
 

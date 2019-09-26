@@ -157,7 +157,7 @@ public class ClassifyFragment extends UserBaseFragment<ClassifyAction> implement
     @Override
     public void onError(String message, int code) {
         loadDiss();
-        showToast(message);
+        showNormalToast(message);
     }
 
 

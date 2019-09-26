@@ -262,7 +262,9 @@ public class AreaPickerView extends Dialog {
                 }
             });
         } else {
-            if (strings.size() >2) {
+            if (strings.size() ==2) {
+                strings.remove(1);
+            }else if(strings.size() == 3){
                 strings.remove(1);
                 strings.remove(1);
             }

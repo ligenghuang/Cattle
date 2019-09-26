@@ -13,9 +13,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hjq.toast.ToastUtils;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.MyAction;
@@ -73,7 +75,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
 
     @Override
     protected MyAction initAction() {
-        return new MyAction((RxAppCompatActivity) getActivity(),this);
+        return new MyAction((RxAppCompatActivity) getActivity(), this);
     }
 
     @Override
@@ -106,7 +108,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
-        if (isVisible){
+        if (isVisible) {
             getUserInfo();
         }
     }
@@ -116,40 +118,41 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
      */
     @Override
     public void getUserInfo() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.getUserInfo();
         }
     }
 
     /**
      * 获取用户信息成功
+     *
      * @param userInfoDto
      */
     @Override
     public void getUserInfoSuccess(UserInfoDto userInfoDto) {
         loadDiss();
         UserInfoDto.DataBean dataBean = userInfoDto.getData();
-        GlideUtil.setImageCircle(mContext,dataBean.getAvatar(),ivMyAvatar,R.mipmap.logo);//头像
+        GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivMyAvatar, R.mipmap.logo);//头像
         tvMyName.setText(dataBean.getRealname());//昵称
         tvMyLevel.setText(dataBean.getLevelname());//等级
-        tvMyId.setText("ID:"+dataBean.getId()+"");//id
+        tvMyId.setText("ID:" + dataBean.getId() + "");//id
 
         double money = Double.parseDouble(dataBean.getRemainder_money());
         DecimalFormat df = new DecimalFormat("#0.00");
         tvMyRemainderMoney.setText(df.format(money));//提现余额
-        tvMyCollection.setText(dataBean.getCollection()+"");//关注
+        tvMyCollection.setText(dataBean.getCollection() + "");//关注
 
-        tvBonusDay.setText(dataBean.getDay()+"");//当日奖金
-        tvBonusMonth.setText(dataBean.getMonth()+"");//当月奖金
+        tvBonusDay.setText(dataBean.getDay() + "");//当日奖金
+        tvBonusMonth.setText(dataBean.getMonth() + "");//当月奖金
 
         tvTotalResults.setText(dataBean.getDistribut_money());//总业绩
-        tvHeadcount.setText(dataBean.getTeam_count()+"");//总人数
-        tvRecommended.setText(dataBean.getToday_rec()+"");//今日推荐
+        tvHeadcount.setText(dataBean.getTeam_count() + "");//总人数
+        tvRecommended.setText(dataBean.getToday_rec() + "");//今日推荐
 
-        if (MainActivity.isLogin){
+        if (MainActivity.isLogin) {
             String json = MySp.getUserList(mContext);
             List<LoginUser> list = new ArrayList<>();
-            if (!TextUtils.isEmpty(json)){
+            if (!TextUtils.isEmpty(json)) {
                 list = new Gson().fromJson(json, new TypeToken<List<LoginUser>>() {
                 }.getType());
             }
@@ -158,26 +161,25 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             userDto.setRealname(dataBean.getRealname());
             userDto.setMobile(dataBean.getMobile());
             userDto.setToken(MySp.getAccessToken(mContext));
-            L.e("lgh_user","token  = "+MySp.getAccessToken(mContext));
+            L.e("lgh_user", "token  = " + MySp.getAccessToken(mContext));
 
-            for (int i = 0; i <list.size() ; i++) {
-                if(list.get(i).getMobile().equals(userDto.getMobile())){
-                    list.set(i,userDto);
-                    L.e("lgh_user","user  = "+userDto.getToken());
-                    MySp.setUserList(mContext,new Gson().toJson(list));
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getMobile().equals(userDto.getMobile())) {
+                    list.set(i, userDto);
+                    L.e("lgh_user", "user  = " + userDto.getToken());
+                    MySp.setUserList(mContext, new Gson().toJson(list));
                     MainActivity.isLogin = false;
                     return;
                 }
             }
-            if (list.size() >= 3){
-                list.set(0,userDto);
-            }else {
+            if (list.size() >= 3) {
+                list.set(0, userDto);
+            } else {
                 list.add(userDto);
             }
 
 
-
-            MySp.setUserList(mContext,new Gson().toJson(list));
+            MySp.setUserList(mContext, new Gson().toJson(list));
             MainActivity.isLogin = false;
         }
     }
@@ -188,7 +190,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     public void onLoginNo() {
         loadDiss();
-        Toast.makeText(mContext, "登录过期，请重新登录！", Toast.LENGTH_SHORT).show();
+        showNormalToast("登录过期，请重新登录！");
         MainActivity.Position = 0;
         MySp.clearAllSP(mContext);
         jumpActivityNotFinish(mContext, LoginActivity.class);
@@ -196,13 +198,14 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
     @Override
     public void onError(String message, int code) {
         loadDiss();
-        showToast(message);
+        showNormalToast(message);
     }
 
     @Override
@@ -224,16 +227,16 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             R.id.tv_wait_evaluation, R.id.tv_sales_return, R.id.ll_my_team,
             R.id.ll_total_results, R.id.ll_headcount, R.id.ll_recommended,
             R.id.tv_invitation, R.id.tv_address, R.id.tv_supplier, R.id.tv_security,
-            R.id.ll_bonus_day,R.id.ll_bonus_month,R.id.tv_ranking_list})
+            R.id.ll_bonus_day, R.id.ll_bonus_month, R.id.tv_ranking_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_my_remainder_money:
                 //todo 提现余额
-                jumpActivityNotFinish(mContext,BalanceActivity.class);
+                jumpActivityNotFinish(mContext, BalanceActivity.class);
                 break;
             case R.id.ll_my_collection:
                 //todo 关注
-                jumpActivityNotFinish(mContext,CollectionActivity.class);
+                jumpActivityNotFinish(mContext, CollectionActivity.class);
                 break;
             case R.id.ll_my_order:
                 //todo 我的订单
@@ -257,53 +260,54 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 break;
             case R.id.tv_sales_return:
                 //todo 退货
-                jumpActivityNotFinish(mContext,SalesReturnActivity.class);
+                jumpActivityNotFinish(mContext, SalesReturnActivity.class);
                 break;
             case R.id.ll_bonus_day:
                 //todo 当日累计奖金
-                jumpActivityNotFinish(mContext,BonusDayActivity.class);
+                jumpActivityNotFinish(mContext, BonusDayActivity.class);
                 break;
             case R.id.tv_ranking_list:
                 //todo 排行榜
-                jumpActivityNotFinish(mContext,RankingListActivity.class);
+                jumpActivityNotFinish(mContext, RankingListActivity.class);
                 break;
             case R.id.ll_bonus_month:
                 //todo 当月累计奖金
-                jumpActivityNotFinish(mContext,BonusMonActivity.class);
+                jumpActivityNotFinish(mContext, BonusMonActivity.class);
                 break;
             case R.id.ll_my_team:
             case R.id.ll_total_results:
             case R.id.ll_headcount:
             case R.id.ll_recommended:
                 //todo 我的团队
-                jumpActivityNotFinish(mContext,MyTeamActivity.class);
+                jumpActivityNotFinish(mContext, MyTeamActivity.class);
                 break;
             case R.id.tv_invitation:
                 //todo 邀请分享
-                jumpActivityNotFinish(mContext,InvitationActivity.class);
+                jumpActivityNotFinish(mContext, InvitationActivity.class);
                 break;
             case R.id.tv_address:
                 //todo 地址管理
-                jumpActivityNotFinish(mContext,AddressListActivity.class);
+                jumpActivityNotFinish(mContext, AddressListActivity.class);
                 break;
             case R.id.tv_supplier:
                 //todo 供应商
-                jumpActivityNotFinish(mContext,SupplierActivity.class);
+                jumpActivityNotFinish(mContext, SupplierActivity.class);
                 break;
             case R.id.tv_security:
                 //todo 安全中心
-                jumpActivityNotFinish(mContext,SecurityActivity.class);
+                jumpActivityNotFinish(mContext, SecurityActivity.class);
                 break;
         }
     }
 
     /**
      * 跳转至订单页面
+     *
      * @param i
      */
     private void jumpOrderActivity(int i) {
-        Intent intent = new Intent(mContext,OrderActivity.class);
-        intent.putExtra("type",i);
+        Intent intent = new Intent(mContext, OrderActivity.class);
+        intent.putExtra("type", i);
         startActivity(intent);
     }
 

@@ -80,20 +80,6 @@ public class SkuAdapter extends RecyclerView.Adapter<SkuAdapter.ViewHolder> {
         public void setData(ProductModel.AttributesEntity.AttributeMembersEntity entity) {
             mTextView.setText(entity.getName());
             mTextView.setSelected(entity.getStatus() == 1);
-//            switch (entity.getStatus()) {
-//                case 0:
-//                    mTextView.setAlpha(1f);
-//                    mTextView.setBackgroundResource(R.drawable.select_size_shape_true);
-//                    break;
-//                case 1:
-//                    mTextView.setAlpha(1f);
-//                    mTextView.setBackgroundResource(R.drawable.select_size_shape_selected);
-//                    break;
-//                case 2:
-//                    mTextView.setAlpha(0.4f);
-//                    mTextView.setBackgroundResource(R.drawable.select_size_shape);
-//                    break;
-//            }
         }
 
         public void setClick(final int position) {

@@ -239,7 +239,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
 
     @Override
     public void editCartError(String msg) {
-        showToast(msg);
+        showNormalToast(msg);
         getCartList();
     }
 
@@ -253,7 +253,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
         loadDiss();
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-        showToast(message);
+        showNormalToast(message);
     }
 
 
@@ -319,7 +319,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
         }
 
         if (num == 0){
-            showToast(ResUtil.getString(R.string.cart_tab_38));
+            showNormalToast(ResUtil.getString(R.string.cart_tab_38));
             return;
         }
 
@@ -348,7 +348,7 @@ public class CartFragment extends UserBaseFragment<ShoppingCartAction> implement
         }
         //todo 判断是否有选中的商品
         if (num == 0){
-            showToast(ResUtil.getString(R.string.cart_tab_10));
+            showNormalToast(ResUtil.getString(R.string.cart_tab_10));
             return;
         }
 

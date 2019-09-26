@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hjq.toast.ToastUtils;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
@@ -80,11 +81,14 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                     if (goodsNum <= 0){
                         editText.setText("1");
                         model.setGoods_num(1);
-                        Toast.makeText(context, ResUtil.getString(R.string.cart_tab_7), Toast.LENGTH_SHORT).show();
+                        ToastUtils.getToast().cancel();
+                        ToastUtils.show(ResUtil.getString(R.string.cart_tab_7));
                     }else if (goodsNum > inventory){
                         model.setGoods_num(inventory);
                         editText.setText(inventory+"");
-                        Toast.makeText(context, ResUtil.getString(R.string.cart_tab_8), Toast.LENGTH_SHORT).show();
+
+                        ToastUtils.getToast().cancel();
+                        ToastUtils.show(ResUtil.getString(R.string.cart_tab_8));
                     }else {
                         model.setGoods_num(goodsNum);
                     }
@@ -113,7 +117,9 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                    if (model.getGoods_num() == 1){
                        model.setGoods_num(1);
                        editText.setText(model.getGoods_num()+"");
-                       Toast.makeText(context, ResUtil.getString(R.string.cart_tab_7), Toast.LENGTH_SHORT).show();
+
+                       ToastUtils.getToast().cancel();
+                       ToastUtils.show(ResUtil.getString(R.string.cart_tab_7));
                    }else {
                        int num = model.getGoods_num()-1;
                        model.setGoods_num(num);
@@ -121,7 +127,8 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                    }
                    L.e("lgh_cart","subtract = "+model.getGoods_num());
                }else {
-                   Toast.makeText(context, ResUtil.getString(R.string.cart_tab_37), Toast.LENGTH_SHORT).show();
+                   ToastUtils.getToast().cancel();
+                   ToastUtils.show(ResUtil.getString(R.string.cart_tab_37));
                }
             }
         });
@@ -134,7 +141,8 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
             public void onClick(View view) {
                 if (!Util.isFastDoubleClick()){
                 if (model.getGoods_num() >= inventory){
-                    Toast.makeText(context, ResUtil.getString(R.string.cart_tab_8), Toast.LENGTH_SHORT).show();
+                    ToastUtils.getToast().cancel();
+                    ToastUtils.show(ResUtil.getString(R.string.cart_tab_8));
                 }else {
                     int num = model.getGoods_num()+1;
                     model.setGoods_num(num);
@@ -142,7 +150,8 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
                 }
                 L.e("lgh_cart","add = "+model.getGoods_num());
                 }else {
-                    Toast.makeText(context, ResUtil.getString(R.string.cart_tab_37), Toast.LENGTH_SHORT).show();
+                    ToastUtils.getToast().cancel();
+                    ToastUtils.show(ResUtil.getString(R.string.cart_tab_37));
                 }
             }
         });

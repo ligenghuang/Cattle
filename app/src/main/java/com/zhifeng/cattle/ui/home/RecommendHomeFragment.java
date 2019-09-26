@@ -138,6 +138,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if (isVisible) {
+            baseAction.toRegister();
             getRecommendHome();
         }
     }
