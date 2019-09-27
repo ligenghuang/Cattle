@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -18,13 +19,17 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.RechargeAction;
-import com.zhifeng.cattle.modules.BankBto;
+import com.zhifeng.cattle.modules.BankImgListDto;
+import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.ui.impl.RechargeView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.dialog.BankListDialog;
 import com.zhifeng.cattle.utils.dialog.RechargePwdDialog;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,6 +58,15 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     EditText etRechargeMoney;
     @BindView(R.id.cv_next)
     CardView cvNext;
+    @BindView(R.id.tv_no_bank)
+    TextView tvNoBank;
+    @BindView(R.id.rl_bank)
+    RelativeLayout rlBank;
+
+    List<BankListDto.DataBean> list = new ArrayList<>();
+    List<BankImgListDto.DataBean> dataBeanList = new ArrayList<>();
+    String bankCard;
+    boolean isBindBank = false;
 
     @Override
     public int intiLayout() {
@@ -64,6 +78,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<Activity>(this));
         binding();
+
     }
 
     @Override
@@ -94,6 +109,14 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         mActicity = this;
         mContext = this;
 
+
+    }
+
+    private void showEt(){
+        etRechargeMoney.setFocusable(true);
+        etRechargeMoney.setFocusableInTouchMode(true);
+        etRechargeMoney.requestFocus();
+
         new Thread(new Runnable() {
 
             public void run() {
@@ -102,51 +125,79 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         }).start();
-
-        //todo 2019/09/20 12:00 获取银行卡接口暂无 先注释
-//        getBank();
-//        loadView();
     }
 
     /**
-     * 获取银行卡
+     * 获取已绑定银行卡列表
      */
     @Override
-    public void getBank() {
+    public void getBankList() {
         if (CheckNetwork.checkNetwork2(mContext)) {
-            loadDialog();
-            baseAction.getBank();
+            baseAction.getBankList();
         }
     }
 
     /**
-     * 获取银行卡 成功
+     * 获取已绑定银行卡列表 成功
      *
-     * @param bankBto
+     * @param bankListDto
      */
     @Override
-    public void getBankSucces(BankBto bankBto) {
+    public void getBankListSuccess(BankListDto bankListDto) {
+        isBindBank = bankListDto.getData().size() != 0;
+        getBankImgList();
+        if (bankListDto.getData().size() != 0) {
+            list = bankListDto.getData();
+            list.get(0).setClick(true);
+            bankCard = list.get(0).getBank_card();
+            String num = list.get(0).getBank_card().substring(bankCard.length() - 4, bankCard.length());
+            String name = list.get(0).getBank_name() + "(" + num + ")";
+            tvRechargeBank.setText(name);
+            rlBank.setVisibility(View.VISIBLE);
+            tvNoBank.setVisibility(View.GONE);
+        } else {
+            rlBank.setVisibility(View.GONE);
+            tvNoBank.setVisibility(View.VISIBLE);
+        }
+        showEt();
+    }
+
+    /**
+     * 获取银行图标
+     */
+    @Override
+    public void getBankImgList() {
+        baseAction.getBankImgList();
+    }
+
+    /**
+     * 获取银行图标 成功
+     *
+     * @param bankListDto
+     */
+    @Override
+    public void getBankImgListSuccess(BankImgListDto bankListDto) {
         loadDiss();
-        BankBto.DataBean dataBean = bankBto.getData();
-        String card =dataBean.getBank_card();
-        tvRechargeBank.setText(dataBean.getBank_name()+"("+card.substring(card.length()-5,card.length())+")");
+        dataBeanList = bankListDto.getData();
     }
 
     /**
      * 充值
+     *
      * @param num
      * @param pwd
      */
     @Override
     public void recharge(double num, String pwd) {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
-            baseAction.recharge(num,pwd);
+            baseAction.recharge(num, pwd);
         }
     }
 
     /**
      * 充值成功
+     *
      * @param generalDto
      */
     @Override
@@ -155,13 +206,15 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         showNormalToast(generalDto.getMsg());
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {  finish();
+            public void run() {
+                finish();
             }
         }, 2000);
     }
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
@@ -175,6 +228,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        getBankList();
     }
 
     @Override
@@ -183,11 +237,35 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         baseAction.toUnregister();
     }
 
-    @OnClick(R.id.cv_next)
+    @OnClick({R.id.cv_next, R.id.ll_bank})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cv_next:
                 next();
+                break;
+            case R.id.ll_bank:
+                hideInput();
+                if (isBindBank){
+                //选择银行卡
+                BankListDialog bankListDialog = new BankListDialog(mContext, R.style.MY_AlertDialog, list, dataBeanList);
+                bankListDialog.setOnClickListener(new BankListDialog.OnClickListener() {
+                    @Override
+                    public void OnClick(List<BankListDto.DataBean> BankList, BankListDto.DataBean model) {
+                        bankCard = model.getBank_card();
+                        String num = model.getBank_card().substring(bankCard.length() - 4, bankCard.length());
+                        String name = model.getBank_name() + "(" + num + ")";
+                        tvRechargeBank.setText(name);
+                        rlBank.setVisibility(View.VISIBLE);
+                        tvNoBank.setVisibility(View.GONE);
+                        list = BankList;
+                        showEt();
+                    }
+                });
+                bankListDialog.show();
+
+                }else {
+                    //绑定银行卡 跳转至绑定银行卡页面
+                }
                 break;
         }
     }
@@ -197,23 +275,23 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
      */
     private void next() {
         //todo 判断是否输入充值金额
-        if (TextUtils.isEmpty(etRechargeMoney.getText().toString())){
+        if (TextUtils.isEmpty(etRechargeMoney.getText().toString())) {
             showNormalToast(ResUtil.getString(R.string.recharge_tab_8));
             return;
         }
         double money = Double.parseDouble(etRechargeMoney.getText().toString());
         //todo 判断输入金额是否小于0
-        if (money <= 0){
+        if (money <= 0) {
             showNormalToast(ResUtil.getString(R.string.recharge_tab_9));
             return;
         }
 
-        RechargePwdDialog rechargePwdDialog = new RechargePwdDialog(mContext,R.style.MY_AlertDialog,money);
+        RechargePwdDialog rechargePwdDialog = new RechargePwdDialog(mContext, R.style.MY_AlertDialog, money);
         rechargePwdDialog.setOnFinishInput(new RechargePwdDialog.OnFinishInput() {
             @Override
             public void inputFinish(String password) {
                 //请求接口
-                recharge(money,password);
+                recharge(money, password);
             }
         });
         rechargePwdDialog.show();

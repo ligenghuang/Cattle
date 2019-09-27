@@ -6,6 +6,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.ReChargeDetail;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.ReChargeDetailView;
@@ -26,6 +27,8 @@ public class ReChargeDetailAction extends BaseAction<ReChargeDetailView> {
     public void   getDetailRecordList(int page){
         post(WebUrlUtil.POST_RechargeDetail_LIST,false,service ->manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"page",page),WebUrlUtil.POST_RechargeDetail_LIST)));
     }
+
+
 
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
@@ -57,6 +60,7 @@ public class ReChargeDetailAction extends BaseAction<ReChargeDetailView> {
                             }
                             view.onError(msg,action.getErrorType());
                             break;
+
                     }
                 });
     }

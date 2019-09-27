@@ -7,6 +7,8 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.BankBto;
+import com.zhifeng.cattle.modules.BankImgListDto;
+import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.RechargeView;
@@ -33,15 +35,6 @@ public class RechargeAction extends BaseAction<RechargeView> {
     }
 
     /**
-     * 获取银行卡
-     */
-    public void getBank(){
-        post(WebUrlUtil.POST_BANK_NUMBER,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_BANK_NUMBER)
-                ));
-    }
-
-    /**
      * 充值
      * @param num
      * @param pwd
@@ -50,6 +43,21 @@ public class RechargeAction extends BaseAction<RechargeView> {
         post(WebUrlUtil.POST_RECHARGE,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"num",num
                 ,"pwd",pwd),WebUrlUtil.POST_RECHARGE)
+        ));
+    }
+
+    /**
+     * 获取已绑定银行卡列表
+     */
+    public void getBankList(){
+        post(WebUrlUtil.POST_GET_BANKLIST,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_GET_BANKLIST)
+        ));
+    }
+
+    public void getBankImgList() {
+        post(WebUrlUtil.POST_BOUND_BANK,false,service -> manager.runHttp(
+                service.PostData(WebUrlUtil.POST_BOUND_BANK)
         ));
     }
 
@@ -83,18 +91,34 @@ public class RechargeAction extends BaseAction<RechargeView> {
                     }
                     view.onError(msg,action.getErrorType());
                     break;
-                case WebUrlUtil.POST_BANK_NUMBER:
-                    //todo 获取银行卡
+                case WebUrlUtil.POST_GET_BANKLIST:
+                    //todo 获取已绑定银行卡列表
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        BankBto bankBto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BankBto>() {
+                        BankListDto bankListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BankListDto>() {
                         }.getType());
-                        if (bankBto.getStatus() == 200){
-                            //todo 获取银行卡成功
-                            view.getBankSucces(bankBto);
+                        if (bankListDto.getStatus() == 200){
+                            //todo 获取已绑定银行卡列表 成功
+                            view.getBankListSuccess(bankListDto);
                             return;
                         }
-                        view.onError(bankBto.getMsg(),action.getErrorType());
+                        view.onError(bankListDto.getMsg(),action.getErrorType());
+                        return;
+                    }
+                    view.onError(msg,action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_BOUND_BANK:
+                    //todo 获取银行图标列表
+                    if (aBoolean) {
+                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                        BankImgListDto bankImgListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BankImgListDto>() {
+                        }.getType());
+                        if (bankImgListDto.getStatus() == 200){
+                            //todo 获取银行图标列表 成功
+                            view.getBankImgListSuccess(bankImgListDto);
+                            return;
+                        }
+                        view.onError(bankImgListDto.getMsg(),action.getErrorType());
                         return;
                     }
                     view.onError(msg,action.getErrorType());

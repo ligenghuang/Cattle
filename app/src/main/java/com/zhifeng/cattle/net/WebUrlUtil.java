@@ -338,4 +338,14 @@ public class WebUrlUtil {
      * 申请退款
      */
     public static final String POST_APPLY_REFUND = "order/apply_refund";
+
+    /**
+     * 获取已绑定银行卡
+     */
+    public static final String POST_GET_BANKLIST = "user/get_bank_number";
+
+    /**
+     * 获取银行图标
+     */
+    public static final String POST_BOUND_BANK = "user/bank_img";
 }

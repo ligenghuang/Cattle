@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_margin="5dp"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_bank"
+            android:layout_width="@dimen/item_height40"
+            android:layout_height="@dimen/item_height40"
+            android:layout_marginRight="@dimen/dp_10"
+            android:scaleType="fitXY"/>
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="农业银行"
+            android:textSize="@dimen/text_size12"
+            android:textColor="@color/color_15"/>
+
+        <ImageView
+            android:id="@+id/iv_item_bank"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_hollow_circle"
+            android:padding="5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@drawable/selector_circle" />
+
+    </LinearLayout>
+
+   <View
+     style="@style/line_4"/>
+</LinearLayout>

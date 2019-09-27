@@ -49,7 +49,7 @@ public class CartListAdapter extends BaseRecyclerAdapter<CartListDto.DataBean> {
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, CartListDto.DataBean model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder,CartListDto.DataBean model,int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_goods_name,model.getGoods_name());//商品名称
         holder.text(R.id.tv_item_goods_price,"￥"+model.getGoods_price());//商品价格

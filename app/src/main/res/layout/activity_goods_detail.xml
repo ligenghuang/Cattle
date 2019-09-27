@@ -36,6 +36,7 @@
                 <cn.bingoogolapple.bgabanner.BGABanner
                     android:id="@+id/banner_main"
                     style="@style/BannerDefaultStyle"
+                    android:background="@color/white"
                     android:fitsSystemWindows="true"
                     app:banner_transitionEffect="defaultEffect"
                     app:layout_collapseMode="parallax" />

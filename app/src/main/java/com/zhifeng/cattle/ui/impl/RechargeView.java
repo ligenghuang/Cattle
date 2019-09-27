@@ -2,6 +2,8 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.BankBto;
+import com.zhifeng.cattle.modules.BankImgListDto;
+import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 
 /**
@@ -16,10 +18,16 @@ import com.zhifeng.cattle.modules.GeneralDto;
 public interface RechargeView extends BaseView {
 
     /**
-     * 获取银行卡列表
+     * 获取已绑定银行卡列表
      */
-    void getBank();
-    void getBankSucces(BankBto bankBto);
+    void getBankList();
+    void getBankListSuccess(BankListDto bankListDto);
+
+    /**
+     * 获取银行图标列表
+     */
+    void getBankImgList();
+    void getBankImgListSuccess(BankImgListDto bankListDto);
 
     /**
      * 充值
