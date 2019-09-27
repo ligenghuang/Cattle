@@ -20,6 +20,7 @@ import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lgh.huanglib.util.data.ValidateUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -92,15 +93,27 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
     String pic_back;
 
     @Override
-    public int intiLayout() {
-        return R.layout.activity_certification;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStack.getInstance().addActivity(new WeakReference<>(this));
         binding();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        baseAction.toRegister();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        baseAction.toUnregister();
+    }
+
+    @Override
+    public int intiLayout() {
+        return R.layout.activity_certification;
     }
 
     @Override
@@ -148,6 +161,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
 
     /**
      * 身份认证传成功
+     *
      * @param certificationDto
      */
     @Override
@@ -164,6 +178,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
 
     /**
      * 失败
+     *
      * @param message
      * @param code
      */
@@ -171,18 +186,6 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
     public void onError(String message, int code) {
         loadDiss();
         showNormalToast(message);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        baseAction.toRegister();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        baseAction.toUnregister();
     }
 
     @OnClick({R.id.rl_add_positive, R.id.rl_add_back, R.id.tv_save})
@@ -210,7 +213,7 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
      */
     private void save() {
         //todo 判断是否输入姓名
-        if (TextUtils.isEmpty(etCertificationName.getText().toString())){
+        if (TextUtils.isEmpty(etCertificationName.getText().toString())) {
             showNormalToast(ResUtil.getString(R.string.certification_tab_2));
             return;
         }
@@ -218,20 +221,25 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
         String name = etCertificationName.getText().toString();
 
         //todo 判断是否输入身份证号
-        if (TextUtils.isEmpty(etCertificationCard.getText().toString())){
+        if (TextUtils.isEmpty(etCertificationCard.getText().toString())) {
             showNormalToast(ResUtil.getString(R.string.certification_tab_4));
             return;
         }
 
+        //todo 判断输入的身份证号格式是否正确
+        if (!ValidateUtils.isIDCard(etCertificationCard.getText().toString())) {
+            showNormalToast(ResUtil.getString(R.string.certification_tab_12));
+            return;
+        }
         String idcard = etCertificationCard.getText().toString();
 
         //todo 判断是否上传身份证
-        if (TextUtils.isEmpty(pic_front) || TextUtils.isEmpty(pic_back)){
+        if (TextUtils.isEmpty(pic_front) || TextUtils.isEmpty(pic_back)) {
             showNormalToast(ResUtil.getString(R.string.certification_tab_11));
             return;
         }
 
-        CertificationPost post = new CertificationPost(pic_front,pic_back,name,idcard);
+        CertificationPost post = new CertificationPost(pic_front, pic_back, name, idcard);
         certification(post);
 
     }
@@ -313,24 +321,24 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             //添加图片返回
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
-               if (isFront){
-                   //todo 正面
-                   images1 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                   if (images1 != null) {
-                       GlideUtil.setImage(mContext, images1.get(0).path, ivAddPositive, R.drawable.icon_add_idcard_positive);
-                       llAddPositive.setVisibility(View.GONE);
-                       pic_front = "data:image/gif;base64,"+PicUtils.imageToBase64(images1.get(0).path);
-                       L.e("lgh_e",pic_front);
-                   }
-               }else {
-                   //todo 背面
-                   images2 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                   if (images2 != null) {
-                       GlideUtil.setImage(mContext, images2.get(0).path, ivAddBack, R.drawable.icon_add_idcard_back);
-                       llAddBack.setVisibility(View.GONE);
-                       pic_back = "data:image/gif;base64,"+PicUtils.imageToBase64(images2.get(0).path);
-                   }
-               }
+                if (isFront) {
+                    //todo 正面
+                    images1 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    if (images1 != null) {
+                        GlideUtil.setImage(mContext, images1.get(0).path, ivAddPositive, R.drawable.icon_add_idcard_positive);
+                        llAddPositive.setVisibility(View.GONE);
+                        pic_front = "data:image/gif;base64," + PicUtils.imageToBase64(images1.get(0).path);
+                        L.e("lgh_e", pic_front);
+                    }
+                } else {
+                    //todo 背面
+                    images2 = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    if (images2 != null) {
+                        GlideUtil.setImage(mContext, images2.get(0).path, ivAddBack, R.drawable.icon_add_idcard_back);
+                        llAddBack.setVisibility(View.GONE);
+                        pic_back = "data:image/gif;base64," + PicUtils.imageToBase64(images2.get(0).path);
+                    }
+                }
             }
         }
 

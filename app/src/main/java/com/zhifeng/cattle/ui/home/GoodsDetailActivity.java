@@ -171,7 +171,6 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     boolean isBuy = false;
 
     GoodsDetailDto.DataBean dataBean;
-    public static GoodsDetailActivity activity;
 
     @Override
     public int intiLayout() {
@@ -213,7 +212,6 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         super.init();
         mActicity = this;
         mContext = this;
-        activity = this;
 
         goods_id = getIntent().getIntExtra("goods_id", 75);
 
@@ -555,7 +553,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void deleteOrAddCollection(String msg) {
         showNormalToast(msg);
-        getGoodsDetail();
+        isCollection = !isCollection;
+        tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
     }
 
     /**

@@ -20,6 +20,7 @@
             android:layout_width="@dimen/item_height40"
             android:layout_height="@dimen/item_height40"
             android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/logo"
             android:scaleType="fitXY"/>
         <TextView
             android:id="@+id/tv_bank_name"

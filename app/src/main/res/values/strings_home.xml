@@ -57,6 +57,7 @@
     <string name="certification_tab_9">添加身份证</string>
     <string name="certification_tab_10">提交订单</string>
     <string name="certification_tab_11">请上传身份证</string>
+    <string name="certification_tab_12">请输入有效的身份证号码</string>
 
     <string name="bug_pwd_dialog_1">确认支付</string>
     <string name="bug_pwd_dialog_2">支付方式</string>

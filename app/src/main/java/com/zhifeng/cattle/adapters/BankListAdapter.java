@@ -49,7 +49,7 @@ public class BankListAdapter extends BaseRecyclerAdapter<BankListDto.DataBean> {
         ImageView img = holder.itemView.findViewById(R.id.iv_bank);
         for (int i = 0; i < dataBeanList.size(); i++) {
             if (model.equals(dataBeanList.get(i).getName())){
-                GlideUtil.setImageCircle(context,dataBeanList.get(i).getImg(),img,R.drawable.icon_logo);
+                GlideUtil.setImageCircle(context,dataBeanList.get(i).getImg(),img,R.mipmap.logo);
             }
         }
 
