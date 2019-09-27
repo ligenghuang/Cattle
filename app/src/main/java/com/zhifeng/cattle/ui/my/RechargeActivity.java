@@ -265,6 +265,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
 
                 }else {
                     //绑定银行卡 跳转至绑定银行卡页面
+                    jumpActivityNotFinish(mContext, BindBankCardActivity.class);
                 }
                 break;
         }

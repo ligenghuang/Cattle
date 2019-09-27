@@ -2,6 +2,7 @@ package com.zhifeng.cattle.utils.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.adapters.BankListAdapter;
 import com.zhifeng.cattle.modules.BankImgListDto;
 import com.zhifeng.cattle.modules.BankListDto;
+import com.zhifeng.cattle.ui.my.BindBankCardActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +97,8 @@ public class BankListDialog extends Dialog {
     @OnClick(R.id.iv_add_bank)
     public void onViewClicked() {
         //todo 跳转至绑定银行卡页面
-
+        Intent i=new Intent(context, BindBankCardActivity.class);
+        context.startActivity(i);
         dismiss();
     }
 

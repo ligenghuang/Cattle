@@ -98,10 +98,10 @@ public class ForgetPwdAction extends BaseAction<ForgetPwdView> {
                             }.getType());
                             if (generalDto.getStatus() == 200){
                                 //todo 获取验证码成功
-                                view.getCodeSuccess(generalDto.getData());
+                                view.getCodeSuccess(generalDto.getMsg());
                                 return;
                             }
-                            view.onError(generalDto.getData(),action.getErrorType());
+                            view.onError(generalDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

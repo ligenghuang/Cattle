@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_black_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f2"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="@dimen/item_height40"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="1dp"
+            app:contentPadding="@dimen/dp_10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/boundbank_tab2"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size15" />
+
+                    <EditText
+                        android:id="@+id/et_bankName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="@string/boundbank_tab3"
+                        android:textColor="@color/color_15"
+                        android:maxLines="2"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="@dimen/text_size15" />
+                </LinearLayout>
+
+                <View
+                    style="@style/line_4"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/boundbank_tab4"
+                        android:textColor="@color/color_15"
+                        android:textSize="@dimen/text_size15" />
+
+                    <EditText
+                        android:id="@+id/et_bankCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="@string/boundbank_tab5"
+                        android:inputType="numberDecimal"
+                        android:maxLength="19"
+                        android:textColor="@color/color_15"
+                        android:textColorHint="@color/color_9"
+                        android:textSize="@dimen/text_size15" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/shape_login_btn_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/supplier_tab_3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size15" />
+
+    </LinearLayout>
+
+</LinearLayout>

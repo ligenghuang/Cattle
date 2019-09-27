@@ -260,6 +260,13 @@
     <string name="refund_tab5">请填写退款原因</string>
     <string name="refund_tab6">提交成功</string>
 
+    <string name="boundbank_tab1">绑定银行卡</string>
+    <string name="boundbank_tab2">银行名</string>
+    <string name="boundbank_tab3">请输入银行名</string>
+    <string name="boundbank_tab4">银行卡号</string>
+    <string name="boundbank_tab5">请输入银行卡号</string>
+    <string name="boundbank_tab6">请输入有效的银行卡号</string>
+
     <string name="bank_list_tab_1">请选择充值银行卡</string>
     <string name="bank_list_tab_2">添加银行卡</string>
     <string name="bank_list_tab_3">请先绑定银行卡</string>

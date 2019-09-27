@@ -348,4 +348,9 @@ public class WebUrlUtil {
      * 获取银行图标
      */
     public static final String POST_BOUND_BANK = "user/bank_img";
+
+    /**
+     * 绑定银行卡
+     */
+    public static final String POST_BIND_BANK = "user/bound_bank";
 }
