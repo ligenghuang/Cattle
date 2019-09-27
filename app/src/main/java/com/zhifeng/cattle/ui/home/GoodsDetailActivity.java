@@ -552,6 +552,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
      */
     @Override
     public void deleteOrAddCollection(String msg) {
+        loadDiss();
         showNormalToast(msg);
         isCollection = !isCollection;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
