@@ -163,7 +163,7 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 break;
             case R.id.ll_security_user:
                 //切换用户
-                jumpActivity(mContext,ChangeAccountActivity.class);
+                jumpActivityNotFinish(mContext,ChangeAccountActivity.class);
                 break;
             case R.id.tv_logout:
                 //退出

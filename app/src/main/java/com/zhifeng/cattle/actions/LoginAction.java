@@ -110,6 +110,7 @@ public class LoginAction extends BaseAction<LoginView> {
                                GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                                }.getType());
                                view.onError(generalDto.getMsg(),action.getErrorType());
+                               return;
                            }
                         }
                         view.onError(msg,action.getErrorType());

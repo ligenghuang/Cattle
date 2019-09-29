@@ -98,6 +98,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     int payType;
     int addressId = -1;
     PayPwdDialog bugPwdDialog;
+    int pwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,28 +204,32 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         switch (payType) {
             case 1:
                 //余额支付
-                bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
-                bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
-                    @Override
-                    public void inputFinish(String password) {
-                        //支付订单
-                        SubmitOrderPost post = new SubmitOrderPost();
-                        post.setCart_id(submitOrderDto.getData());
-                        post.setPay_type(payType + "");
-                        post.setPwd(password);
-                        payOrder(post);
-                    }
+                if (pwd == 1) {
+                    bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
+                    bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
+                        @Override
+                        public void inputFinish(String password) {
+                            //支付订单
+                            SubmitOrderPost post = new SubmitOrderPost();
+                            post.setCart_id(submitOrderDto.getData());
+                            post.setPay_type(payType + "");
+                            post.setPwd(password);
+                            payOrder(post);
+                        }
 
-                    @Override
-                    public void close() {
-                        //取消支付  跳转至订单详情页
-                        Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                        intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                bugPwdDialog.show();
+                        @Override
+                        public void close() {
+                            //取消支付  跳转至订单详情页
+                            Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                            intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                    bugPwdDialog.show();
+                } else {
+                   showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                }
                 break;
             case 2:
                 break;
@@ -241,10 +246,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
      */
     @Override
     public void payOrder(SubmitOrderPost submitOrderPost) {
-       if (CheckNetwork.checkNetwork2(mContext)){
-           loadDialog();
-           baseAction.payOrder(submitOrderPost);
-       }
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.payOrder(submitOrderPost);
+        }
     }
 
     /**
@@ -310,6 +315,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         tvTotalGoodsPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, String.valueOf(totalPrice)));
         tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(num)));
         tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, String.valueOf(totalPrice)));
+        pwd = dataBean.getPwd();
     }
 
     @Override

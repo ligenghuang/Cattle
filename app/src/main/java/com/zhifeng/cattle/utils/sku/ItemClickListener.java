@@ -127,6 +127,7 @@ public class ItemClickListener implements SkuAdapter.OnClickListener {
                         }else {
                             sendSuccess(handler,"0",1);
                             sendSuccess(handler,"0",2);
+                            sendSuccess(handler,"-1",4);
                             L.e("lgh_sku","lgh_sku  = "+2);
                         }
                         break;
@@ -135,6 +136,7 @@ public class ItemClickListener implements SkuAdapter.OnClickListener {
                         unSelecPrice = selecPrice - unPirce;
                         sendSuccess(handler,unSelecPrice,3);
                         sendSuccess(handler,"0",7);
+                        sendSuccess(handler,"-1",4);
                         L.e("lgh_sku","lgh_sku  = "+3);
                     }
 

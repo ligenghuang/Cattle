@@ -158,7 +158,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     String content_param;//产品参数
     String goodsName = "";
     String service;
-    int sku_id;
+    int sku_id = -1;
     int cart_number = 1;
     boolean isCollection = false;
 
@@ -286,7 +286,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
-        sku_id = dataBean.getSpec().getGoods_sku().get(0).getSku_id();//todo 2019/09/19 默认sku  后面添加规格选择器后需更改
+//        sku_id = dataBean.getSpec().getGoods_sku().get(0).getSku_id();//todo 2019/09/19 默认sku  后面添加规格选择器后需更改
 
         comment_count = dataBean.getComment_count();
         tvGoodsCommentCount.setText(ResUtil.getFormatString(R.string.goods_detail_tab_12, comment_count + ""));//评价数量
@@ -422,20 +422,24 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (IsBuy) {
-                        case 0:
-                            //加入购物车
-                            addCart(sku_id, cart_number);
-                            break;
-                        case 1:
-                            //立即购买
-                            buyNow(sku_id, cart_number);
-                            break;
-                        case 2:
-                            //选择规格
-                            mUiData.getBottomSheetDialog().dismiss();
-                            break;
-                    }
+                   if (sku_id == -1){
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_31));
+                   }else {
+                       switch (IsBuy) {
+                           case 0:
+                               //加入购物车
+                               addCart(sku_id, cart_number);
+                               break;
+                           case 1:
+                               //立即购买
+                               buyNow(sku_id, cart_number);
+                               break;
+                           case 2:
+                               //选择规格
+                               mUiData.getBottomSheetDialog().dismiss();
+                               break;
+                       }
+                   }
                 }
             });
             //添加list组
@@ -671,6 +675,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void onError(String message, int code) {
         loadDiss();
+        L.e("lgh_dialog","msg  = "+message);
         showNormalToast(message);
     }
 
@@ -788,7 +793,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
 
     @OnClick({R.id.f_right_iv, R.id.tv_goods_attention, R.id.tv_goods_address, R.id.tv_goods_spec, R.id.tv_goods_comment_all,
-            R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top})
+            R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top,R.id.tv_goods_add_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.f_right_iv:
@@ -855,6 +860,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 isBuy = true;
                 showBottomSheetDialog(testData, 1);
 //                buyNow(sku_id, cart_number);
+                break;
+            case R.id.tv_goods_add_cart:
+                //todo 加入购物车
+                isBuy = false;
+                showBottomSheetDialog(testData, 0);
                 break;
             case R.id.iv_to_up_top:
                 //todo 滚动到顶部

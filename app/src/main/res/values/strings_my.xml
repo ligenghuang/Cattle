@@ -74,6 +74,7 @@
     <string name="order_tab_33">退款中</string>
     <string name="order_tab_34">已退款</string>
     <string name="order_tab_35">退款失败</string>
+    <string name="order_tab_36">待评价</string>
 
 
     <string name="sales_return_tab_1">正在退货</string>

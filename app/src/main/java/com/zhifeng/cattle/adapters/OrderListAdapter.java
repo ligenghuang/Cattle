@@ -226,8 +226,13 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
                 break;
             case 4:
                 //todo 交易完成
-                llOrder_1.setVisibility(View.VISIBLE);
-                text = R.string.order_tab_10;
+                if (comment == 0){
+                    llOrder_5.setVisibility(View.VISIBLE);
+                    text = R.string.order_tab_36;
+                }else {
+                    llOrder_1.setVisibility(View.VISIBLE);
+                    text = R.string.order_tab_10;
+                }
                 break;
             case 6:
                 //todo 申请退款

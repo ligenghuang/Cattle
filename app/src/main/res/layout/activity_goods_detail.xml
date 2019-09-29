@@ -419,18 +419,45 @@
             android:textSize="@dimen/text_size15"
             android:textStyle="bold" />
 
-        <!--立即购买-->
-        <TextView
-            android:id="@+id/tv_goods_buy"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/color_fd69a5"
-            android:gravity="center"
-            android:text="@string/goods_detail_tab_3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size15"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <!--加入购物车-->
+            <TextView
+                android:id="@+id/tv_goods_add_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/color_fd69a5"
+                android:gravity="center"
+                android:text="@string/goods_detail_tab_32"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size15"
+                android:textStyle="bold" />
+
+
+            <View android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/color_e6"/>
+
+            <!--立即购买-->
+            <TextView
+                android:id="@+id/tv_goods_buy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/color_fd69a5"
+                android:gravity="center"
+                android:text="@string/goods_detail_tab_3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size15"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
