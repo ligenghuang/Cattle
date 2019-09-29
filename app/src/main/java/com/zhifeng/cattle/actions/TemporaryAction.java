@@ -107,7 +107,6 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
                       try{
-                          L.e("lgh_pay", "输出返回结果1 " + action.getUserData().toString());
                           PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
                           }.getType());
                           if (payOrderDto.getStatus() == 200) {
@@ -118,14 +117,12 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                           view.onError(payOrderDto.getMsg(), action.getErrorType());
                           return;
                       }catch (JsonSyntaxException e){
-                          L.e("lgh_pay", "输出返回结果2 " + action.getUserData().toString());
                           GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                           }.getType());
                           view.payOrderError(generalDto.getMsg());
                           return;
                       }
                     }
-                    L.e("lgh_pay", "输出返回结果3 " + action.getUserData().toString());
                     view.onError(msg, action.getErrorType());
                     break;
             }

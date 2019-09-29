@@ -280,6 +280,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     public void payOrderError(String msg) {
         L.e("lgh_pay", "输出返回结果4" + msg);
+        loadDiss();
         showNormalToast(msg);
     }
 
@@ -332,6 +333,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     @Override
     public void onError(String message, int code) {
+        loadDiss();
         loadDiss();
         showNormalToast(message);
     }
