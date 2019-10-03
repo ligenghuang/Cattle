@@ -1,7 +1,9 @@
 package com.zhifeng.cattle.modules;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 public class OrderComment {
     private String order_id;
@@ -11,9 +13,9 @@ public class OrderComment {
     private int logistics;
     private int service;
     private String content;
-    private String[] img;
+    private List<String> img;
 
-    public OrderComment(String order_id, String goods_id, String sku_id, int describe, int logistics, int service, String content, String[] img) {
+    public OrderComment(String order_id, String goods_id, String sku_id, int describe, int logistics, int service, String content, List<String> img) {
         this.order_id = order_id;
         this.goods_id = goods_id;
         this.sku_id = sku_id;
@@ -80,25 +82,37 @@ public class OrderComment {
         this.content = content == null ? "" : content;
     }
 
-    public String[] getImg() {
+    public List<String> getImg() {
+        if (img == null) {
+            return new ArrayList<>();
+        }
         return img;
     }
 
-    public void setImg(String[] img) {
+    public void setImg(List<String> img) {
         this.img = img;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "\"order_id\":\'" + order_id + "\'" +
-                ", \"goods_id\":\'" + goods_id + "\'" +
-                ", \"sku_id\":\'" + sku_id + "\'" +
-                ", \"describe\":\'" + describe + "\'" +
-                ", \"logistics\":\'" + logistics + "\'" +
-                ", \"service\":\'" + service + "\'" +
-                ", \"content\":\'" + content + "\'" +
-                ", \"img\":" + Arrays.toString(img) +
-                '}';
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"order_id\":\"")
+                .append(order_id).append('\"');
+        sb.append(",\"goods_id\":\"")
+                .append(goods_id).append('\"');
+        sb.append(",\"sku_id\":\"")
+                .append(sku_id).append('\"');
+        sb.append(",\"describe\":")
+                .append(describe);
+        sb.append(",\"logistics\":")
+                .append(logistics);
+        sb.append(",\"service\":")
+                .append(service);
+        sb.append(",\"content\":\"")
+                .append(content).append('\"');
+        sb.append(",\"img\":")
+                .append(img);
+        sb.append('}');
+        return sb.toString();
     }
 }

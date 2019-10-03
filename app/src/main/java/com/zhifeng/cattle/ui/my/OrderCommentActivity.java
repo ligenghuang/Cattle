@@ -40,8 +40,11 @@ import com.zhifeng.cattle.utils.view.FlowLayout;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,7 +113,7 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
         mActicity = this;
         mContext = this;
 
-        order_id = getIntent().getStringExtra("order_id");
+        order_id = String.valueOf(getIntent().getIntExtra("order_id",0));
         goods_id = getIntent().getStringExtra("goods_id");
         sku_id = getIntent().getStringExtra("sku_id");
 
@@ -169,9 +172,9 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
             return;
         }
 
-        String[] str = new String[]{};
+       List<String> str = new ArrayList<>();
         for (int i = 0; i <selImageList.size() ; i++) {
-            str[i]=PicUtils.imageToBase64(selImageList.get(i).path);
+            str.add("data:image/gif;base64,"+PicUtils.imageToBase64(selImageList.get(i).path));
         }
 
         OrderComment orderComment = new OrderComment(order_id, goods_id, sku_id, describe, logistics, service, content, str);
