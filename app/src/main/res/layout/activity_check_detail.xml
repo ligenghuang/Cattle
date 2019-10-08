@@ -43,7 +43,7 @@
                 android:text="@string/balance_tab_9" />
         </LinearLayout>
 
-        <androidx.viewpager.widget.ViewPager
+        <com.lgh.huanglib.util.cusview.CustomViewPager
             android:id="@+id/vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

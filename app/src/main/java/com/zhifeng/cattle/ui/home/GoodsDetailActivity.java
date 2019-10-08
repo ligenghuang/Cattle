@@ -584,7 +584,11 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void addCartSuccess(String msg) {
         loadDiss();
-        showNormalToast(msg);
+        if (mUiData.getBottomSheetDialog() != null) {
+            mUiData.getBottomSheetDialog().dismiss();
+        }
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_33));
+
     }
 
     /**

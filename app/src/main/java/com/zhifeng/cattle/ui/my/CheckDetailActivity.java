@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,16 +11,22 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
+import com.lgh.huanglib.util.cusview.CustomViewPager;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
+import com.zhifeng.cattle.ui.classify.ClassifyFragment;
+import com.zhifeng.cattle.ui.home.HomeFragment;
+import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * @ClassName:
@@ -28,6 +35,16 @@ import butterknife.OnClick;
  * @Date: 2019/9/23 17:09
  */
 public class CheckDetailActivity extends UserBaseActivity {
+    public static int Position = 0;
+    private static final int POIONTONE = 0;
+    private static final int POIONTTWO = 1;
+    private ArrayList<Fragment> fragments;
+    private MyFragmentPagerAdapter fragmentPagerAdapter;
+    private int fragmentSize = 2;
+
+    CheckDetailFragment incomeFragment;
+    CheckDetailFragment outcomeFragment;
+
     @BindView(R.id.top_view)
     View topView;
     @BindView(R.id.f_title_tv)
@@ -39,8 +56,7 @@ public class CheckDetailActivity extends UserBaseActivity {
     @BindView(R.id.tvOutCome)
     TextView tvOutCome;
     @BindView(R.id.vp)
-    ViewPager vp;
-    public int mLogType = 1;
+    CustomViewPager vp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +80,8 @@ public class CheckDetailActivity extends UserBaseActivity {
         super.init();
         mActicity = this;
         mContext = this;
-        tvIncome.setSelected(true);
-        ArrayList<Fragment> fragments = new ArrayList<>();
+        initViewPager();
 
-        CheckDetailFragment incomeFragment = new CheckDetailFragment();
-        incomeFragment.setLog_type(1);
-        fragments.add(incomeFragment);
-
-        CheckDetailFragment outcomeFragment = new CheckDetailFragment();
-        outcomeFragment.setLog_type(0);
-        fragments.add(outcomeFragment);
-
-        vp.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
     }
 
     /**
@@ -95,11 +101,83 @@ public class CheckDetailActivity extends UserBaseActivity {
         fTitleTv.setText(ResUtil.getString(R.string.balance_tab_7));
     }
 
-    @OnClick({R.id.tvIncome, R.id.tvOutCome})
-    public void onClick(View v) {
-        mLogType = v.getId() == R.id.tvIncome ? 1 : 0;
-        tvIncome.setSelected(mLogType == 1);
-        tvOutCome.setSelected(mLogType == 0);
-        vp.setCurrentItem(v.getId() == R.id.tvIncome ? 0 : 1);
+    private void initViewPager() {
+        fragments = new ArrayList<Fragment>();
+        for (int i = 0; i < fragmentSize; i++) {
+            switch (i) {
+                case POIONTONE://
+                    incomeFragment = new CheckDetailFragment(POIONTONE);
+                    if (Position != POIONTONE) {
+                        incomeFragment.setUserVisibleHint(false);//
+                    }
+
+                    fragments.add(incomeFragment);
+                    break;
+                case POIONTTWO://
+                    outcomeFragment = new CheckDetailFragment(POIONTTWO);
+                    if (Position != POIONTTWO) {
+                        outcomeFragment.setUserVisibleHint(false);//
+                    }
+                    fragments.add(outcomeFragment);
+                    break;  default:
+                    break;
+            }
+        }
+
+        fragmentPagerAdapter = new MyFragmentPagerAdapter(
+                getSupportFragmentManager(), fragments);
+
+        fragmentPagerAdapter.setFragments(fragments);
+        setSelectedLin(Position);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                vp.setAdapter(fragmentPagerAdapter);
+                vp.setCurrentItem(Position, false);
+                vp.setOffscreenPageLimit(fragmentSize);
+
+
+            }
+        }, 500);
+    }
+
+    @OnTouch({R.id.tvIncome, R.id.tvOutCome})
+    public boolean onTouch(View v) {
+        switch (v.getId()) {
+            case R.id.tvIncome:
+                Position = POIONTONE;
+                break;
+            case R.id.tvOutCome:
+                Position = POIONTTWO;
+                break;
+            default:
+                break;
+        }
+        setSelectedLin(Position);
+        vp.setCurrentItem(Position, false);
+        return false;
+    }
+    /**
+     * 选择
+     *
+     * @param position
+     */
+    public void setSelectedLin(int position) {
+        tvIncome.setSelected(false);
+        tvOutCome.setSelected(false);
+
+        //设置状态栏黑色字体与图标
+//        QMUIStatusBarHelper.setStatusBarLightMode(this);
+        mImmersionBar.statusBarDarkFont(true);
+        switch (position) {
+            case 0:
+                tvIncome.setSelected(true);
+                break;
+            case 1:
+                tvOutCome.setSelected(true);
+                break;
+            default:
+                break;
+        }
     }
 }

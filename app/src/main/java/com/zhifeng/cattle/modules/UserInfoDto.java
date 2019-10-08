@@ -87,8 +87,8 @@ public class UserInfoDto {
         private String levelname;
         private int today_rec;
         private int team_count;
-        private int month;
-        private int day;
+        private double month;
+        private double day;
 
         public String getRealname() {
             return realname == null ? "" : realname;
@@ -234,19 +234,19 @@ public class UserInfoDto {
             this.team_count = team_count;
         }
 
-        public int getMonth() {
+        public double getMonth() {
             return month;
         }
 
-        public void setMonth(int month) {
+        public void setMonth(double month) {
             this.month = month;
         }
 
-        public int getDay() {
+        public double getDay() {
             return day;
         }
 
-        public void setDay(int day) {
+        public void setDay(double day) {
             this.day = day;
         }
     }

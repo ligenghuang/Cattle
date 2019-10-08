@@ -24,7 +24,7 @@ public class CheckDetailAction extends BaseAction<CheckDetailView> {
     }
 
     public void getCheckDetail(int log_type, int pageSize, int page) {
-        post(WebUrlUtil.POST_CHECK_DETAIL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "log_type", log_type, "pageSize", pageSize, "page", page), WebUrlUtil.POST_CHECK_DETAIL)));
+        post(WebUrlUtil.POST_CHECK_DETAIL, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "log_type", log_type==0?1:0, "pageSize", pageSize, "page", page), WebUrlUtil.POST_CHECK_DETAIL)));
     }
 
     /**

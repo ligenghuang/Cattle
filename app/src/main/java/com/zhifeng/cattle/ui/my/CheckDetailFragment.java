@@ -46,6 +46,10 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
     private int log_type;
     private CheckDetailAdapter adapter;
 
+    public CheckDetailFragment(int log_type) {
+        this.log_type = log_type;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +82,7 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         rv.setVisibility(View.GONE);
-        if (isVisible && ((CheckDetailActivity) mActivity).mLogType == log_type) {
+        if (isVisible && ((CheckDetailActivity) mActivity).Position == log_type) {
             refreshLayout.autoRefresh();
         }
     }
@@ -161,9 +165,6 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
         refreshLayout.finishLoadMore();
     }
 
-    void setLog_type(int log_type) {
-        this.log_type = log_type;
-    }
 
     @Override
     public void onResume() {

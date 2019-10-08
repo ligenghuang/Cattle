@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.lgh.huanglib.util.config.MyApplication;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.crash.PgyerCrashObservable;
+import com.pgyersdk.crash.PgyerObserver;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -67,6 +70,14 @@ public class MyApp extends MyApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
+
+        PgyCrashManager.register();
+        PgyerCrashObservable.get().attach(new PgyerObserver() {
+            @Override
+            public void receivedCrash(Thread thread, Throwable throwable) {
+
+            }
+        });
     }
 
     @Override

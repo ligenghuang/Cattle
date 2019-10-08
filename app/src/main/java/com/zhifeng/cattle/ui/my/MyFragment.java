@@ -29,6 +29,7 @@ import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
 import com.zhifeng.cattle.utils.data.MySp;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -142,8 +143,10 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         tvMyRemainderMoney.setText(df.format(money));//提现余额
         tvMyCollection.setText(dataBean.getCollection() + "");//关注
 
-        tvBonusDay.setText(dataBean.getDay() + "");//当日奖金
-        tvBonusMonth.setText(dataBean.getMonth() + "");//当月奖金
+        BigDecimal bigDecimal = new BigDecimal(dataBean.getDay());
+        BigDecimal bigDecimal2 = new BigDecimal(dataBean.getMonth());
+        tvBonusDay.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP)+ "");//当日奖金
+        tvBonusMonth.setText(bigDecimal2.setScale(2, BigDecimal.ROUND_HALF_UP) + "");//当月奖金
 
         tvTotalResults.setText(dataBean.getDistribut_money());//总业绩
         tvHeadcount.setText(dataBean.getTeam_count() + "");//总人数

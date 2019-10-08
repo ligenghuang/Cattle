@@ -7,6 +7,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.AddCartDto;
 import com.zhifeng.cattle.modules.BuyNowDto;
 import com.zhifeng.cattle.modules.DefaultCityDto;
 import com.zhifeng.cattle.modules.ErrorDto;
@@ -202,7 +203,7 @@ public class GoodsDetailAction extends BaseAction<GoodsDetailView> {
                         //todo 加入购物车
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            AddCartDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AddCartDto>() {
                             }.getType());
                             if (generalDto.getStatus() == 1||generalDto.getStatus() == 200) {
                                 //todo 加入购物车成功
