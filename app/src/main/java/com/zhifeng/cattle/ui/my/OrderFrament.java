@@ -196,8 +196,8 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
                 //todo 去评价
                 Intent i=new Intent(mContext,OrderCommentActivity.class);
                 i.putExtra("order_id",orderId);
-                i.putExtra("goods_id",goodsBeans.get(0).getGoods_id());
-                i.putExtra("sku_id",goodsBeans.get(0).getSku_id());
+                i.putExtra("goods_id",goodsBeans.get(0).getGoods_id()+"");
+                i.putExtra("sku_id",goodsBeans.get(0).getSku_id()+"");
                 startActivity(i);
             }
         });

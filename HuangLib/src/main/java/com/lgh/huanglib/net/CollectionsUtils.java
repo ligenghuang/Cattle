@@ -1,5 +1,7 @@
 package com.lgh.huanglib.net;
 
+import com.lgh.huanglib.util.L;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +35,7 @@ public class CollectionsUtils {
                 map.put(String.valueOf(objects[i]), String.valueOf(objects[++i]));
             }
         }
+        L.e("lgh_json","map = "+map.get("comments").toString());
         return map;
 
     }

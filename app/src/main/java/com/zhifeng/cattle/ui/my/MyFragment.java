@@ -9,15 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hjq.toast.ToastUtils;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.config.GlideUtil;
-import com.lgh.huanglib.util.data.ResUtil;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.MyAction;
@@ -28,11 +34,13 @@ import com.zhifeng.cattle.ui.impl.MyView;
 import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
 import com.zhifeng.cattle.utils.data.MySp;
+import com.zhifeng.cattle.utils.dialog.PicturesDialog;
+import com.zhifeng.cattle.utils.imageloader.GlideImageLoader;
+import com.zhifeng.cattle.utils.photo.PicUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +56,18 @@ import butterknife.OnClick;
  */
 
 public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
+    public static final int REQUEST_CODE_SELECT = 100;
+    public static final int REQUEST_CODE_PREVIEW = 101;
+    public static final int IMAGE_ITEM_ADD = -1;
+    public static final int REQUEST_CODE_TAKE = 102;
+    public static final int REQUEST_CODE_ALBUM = 103;
+    public static int REQUEST_SELECT_TYPE = -1;//选择的类型
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    private ArrayList<ImageItem> selImageList = new ArrayList<>(); //当前选择的所有图片
+    ArrayList<ImageItem> images = null;
+    private int maxImgCount = 1;               //允许选择图片最大数
+
     View view;
     @BindView(R.id.top_view)
     View topView;
@@ -95,6 +115,20 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     protected void init() {
         super.init();
+        refreshLayout.setEnableLoadMore(false);
+
+        initImagePicker();
+    }
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getUserInfo();
+            }
+        });
     }
 
     @Override
@@ -132,6 +166,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     public void getUserInfoSuccess(UserInfoDto userInfoDto) {
         loadDiss();
+        refreshLayout.finishRefresh();
         UserInfoDto.DataBean dataBean = userInfoDto.getData();
         GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivMyAvatar, R.mipmap.logo);//头像
         tvMyName.setText(dataBean.getRealname());//昵称
@@ -145,7 +180,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
 
         BigDecimal bigDecimal = new BigDecimal(dataBean.getDay());
         BigDecimal bigDecimal2 = new BigDecimal(dataBean.getMonth());
-        tvBonusDay.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP)+ "");//当日奖金
+        tvBonusDay.setText(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP) + "");//当日奖金
         tvBonusMonth.setText(bigDecimal2.setScale(2, BigDecimal.ROUND_HALF_UP) + "");//当月奖金
 
         tvTotalResults.setText(dataBean.getDistribut_money());//总业绩
@@ -188,6 +223,30 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     }
 
     /**
+     * 修改头像
+     *
+     * @param path
+     */
+    @Override
+    public void updataAvatar(String path) {
+        if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
+            baseAction.updataAvatar(path);
+        }
+    }
+
+    /**
+     * 修改头像成功
+     *
+     * @param url
+     */
+    @Override
+    public void updataAvatarSuccess(String url) {
+        loadDiss();
+        GlideUtil.setImageCircle(mContext, url, ivMyAvatar, R.mipmap.logo);
+    }
+
+    /**
      * token过期
      */
     @Override
@@ -208,6 +267,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     @Override
     public void onError(String message, int code) {
         loadDiss();
+        refreshLayout.finishRefresh();
         showNormalToast(message);
     }
 
@@ -230,7 +290,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
             R.id.tv_wait_evaluation, R.id.tv_sales_return, R.id.ll_my_team,
             R.id.ll_total_results, R.id.ll_headcount, R.id.ll_recommended,
             R.id.tv_invitation, R.id.tv_address, R.id.tv_supplier, R.id.tv_security,
-            R.id.ll_bonus_day, R.id.ll_bonus_month, R.id.tv_ranking_list})
+            R.id.ll_bonus_day, R.id.ll_bonus_month, R.id.tv_ranking_list, R.id.iv_my_avatar, R.id.tv_my_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_my_remainder_money:
@@ -300,6 +360,16 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                 //todo 安全中心
                 jumpActivityNotFinish(mContext, SecurityActivity.class);
                 break;
+            case R.id.iv_my_avatar:
+                //todo 修改头像
+                showSelectDiaLog();
+                break;
+            case R.id.tv_my_name:
+                //todo 修改用户名
+                Intent intent = new Intent(mContext, ModifyUserNameActivity.class);
+                intent.putExtra("userName", tvMyName.getText().toString());
+                startActivity(intent);
+                break;
         }
     }
 
@@ -314,5 +384,99 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         startActivity(intent);
     }
 
+    /**
+     * 选择图片
+     */
+    public void showSelectDiaLog() {
+        PicturesDialog dialog = new PicturesDialog(mActivity, R.style.MY_AlertDialog);
+        dialog.setOnClickListener(new PicturesDialog.OnClickListener() {
+            @Override
+            public void onCamera() {
+                takePhoto();
+            }
+
+            @Override
+            public void onPhoto() {
+                takeUserGally();
+            }
+        });
+        dialog.show();
+    }
+
+    private void takePhoto() {
+        // 直接调起相机
+        /**
+         * 0.4.7 目前直接调起相机不支持裁剪，如果开启裁剪后不会返回图片，请注意，后续版本会解决
+         *
+         * 但是当前直接依赖的版本已经解决，考虑到版本改动很少，所以这次没有上传到远程仓库
+         *
+         * 如果实在有所需要，请直接下载源码引用。
+         */
+        //打开选择,本次允许选择的数量
+        ImagePicker.getInstance().setSelectLimit(1);
+        Intent intent = new Intent(mContext, ImageGridActivity.class);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        startActivityForResult(intent, REQUEST_CODE_SELECT);
+    }
+
+    /**
+     * 打开相册
+     */
+    private void takeUserGally() {
+        //打开选择,本次允许选择的数量
+        ImagePicker.getInstance().setSelectLimit(1);
+        Intent intent1 = new Intent(mContext, ImageGridActivity.class);
+        /* 如果需要进入选择的时候显示已经选中的图片，
+         * 详情请查看ImagePickerActivity
+         * */
+//                                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
+        startActivityForResult(intent1, REQUEST_CODE_SELECT);
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);                      //显示拍照按钮
+        imagePicker.setCrop(false);                           //允许裁剪（单选才有效）
+        imagePicker.setMultiMode(false);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setSelectLimit(1);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(400);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(400);                         //保存文件的高度。单位像素
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            //添加图片返回
+            if (data != null && requestCode == REQUEST_CODE_SELECT) {
+                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                if (images != null) {
+                    selImageList.addAll(images);
+                    //todo 请求接口
+                    updataAvatar("data:image/gif;base64," + PicUtils.imageToBase64(selImageList.get(0).path));
+                }
+            }
+        }
+//        else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+//            //预览图片返回
+//            if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
+//                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+//                if (images != null) {
+//                    selImageList.clear();
+//                    selImageList.addAll(images);
+//                    adapter.setImages(selImageList);
+//                }
+//            }
+//        }
+    }
+
+
+    /**********************************选择图片 end*********************************************/
 
 }

@@ -243,7 +243,7 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
         Catenav2Bean catenav2Bean = new Catenav2Bean();
         list.add(catenav2Bean);
         list.addAll(catenav2);
-        HomeFragment.fragment.setCatenavList(list);
+//        HomeFragment.fragment.setCatenavList(list);
     }
 
     /**

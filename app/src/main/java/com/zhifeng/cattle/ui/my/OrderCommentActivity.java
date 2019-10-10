@@ -86,9 +86,9 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
     private String order_id;
     private String goods_id;
     private String sku_id;
-    private int describe;
-    private int logistics;
-    private int service;
+    private int describe = 1;
+    private int logistics = 1;
+    private int service = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,11 +177,12 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
             str.add("data:image/gif;base64,"+PicUtils.imageToBase64(selImageList.get(i).path));
         }
 
-        OrderComment orderComment = new OrderComment(order_id, goods_id, sku_id, describe, logistics, service, content, str);
+        OrderComment orderComment = new OrderComment(order_id, goods_id, sku_id, describe+"", logistics+"", service+"", content, str);
         if (CheckNetwork.checkNetwork2(mContext)){
             loadDialog();
-            baseAction.postComment(orderComment.toString());
+            baseAction.postComment(orderComment);
         }
+        L.e("lgh_json",orderComment.toString());
     }
 
     /**

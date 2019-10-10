@@ -29,7 +29,7 @@ public class BindBankCardAction extends BaseAction<BindBankCardView> {
     }
 
     public void bindBankCard(String bankName, long bankcard) {
-        post(WebUrlUtil.POST_BIND_BANK, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "bankName", bankName, "bankcard", bankcard), WebUrlUtil.POST_BIND_BANK)));
+        post(WebUrlUtil.POST_BIND_BANK, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "bankname", bankName, "bankcard", bankcard), WebUrlUtil.POST_BIND_BANK)));
     }
 
     /**

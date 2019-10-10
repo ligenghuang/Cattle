@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.Catenav2Bean;
+import com.zhifeng.cattle.modules.RecommendHomeDto;
+
+import java.util.List;
 
 /**
   *
@@ -16,7 +19,7 @@ import com.zhifeng.cattle.modules.Catenav2Bean;
   * @Version:        1.0
  */
 
-public class CatenavListAdapter extends BaseRecyclerAdapter<Catenav2Bean> {
+public class CatenavListAdapter extends BaseRecyclerAdapter<RecommendHomeDto.DataBean.Catenav1Bean> {
 
     OnClickListener onClickListener;
 
@@ -29,7 +32,7 @@ public class CatenavListAdapter extends BaseRecyclerAdapter<Catenav2Bean> {
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, Catenav2Bean model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder, RecommendHomeDto.DataBean.Catenav1Bean model, int position) {
         holder.setIsRecyclable(false);
         ImageView img = holder.itemView.findViewById(R.id.iv_logo);
         TextView textView = holder.itemView.findViewById(R.id.tv_item_name);
@@ -41,13 +44,13 @@ public class CatenavListAdapter extends BaseRecyclerAdapter<Catenav2Bean> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onClick(model.getCat_id(),model.getCat_name());
+                onClickListener.onClick(model.getCat_id(),model.getCat_name(),position - 1);
             }
         });
     }
 
     public interface OnClickListener{
-        void onClick(int id,String name);
+        void onClick(int id,String name,int position);
     }
 
 

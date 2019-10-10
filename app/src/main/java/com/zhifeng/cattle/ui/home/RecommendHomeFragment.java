@@ -230,7 +230,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         Catenav2Bean catenav2Bean = new Catenav2Bean();
         list.add(catenav2Bean);
         list.addAll(catenav2);
-        HomeFragment.fragment.setCatenavList(list);
+//        HomeFragment.fragment.setCatenavList(list);
     }
 
     /**
@@ -311,6 +311,11 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
             list.add(catenav1.get(i).getCat_name());
         }
         HomeFragment.fragment.setTitle(list);
+        List<RecommendHomeDto.DataBean.Catenav1Bean> catenav1BeanList = new ArrayList<>();
+        RecommendHomeDto.DataBean.Catenav1Bean catenav1Bean = new RecommendHomeDto.DataBean.Catenav1Bean();
+        catenav1BeanList.add(catenav1Bean);
+        catenav1BeanList.addAll(catenav1);
+        HomeFragment.fragment.setCatenavList(catenav1BeanList);
     }
 
 }

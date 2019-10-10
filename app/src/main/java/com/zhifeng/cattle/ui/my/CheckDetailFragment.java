@@ -72,7 +72,7 @@ public class CheckDetailFragment extends UserBaseFragment<CheckDetailAction> imp
 
     @Override
     protected void initialize() {
-        adapter = new CheckDetailAdapter();
+        adapter = new CheckDetailAdapter(log_type);
         rv.addItemDecoration(new DividerItemDecoration(mContext, RecyclerView.VERTICAL));
         rv.setLayoutManager(new LinearLayoutManager(mContext));
         rv.setAdapter(adapter);

@@ -17,6 +17,7 @@ import com.lxj.xpopup.XPopup;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.modules.Catenav2Bean;
+import com.zhifeng.cattle.modules.RecommendHomeDto;
 import com.zhifeng.cattle.utils.base.UserBaseFragment;
 import com.zhifeng.cattle.utils.popup.CustomPopup;
 
@@ -56,8 +57,8 @@ public class HomeFragment extends UserBaseFragment {
      TextView tvType2;
     @BindView(R.id.tv_type_3)
      TextView tvType3;
-    @BindView(R.id.tv_type_4)
-     TextView tvType4;
+//    @BindView(R.id.tv_type_4)
+//     TextView tvType4;
     @BindView(R.id.ll_top)
     LinearLayout llTop;
 
@@ -69,7 +70,7 @@ public class HomeFragment extends UserBaseFragment {
     PovertyReliefFragment povertyReliefFragment;
     HomeOtherFragment importFragment;
     HomeOtherFragment foodDrinkFragment;
-    List<Catenav2Bean> list = new ArrayList<>();
+    List<RecommendHomeDto.DataBean.Catenav1Bean> list = new ArrayList<>();
 
     @Override
     protected BaseAction initAction() {
@@ -151,6 +152,7 @@ public class HomeFragment extends UserBaseFragment {
 
         fragmentPagerAdapter.setFragments(fragments);
         setSelectedLin(Position);
+        setListSetClick();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -163,7 +165,9 @@ public class HomeFragment extends UserBaseFragment {
         }, 500);
     }
 
-    @OnTouch({R.id.tv_type_1, R.id.tv_type_2, R.id.tv_type_3,R.id.tv_type_4})
+    @OnTouch({R.id.tv_type_1, R.id.tv_type_2, R.id.tv_type_3
+//            ,R.id.tv_type_4
+    })
     public boolean onTouch(View v) {
         switch (v.getId()) {
             case R.id.tv_type_1:
@@ -175,14 +179,15 @@ public class HomeFragment extends UserBaseFragment {
             case R.id.tv_type_3:
                 Position = POIONTTHREE;
                 break;
-            case R.id.tv_type_4:
-                Position = POIONTFOUR;
-                break;
+//            case R.id.tv_type_4:
+//                Position = POIONTFOUR;
+//                break;
             default:
                 break;
         }
 
         setSelectedLin(Position);
+        setListSetClick();
         myPager.setCurrentItem(Position, false);
         return false;
     }
@@ -196,7 +201,7 @@ public class HomeFragment extends UserBaseFragment {
         tvType1.setSelected(false);
         tvType2.setSelected(false);
         tvType3.setSelected(false);
-        tvType4.setSelected(false);
+//        tvType4.setSelected(false);
         //设置状态栏黑色字体与图标
 //        QMUIStatusBarHelper.setStatusBarLightMode(this);
         mImmersionBar.statusBarDarkFont(true);
@@ -210,9 +215,9 @@ public class HomeFragment extends UserBaseFragment {
             case 2:
                 tvType3.setSelected(true);
                 break;
-            case 3:
-                tvType4.setSelected(true);
-                break;
+//            case 3:
+//                tvType4.setSelected(true);
+//                break;
             default:
                 break;
         }
@@ -222,14 +227,20 @@ public class HomeFragment extends UserBaseFragment {
         tvType1.setText(list.get(0));
         tvType2.setText(list.get(1));
         tvType3.setText(list.get(2));
-        tvType4.setText(list.get(3));
+//        tvType4.setText(list.get(3));
+    }
+
+    private void setListSetClick(){
+        for (int i = 1; i <list.size() ; i++) {
+            list.get(i).setClick(i == (Position+1));
+        }
     }
 
     /**
      * 获取二级分类列表
      * @param list
      */
-    public void setCatenavList(List<Catenav2Bean> list){
+    public void setCatenavList(List<RecommendHomeDto.DataBean.Catenav1Bean> list){
         this.list = list;
     }
 
@@ -243,7 +254,14 @@ public class HomeFragment extends UserBaseFragment {
                 new XPopup.Builder(mActivity)
                         .hasShadowBg(false)
                         .atView(llTop)
-                        .asCustom(new CustomPopup(mContext, list))
+                        .asCustom(new CustomPopup(mContext, list,new CustomPopup.OnListClickListener() {
+                            @Override
+                            public void onClick(int position) {
+                                Position = position;
+                                setSelectedLin(Position);
+                                myPager.setCurrentItem(Position, false);
+                            }
+                        }))
                         .show();
                 break;
         }

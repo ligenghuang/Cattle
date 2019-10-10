@@ -353,4 +353,14 @@ public class WebUrlUtil {
      * 绑定银行卡
      */
     public static final String POST_BIND_BANK = "user/bound_bank";
+
+    /**
+     * 修改头像
+     */
+    public static final String POST_UPDATEAVATAR = "user/updateTou";
+
+    /**
+     * 修改用户名
+     */
+    public static final String POST_UPDATE_USER_NAME = "user/edit_name";
 }

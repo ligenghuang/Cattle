@@ -2,7 +2,7 @@
 <resources>
 
     <string name="my_tab_1">提现余额</string>
-    <string name="my_tab_2">关注</string>
+    <string name="my_tab_2">收藏</string>
     <string name="my_tab_3">我的订单</string>
     <string name="my_tab_4">查看全部订单</string>
     <string name="my_tab_5">待付款</string>
@@ -271,4 +271,8 @@
     <string name="bank_list_tab_1">请选择充值银行卡</string>
     <string name="bank_list_tab_2">添加银行卡</string>
     <string name="bank_list_tab_3">请先绑定银行卡</string>
+
+    <string name="modify_user_name_tab_1">请输入会员名</string>
+    <string name="modify_user_name_tab_2">会员名：</string>
+    <string name="modify_user_name_tab_3">会员名不能为空！</string>
 </resources>

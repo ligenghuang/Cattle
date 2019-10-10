@@ -9,13 +9,13 @@ public class OrderComment {
     private String order_id;
     private String goods_id;
     private String sku_id;
-    private int describe;
-    private int logistics;
-    private int service;
+    private String describe;
+    private String logistics;
+    private String service;
     private String content;
     private List<String> img;
 
-    public OrderComment(String order_id, String goods_id, String sku_id, int describe, int logistics, int service, String content, List<String> img) {
+    public OrderComment(String order_id, String goods_id, String sku_id, String describe, String logistics, String service, String content, List<String> img) {
         this.order_id = order_id;
         this.goods_id = goods_id;
         this.sku_id = sku_id;
@@ -50,28 +50,28 @@ public class OrderComment {
         this.sku_id = sku_id == null ? "" : sku_id;
     }
 
-    public int getDescribe() {
-        return describe;
+    public String getDescribe() {
+        return describe == null ? "" : describe;
     }
 
-    public void setDescribe(int describe) {
-        this.describe = describe;
+    public void setDescribe(String describe) {
+        this.describe = describe == null ? "" : describe;
     }
 
-    public int getLogistics() {
-        return logistics;
+    public String getLogistics() {
+        return logistics == null ? "" : logistics;
     }
 
-    public void setLogistics(int logistics) {
-        this.logistics = logistics;
+    public void setLogistics(String logistics) {
+        this.logistics = logistics == null ? "" : logistics;
     }
 
-    public int getService() {
-        return service;
+    public String getService() {
+        return service == null ? "" : service;
     }
 
-    public void setService(int service) {
-        this.service = service;
+    public void setService(String service) {
+        this.service = service == null ? "" : service;
     }
 
     public String getContent() {
@@ -95,24 +95,15 @@ public class OrderComment {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"order_id\":\"")
-                .append(order_id).append('\"');
-        sb.append(",\"goods_id\":\"")
-                .append(goods_id).append('\"');
-        sb.append(",\"sku_id\":\"")
-                .append(sku_id).append('\"');
-        sb.append(",\"describe\":")
-                .append(describe);
-        sb.append(",\"logistics\":")
-                .append(logistics);
-        sb.append(",\"service\":")
-                .append(service);
-        sb.append(",\"content\":\"")
-                .append(content).append('\"');
-        sb.append(",\"img\":")
-                .append(img);
-        sb.append('}');
-        return sb.toString();
+        return "OrderComment{" +
+                "order_id='" + order_id + '\'' +
+                ", goods_id='" + goods_id + '\'' +
+                ", sku_id='" + sku_id + '\'' +
+                ", describe=" + describe +
+                ", logistics=" + logistics +
+                ", service=" + service +
+                ", content='" + content + '\'' +
+                ", img=" + img +
+                '}';
     }
 }

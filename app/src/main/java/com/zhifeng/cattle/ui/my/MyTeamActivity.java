@@ -137,13 +137,12 @@ public class MyTeamActivity extends UserBaseActivity<MyTeamAction> implements My
         loadDiss();
         refreshLayout.finishRefresh();
         MyTeamDto.DataBean dataBean = myTeamDto.getData();
-        BigDecimal bigDecimal = new BigDecimal(dataBean.getPerformance());
-        BigDecimal bigDecimal2 = new BigDecimal(dataBean.getReward());
-        tvTotalResults.setText("￥"+bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP));
-        tvCumulativeRewards.setText("￥"+bigDecimal2.setScale(2, BigDecimal.ROUND_HALF_UP));
-        tvTeamNum.setText(dataBean.getTeam_number()+"");
+        BigDecimal bigDecimal = new BigDecimal(dataBean.getReward());
+        tvTotalResults.setText("￥"+dataBean.getDistribut_money());
+        tvCumulativeRewards.setText("￥"+bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP));
+        tvTeamNum.setText(dataBean.getTeam_count()+"");
         tvFirstLeaderId.setText(ResUtil.getFormatString(R.string.my_team_tab_6,dataBean.getFirst_leader()+""));
-        tvFirstLeaderName.setText(ResUtil.getFormatString(R.string.my_team_tab_8,dataBean.getFirst_leader_name()));
+        tvFirstLeaderName.setText(ResUtil.getFormatString(R.string.my_team_tab_8,dataBean.getFirst_leadername()));
         tvUserId.setText(ResUtil.getFormatString(R.string.my_team_tab_7,dataBean.getId()+""));
     }
 

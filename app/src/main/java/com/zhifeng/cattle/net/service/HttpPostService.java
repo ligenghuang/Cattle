@@ -2,6 +2,7 @@ package com.zhifeng.cattle.net.service;
 
 
 import com.lgh.huanglib.retrofitlib.Api.BaseResultEntity;
+import com.zhifeng.cattle.modules.post.OrderCommentPost;
 
 import java.util.Map;
 
@@ -46,7 +47,8 @@ public interface HttpPostService {
     Observable<BaseResultEntity> PostData(@Body Map<Object, Object> body, @Url String url);
     @POST
     Observable<BaseResultEntity> PostData(@Body RequestBody body, @Url String url);
-
+    @POST
+    Observable<BaseResultEntity> PostData2(@Body OrderCommentPost body, @Url String url);
     /**
      * GET请求
      * @param url

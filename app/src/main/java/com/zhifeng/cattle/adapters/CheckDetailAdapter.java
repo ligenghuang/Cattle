@@ -4,9 +4,10 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.CheckDetail;
 
 public class CheckDetailAdapter extends BaseRecyclerAdapter<CheckDetail.DataBeanX.DataBean> {
-
-    public CheckDetailAdapter() {
+    int log_type;
+    public CheckDetailAdapter(int log_type) {
         super(R.layout.layout_item_checkdetail);
+        this.log_type =  log_type;
     }
 
     @Override
@@ -14,6 +15,7 @@ public class CheckDetailAdapter extends BaseRecyclerAdapter<CheckDetail.DataBean
         holder.setIsRecyclable(false);
         holder.text(R.id.tvNote, model.getNote());
         holder.text(R.id.tvCreateTime, model.getCreate_time());
-        holder.text(R.id.tvBalance, String.valueOf(model.getBalance()));
+        String type = log_type == 1?"-":"";
+        holder.text(R.id.tvBalance, type+String.valueOf(model.getBalance()));
     }
 }

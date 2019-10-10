@@ -122,6 +122,15 @@ public class RecommendHomeDto {
 
             private int cat_id;
             private String cat_name;
+            boolean isOnClick;
+
+            public boolean isOnClick() {
+                return isOnClick;
+            }
+
+            public void setClick(boolean click) {
+                isOnClick = click;
+            }
 
             public int getCat_id() {
                 return cat_id;

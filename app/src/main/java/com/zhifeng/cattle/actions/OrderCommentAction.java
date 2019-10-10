@@ -8,7 +8,9 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.GeneralDto;
+import com.zhifeng.cattle.modules.OrderComment;
 import com.zhifeng.cattle.modules.OrderCommentResult;
+import com.zhifeng.cattle.modules.post.OrderCommentPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.OrderCommentView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -16,8 +18,14 @@ import com.zhifeng.cattle.utils.data.MySp;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class OrderCommentAction extends BaseAction<OrderCommentView> {
     public OrderCommentAction(RxAppCompatActivity _rxAppCompatActivity, OrderCommentView orderCommentView) {
@@ -25,8 +33,17 @@ public class OrderCommentAction extends BaseAction<OrderCommentView> {
         attachView(orderCommentView);
     }
 
-    public void postComment(String comments) {
-        post(WebUrlUtil.POST_ORDER_COMMENT, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "comments", comments), WebUrlUtil.POST_ORDER_COMMENT)));
+    public void postComment(OrderComment orderComment) {
+        String comments = new Gson().toJson(orderComment,OrderComment.class);
+        L.e("lgh_json","comments  = "+comments);
+        OrderCommentPost commentPost = new OrderCommentPost(MySp.getAccessToken(MyApp.getContext()),"["+comments+"]");
+        post(WebUrlUtil.POST_ORDER_COMMENT, false,
+                service -> manager.runHttp(service.PostData(
+                        RequestBody.create(MediaType.parse("application/json; charset=utf-8"),commentPost.toString()), WebUrlUtil.POST_ORDER_COMMENT)));
+    }
+
+    private String getComments(String comments){
+        return comments.replaceAll("\\\\","");
     }
 
     /**

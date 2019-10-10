@@ -14,17 +14,23 @@ import com.lxj.xpopup.impl.PartShadowPopupView;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.adapters.CatenavListAdapter;
 import com.zhifeng.cattle.modules.Catenav2Bean;
+import com.zhifeng.cattle.modules.RecommendHomeDto;
+import com.zhifeng.cattle.ui.home.HomeFragment;
 import com.zhifeng.cattle.ui.home.ListPageActivity;
 
 import java.util.List;
 
 public class CustomPopup extends PartShadowPopupView {
     Context context;
-    List<Catenav2Bean> list;
-    public CustomPopup(@NonNull Context context,List<Catenav2Bean> list) {
+    List<RecommendHomeDto.DataBean.Catenav1Bean> list;
+    OnListClickListener onListClickListener;
+
+
+    public CustomPopup(@NonNull Context context, List<RecommendHomeDto.DataBean.Catenav1Bean> list,OnListClickListener onListClickListener) {
         super(context);
         this.context = context;
         this.list = list;
+        this.onListClickListener = onListClickListener;
     }
 
     // 返回自定义弹窗的布局
@@ -50,12 +56,16 @@ public class CustomPopup extends PartShadowPopupView {
         catenavListAdapter.refresh(list);
         catenavListAdapter.setOnClickListener(new CatenavListAdapter.OnClickListener() {
             @Override
-            public void onClick(int id,String name) {
+            public void onClick(int id,String name,int position) {
                 //todo 跳转页面
-                Intent i = new Intent(context, ListPageActivity.class);
-                i.putExtra("cat_id", id);
-                i.putExtra("name", name);
-                context.startActivity(i);
+                for (int i = 0; i <list.size() ; i++) {
+                    list.get(i).setClick(id == list.get(i).getCat_id());
+                }
+//                Intent i = new Intent(context, ListPageActivity.class);
+//                i.putExtra("cat_id", id);
+//                i.putExtra("name", name);
+//                context.startActivity(i);
+                onListClickListener.onClick(position);
                 dismiss();
             }
         });
@@ -66,6 +76,10 @@ public class CustomPopup extends PartShadowPopupView {
     @Override
     protected PopupAnimator getPopupAnimator() {
         return super.getPopupAnimator();
+    }
+
+    public interface OnListClickListener{
+        void onClick(int position);
     }
 
 }

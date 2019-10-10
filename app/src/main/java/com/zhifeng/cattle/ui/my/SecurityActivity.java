@@ -146,7 +146,7 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
         }
     }
 
-    @OnClick({ R.id.tv_security_phone, R.id.ll_security_pay_pwd, R.id.ll_security_user,R.id.tv_logout})
+    @OnClick({ R.id.tv_security_phone, R.id.ll_security_pay_pwd, R.id.ll_security_user,R.id.tv_logout,R.id.tv_security_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_security_phone:
@@ -172,6 +172,12 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
                 startActivity(intent);
                 MainActivity.Position = 0;
                 ActivityStack.getInstance().exitIsNotHaveMain( LoginActivity.class);
+                break;
+            case R.id.tv_security_name:
+                //todo 修改用户名
+                Intent intent1 = new Intent(mContext,ModifyUserNameActivity.class);
+                intent1.putExtra("userName",tvSecurityName.getText().toString());
+                startActivity(intent1);
                 break;
         }
     }
