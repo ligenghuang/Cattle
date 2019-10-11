@@ -67,6 +67,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     List<BankImgListDto.DataBean> dataBeanList = new ArrayList<>();
     String bankCard;
     boolean isBindBank = false;
+    boolean isNext = false;
 
     @Override
     public int intiLayout() {
@@ -228,7 +229,9 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
-        getBankList();
+        if (!isNext){
+            getBankList();
+        }
     }
 
     @Override
@@ -286,7 +289,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
             showNormalToast(ResUtil.getString(R.string.recharge_tab_9));
             return;
         }
-
+        isNext = true;
         RechargePwdDialog rechargePwdDialog = new RechargePwdDialog(mContext, R.style.MY_AlertDialog, money);
         rechargePwdDialog.setOnFinishInput(new RechargePwdDialog.OnFinishInput() {
             @Override
@@ -295,6 +298,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
                 recharge(money, password);
             }
         });
+        hideInput();
         rechargePwdDialog.show();
     }
 }

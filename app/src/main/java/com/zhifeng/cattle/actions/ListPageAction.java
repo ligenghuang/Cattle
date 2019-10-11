@@ -23,8 +23,8 @@ public class ListPageAction extends BaseAction<ListPageView> {
         attachView(listPageView);
     }
 
-    public void getListPage(String cat_id, int pageSize, int page) {
-        post(WebUrlUtil.POST_LIST_PAGE, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "cat_id", cat_id, "pageSize", pageSize, "page", page), WebUrlUtil.POST_LIST_PAGE)));
+    public void getListPage(String cat_id) {
+        post(WebUrlUtil.POST_LIST_PAGE, false, service -> manager.runHttp(service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "cat_id2", cat_id), WebUrlUtil.POST_LIST_PAGE)));
     }
 
     /**

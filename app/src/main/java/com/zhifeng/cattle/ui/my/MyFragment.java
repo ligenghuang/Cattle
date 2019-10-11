@@ -244,6 +244,8 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
     public void updataAvatarSuccess(String url) {
         loadDiss();
         GlideUtil.setImageCircle(mContext, url, ivMyAvatar, R.mipmap.logo);
+        images = new ArrayList<>();
+        selImageList = new ArrayList<>();
     }
 
     /**

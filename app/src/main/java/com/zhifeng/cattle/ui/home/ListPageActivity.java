@@ -44,6 +44,8 @@ public class ListPageActivity extends UserBaseActivity<ListPageAction> implement
     RecyclerView recyclerview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_null_data)
+    TextView tvNullData;
     private final int pageSize = 20;
     private int page;
     private boolean isRefresh = true;
@@ -76,6 +78,9 @@ public class ListPageActivity extends UserBaseActivity<ListPageAction> implement
         super.init();
         mContext = this;
         mActicity = this;
+
+        refreshLayout.setEnableLoadMore(false);
+
         adapter = new ListPageAdapter(mContext);
         recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerview.setAdapter(adapter);
@@ -94,7 +99,7 @@ public class ListPageActivity extends UserBaseActivity<ListPageAction> implement
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMoreListPage();
+
             }
         });
     }
@@ -120,42 +125,21 @@ public class ListPageActivity extends UserBaseActivity<ListPageAction> implement
     @Override
     public void getListPage() {
         if (CheckNetwork.checkNetwork2(mContext)) {
-            isRefresh = true;
-            page = 1;
-            baseAction.getListPage(cat_id, pageSize, page);
+            baseAction.getListPage(cat_id);
         } else {
             refreshLayout.finishRefresh();
         }
     }
 
-    private void loadMoreListPage() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            isRefresh = false;
-            page++;
-            baseAction.getListPage(cat_id, pageSize, page);
-        } else {
-            isMore=false;
-            loadSwapTab();
-        }
-    }
 
     @Override
     public void getListPageSuccess(ListPage listPage) {
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMore();
-        List<ListPage.DataBeanX.GoodsBean.DataBean> beans = listPage.getData().getGoods().getData();
-        if (beans.size() > 0) {
-            recyclerview.setVisibility(View.VISIBLE);
-            isMore = page < listPage.getData().getGoods().getLast_page();
-            if (isRefresh) {
-                adapter.refresh(beans);
-            } else {
-                adapter.loadMore(beans);
-            }
-        } else {
-            isMore = false;
-            loadSwapTab();
-        }
+        List<ListPage.DataBean> beans = listPage.getData();
+        adapter.refresh(beans);
+        tvNullData.setVisibility(beans.size() == 0?View.VISIBLE :View.GONE);
+        recyclerview.setVisibility(beans.size() != 0?View.VISIBLE :View.GONE);
     }
 
     @Override

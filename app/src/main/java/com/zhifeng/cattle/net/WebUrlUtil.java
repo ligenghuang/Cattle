@@ -283,7 +283,7 @@ public class WebUrlUtil {
     /**
      * 首页列表页
      */
-    public static final String POST_LIST_PAGE = "index/list_page";
+    public static final String POST_LIST_PAGE = "goods/cat2goods";
 
     /**
      * 首页搜索

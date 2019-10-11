@@ -177,7 +177,7 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
             str.add("data:image/gif;base64,"+PicUtils.imageToBase64(selImageList.get(i).path));
         }
 
-        OrderComment orderComment = new OrderComment(order_id, goods_id, sku_id, describe+"", logistics+"", service+"", content, str);
+        OrderComment orderComment = new OrderComment(Integer.parseInt(order_id), Integer.parseInt(goods_id), Integer.parseInt(sku_id), describe+"", logistics+"", service+"", content, str);
         if (CheckNetwork.checkNetwork2(mContext)){
             loadDialog();
             baseAction.postComment(orderComment);
@@ -187,12 +187,11 @@ public class OrderCommentActivity extends UserBaseActivity<OrderCommentAction> i
 
     /**
      * 提交评价成功
-     * @param orderCommentResult
      */
     @Override
-    public void postCommentSuccess(OrderCommentResult orderCommentResult) {
+    public void postCommentSuccess() {
         loadDiss();
-        showNormalToast(orderCommentResult.getMsg());
+        showNormalToast(ResUtil.getString(R.string.order_tab_37));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

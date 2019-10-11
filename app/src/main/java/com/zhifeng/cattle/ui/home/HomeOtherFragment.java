@@ -163,7 +163,7 @@ public class HomeOtherFragment extends UserBaseFragment<HomeOtherAction> impleme
             public void onClick(int id,String name) {
                 //todo 跳转页面
                 Intent i = new Intent(mContext, ListPageActivity.class);
-                i.putExtra("cat_id", id);
+                i.putExtra("cat_id", id+"");
                 i.putExtra("name", name);
                 startActivity(i);
             }

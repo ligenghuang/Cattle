@@ -58,9 +58,9 @@ public class MyTeamDto {
 
         private int id;
         private String realname;
-        private int estimate_money;
+        private double estimate_money;
         private String distribut_money;
-        private int reward;
+        private double reward;
         private int first_leader;
         private String first_leadername;
         private int team_count;
@@ -81,11 +81,11 @@ public class MyTeamDto {
             this.realname = realname == null ? "" : realname;
         }
 
-        public int getEstimate_money() {
+        public double getEstimate_money() {
             return estimate_money;
         }
 
-        public void setEstimate_money(int estimate_money) {
+        public void setEstimate_money(double estimate_money) {
             this.estimate_money = estimate_money;
         }
 
@@ -97,11 +97,11 @@ public class MyTeamDto {
             this.distribut_money = distribut_money == null ? "" : distribut_money;
         }
 
-        public int getReward() {
+        public double getReward() {
             return reward;
         }
 
-        public void setReward(int reward) {
+        public void setReward(double reward) {
             this.reward = reward;
         }
 
