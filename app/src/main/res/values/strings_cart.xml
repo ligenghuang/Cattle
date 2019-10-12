@@ -13,6 +13,7 @@
     <string name="cart_tab_11">购物车</string>
     <string name="cart_tab_12">提交订单</string>
     <string name="cart_tab_13">身份证认证</string>
+    <string name="cart_tab_13_1">根据海关规定，需要您完善收货人身份证信息</string>
     <string name="cart_tab_14">本店自营商品</string>
     <string name="cart_tab_15">颜色：%0$s</string>
     <string name="cart_tab_16">尺码：%0$s</string>

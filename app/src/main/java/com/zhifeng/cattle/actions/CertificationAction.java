@@ -7,6 +7,7 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.CertificationDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.post.CertificationPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.CertificationView;
@@ -49,6 +50,16 @@ public class CertificationAction extends BaseAction<CertificationView> {
     }
 
     /**
+     * 显示身份认证信息
+     */
+    public void showIdCsrd(){
+        post(WebUrlUtil.POST_SHOW_IDCARD,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHOW_IDCARD)
+        ));
+    }
+
+
+    /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
      *
      * @param action
@@ -80,6 +91,20 @@ public class CertificationAction extends BaseAction<CertificationView> {
                             if (certificationDto.getStatus() == 1){
                                 //todo 身份认证成功
                                 view.certificationSuccess(certificationDto);
+                                return;
+                            }
+                            view.onError(certificationDto.getMsg(),action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_SHOW_IDCARD:
+                        if (aBoolean) {
+                            ShowIdCardDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ShowIdCardDto>() {
+                            }.getType());
+                            if (certificationDto.getStatus() == 200){
+                                //todo 身份认证信息
+                                view.showIdCardSuccess(certificationDto);
                                 return;
                             }
                             view.onError(certificationDto.getMsg(),action.getErrorType());

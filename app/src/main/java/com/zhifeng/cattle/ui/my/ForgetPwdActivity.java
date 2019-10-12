@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -57,6 +58,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
 
     int type;
     String phone;
+    boolean isOrder;
 
     //获取验证码倒计时
     private MyCountDownTimer timer;
@@ -94,6 +96,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
         toolbar.setNavigationOnClickListener(view -> finish());
         type = getIntent().getIntExtra("type",0);
         fTitleTv.setText(ResUtil.getString(type==0?R.string.pay_pwd_tab_2:R.string.pay_pwd_tab_3));
+        isOrder = getIntent().getBooleanExtra("isOrder",false);
     }
 
     @Override
@@ -184,6 +187,11 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+               if (isOrder){
+                   Intent intent = new Intent();
+                   intent.putExtra("pwd",1);
+                   setResult(201,intent);
+               }
                 finish();
             }
         }, 2000);

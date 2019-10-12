@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.IsFastClick;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.TemporaryAction;
@@ -30,8 +31,11 @@ import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.ui.impl.TemporaryView;
 import com.zhifeng.cattle.ui.my.AddressListActivity;
+import com.zhifeng.cattle.ui.my.ForgetPwdActivity;
+import com.zhifeng.cattle.ui.my.OrderActivity;
 import com.zhifeng.cattle.ui.my.OrderDetailActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
 
 import java.lang.ref.WeakReference;
@@ -220,20 +224,23 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                         @Override
                         public void close() {
                             //取消支付  跳转至订单详情页
-                            Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                            intent.putExtra("order_id", Integer.parseInt(submitOrderDto.getData()));
+                            Intent intent = new Intent(mContext, OrderActivity.class);
+                            intent.putExtra("type", 1);
                             startActivity(intent);
                             finish();
                         }
                     });
                     bugPwdDialog.show();
                 } else {
-                   showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
+                    showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
                 }
                 break;
             case 2:
-                break;
             case 3:
+                Intent intent = new Intent(mContext, OrderActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+                finish();
                 break;
         }
 
@@ -354,7 +361,22 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         if (!TextUtils.isEmpty(etOrderNote.getText().toString())) {
             post.setUser_note(etOrderNote.getText().toString());
         }
-        submitOrder(post);
+
+        if (payType == 1 && pwd == 0) {
+            showNormalToast(ResUtil.getString(R.string.goods_detail_tab_30));
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(mContext, ForgetPwdActivity.class);
+                    intent.putExtra("phone", MySp.getMobile(mContext));
+                    intent.putExtra("type", 1);
+                    intent.putExtra("isOrder", true);
+                    startActivityForResult(intent, 201);
+                }
+            }, 2000);
+        } else {
+            submitOrder(post);
+        }
 
     }
 
@@ -373,14 +395,16 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 startActivityForResult(i, 200);
                 break;
             case R.id.btnPay:
-                buyNow();
+                if (IsFastClick.isFastClick()){
+                    buyNow();
+                }
                 break;
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 200 && resultCode == 200) {
+        if (resultCode == 200) {
             if (data != null) {
                 String address = data.getStringExtra("address2");
                 String address_info = data.getStringExtra("address");
@@ -392,6 +416,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 tvMoblie.setText(phone);
                 llAddress.setVisibility(View.VISIBLE);
                 tvNoAddress.setVisibility(View.GONE);
+            }
+        } else if (resultCode == 201) {
+            if (data != null) {
+                pwd = data.getIntExtra("pwd", 0);
             }
         }
     }

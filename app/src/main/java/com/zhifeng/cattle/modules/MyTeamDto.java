@@ -90,11 +90,11 @@ public class MyTeamDto {
         }
 
         public String getDistribut_money() {
-            return distribut_money == null ? "" : distribut_money;
+            return distribut_money == null ? "0" : distribut_money;
         }
 
         public void setDistribut_money(String distribut_money) {
-            this.distribut_money = distribut_money == null ? "" : distribut_money;
+            this.distribut_money = distribut_money == null ? "0" : distribut_money;
         }
 
         public double getReward() {

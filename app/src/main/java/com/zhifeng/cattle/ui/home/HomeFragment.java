@@ -57,8 +57,8 @@ public class HomeFragment extends UserBaseFragment {
      TextView tvType2;
     @BindView(R.id.tv_type_3)
      TextView tvType3;
-//    @BindView(R.id.tv_type_4)
-//     TextView tvType4;
+    @BindView(R.id.tv_type_4)
+     TextView tvType4;
     @BindView(R.id.ll_top)
     LinearLayout llTop;
 
@@ -166,7 +166,7 @@ public class HomeFragment extends UserBaseFragment {
     }
 
     @OnTouch({R.id.tv_type_1, R.id.tv_type_2, R.id.tv_type_3
-//            ,R.id.tv_type_4
+            ,R.id.tv_type_4
     })
     public boolean onTouch(View v) {
         switch (v.getId()) {
@@ -179,9 +179,9 @@ public class HomeFragment extends UserBaseFragment {
             case R.id.tv_type_3:
                 Position = POIONTTHREE;
                 break;
-//            case R.id.tv_type_4:
-//                Position = POIONTFOUR;
-//                break;
+            case R.id.tv_type_4:
+                Position = POIONTFOUR;
+                break;
             default:
                 break;
         }
@@ -215,9 +215,9 @@ public class HomeFragment extends UserBaseFragment {
             case 2:
                 tvType3.setSelected(true);
                 break;
-//            case 3:
-//                tvType4.setSelected(true);
-//                break;
+            case 3:
+                tvType4.setSelected(true);
+                break;
             default:
                 break;
         }

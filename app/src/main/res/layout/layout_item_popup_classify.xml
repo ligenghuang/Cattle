@@ -11,8 +11,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:src="@drawable/icon_logo"/>
 
 

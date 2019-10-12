@@ -247,6 +247,11 @@ public class WebUrlUtil {
     public static final String POST_UPDATA_IDCARD_PIC = "Index/updata_idcard_pic";
 
     /**
+     * 身份证认证显示
+     */
+    public static final String POST_SHOW_IDCARD = "index/show_idcard";
+
+    /**
      * 获取默认地址
      */
     public static final String POST_DEFAULT_CITY = "Address/get_default_city";

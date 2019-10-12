@@ -6,6 +6,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.AgreementDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.AgreementView;
@@ -63,18 +64,18 @@ public class AgreementAction extends BaseAction<AgreementView> {
                 L.e("xx", "输出返回结果 " + aBoolean);
 
                 switch (action.getIdentifying()) {
-                    case WebUrlUtil.POST_SEND_CODE:
+                    case WebUrlUtil.POST_USER_CONSULT:
 //                        //todo 获取用户协议
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            AgreementDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AgreementDto>() {
                             }.getType());
                             if (generalDto.getStatus() == 200){
                                 //todo 获取用户协议成功
-                                view.getAgreementSuccess(generalDto.getData());
+                                view.getAgreementSuccess(generalDto.getData().getConsult());
                                 return;
                             }
-                            view.onError(generalDto.getData(),action.getErrorType());
+                            view.onError(generalDto.getMsg(),action.getErrorType());
                             return;
                         }
                         view.onError(msg,action.getErrorType());

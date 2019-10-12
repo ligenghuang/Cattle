@@ -13,10 +13,7 @@ import com.lxj.xpopup.animator.PopupAnimator;
 import com.lxj.xpopup.impl.PartShadowPopupView;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.adapters.CatenavListAdapter;
-import com.zhifeng.cattle.modules.Catenav2Bean;
 import com.zhifeng.cattle.modules.RecommendHomeDto;
-import com.zhifeng.cattle.ui.home.HomeFragment;
-import com.zhifeng.cattle.ui.home.ListPageActivity;
 
 import java.util.List;
 
@@ -75,6 +72,22 @@ public class CustomPopup extends PartShadowPopupView {
     // 设置自定义动画器，看需要而定
     @Override
     protected PopupAnimator getPopupAnimator() {
+        PopupAnimator animator = new PopupAnimator() {
+            @Override
+            public void initAnimator() {
+
+            }
+
+            @Override
+            public void animateShow() {
+
+            }
+
+            @Override
+            public void animateDismiss() {
+
+            }
+        };
         return super.getPopupAnimator();
     }
 

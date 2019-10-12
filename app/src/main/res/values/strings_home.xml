@@ -20,7 +20,7 @@
     <string name="goods_detail_tab_1">客服</string>
     <string name="goods_detail_tab_2">购物车</string>
     <string name="goods_detail_tab_3">立即购买</string>
-    <string name="goods_detail_tab_4">关注</string>
+    <string name="goods_detail_tab_4">收藏</string>
     <string name="goods_detail_tab_5">配送</string>
     <string name="goods_detail_tab_6">运费</string>
     <string name="goods_detail_tab_7">免运费</string>
@@ -33,7 +33,7 @@
     <string name="goods_detail_tab_14">产品参数</string>
     <string name="goods_detail_tab_15">销量：%0$s</string>
     <string name="goods_detail_tab_16">库存：%0$s</string>
-    <string name="goods_detail_tab_17">已关注</string>
+    <string name="goods_detail_tab_17">已收藏</string>
     <string name="goods_detail_tab_18">首页</string>
     <string name="goods_detail_tab_19">分类</string>
     <string name="goods_detail_tab_20">购物车</string>

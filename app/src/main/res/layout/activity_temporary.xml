@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/icon_more"
                     android:padding="@dimen/dp_10"
-                    android:text="@string/cart_tab_13" />
+                    android:text="@string/cart_tab_13_1" />
             </LinearLayout>
 
             <LinearLayout

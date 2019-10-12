@@ -168,6 +168,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
         loadDiss();
         refreshLayout.finishRefresh();
         UserInfoDto.DataBean dataBean = userInfoDto.getData();
+        MySp.setMobile(mContext,dataBean.getMobile());
         GlideUtil.setImageCircle(mContext, dataBean.getAvatar(), ivMyAvatar, R.mipmap.logo);//头像
         tvMyName.setText(dataBean.getRealname());//昵称
         tvMyLevel.setText(dataBean.getLevelname());//等级
@@ -462,6 +463,7 @@ public class MyFragment extends UserBaseFragment<MyAction> implements MyView {
                     selImageList.addAll(images);
                     //todo 请求接口
                     updataAvatar("data:image/gif;base64," + PicUtils.imageToBase64(selImageList.get(0).path));
+                    L.e("lgh");
                 }
             }
         }

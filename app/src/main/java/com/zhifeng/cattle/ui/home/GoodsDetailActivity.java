@@ -286,6 +286,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+        tvGoodsAttention.setSelected(isCollection);
 //        sku_id = dataBean.getSpec().getGoods_sku().get(0).getSku_id();//todo 2019/09/19 默认sku  后面添加规格选择器后需更改
 
         comment_count = dataBean.getComment_count();
@@ -560,6 +561,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         showNormalToast(msg);
         isCollection = !isCollection;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
+        tvGoodsAttention.setSelected(isCollection);
     }
 
     /**

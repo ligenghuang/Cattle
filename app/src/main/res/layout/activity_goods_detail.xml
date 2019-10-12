@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
-                        android:drawableLeft="@drawable/icon_attention"
+                        android:drawableLeft="@drawable/selector_attention"
                         android:drawablePadding="3dp"
                         android:gravity="center"
                         android:text="@string/goods_detail_tab_4"

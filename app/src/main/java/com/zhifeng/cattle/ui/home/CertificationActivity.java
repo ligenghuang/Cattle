@@ -28,6 +28,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.CertificationAction;
 import com.zhifeng.cattle.modules.CertificationDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.post.CertificationPost;
 import com.zhifeng.cattle.ui.impl.CertificationView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
@@ -144,6 +145,9 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
         mActicity = this;
         mContext = this;
         initImagePicker();
+
+        showIdCard();
+
     }
 
     /**
@@ -174,6 +178,31 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
                 finish();
             }
         }, 2000);
+    }
+
+    /**
+     * 显示身份认证信息
+     */
+    @Override
+    public void showIdCard() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            loadDialog();
+            baseAction.showIdCsrd();
+        }
+    }
+
+    /**
+     * 显示身份认证信息 成功
+     * @param showIdCardDto
+     */
+    @Override
+    public void showIdCardSuccess(ShowIdCardDto showIdCardDto) {
+        loadDiss();
+        ShowIdCardDto.DataBean dataBean = showIdCardDto.getData();
+        etCertificationCard.setText(dataBean.getIdcard());
+        etCertificationName.setText(dataBean.getName());
+        GlideUtil.setImage(mContext, dataBean.getPic_front(), ivAddPositive, R.drawable.icon_add_idcard_positive);
+        GlideUtil.setImage(mContext, dataBean.getPic_back(), ivAddBack, R.drawable.icon_add_idcard_back);
     }
 
     /**

@@ -88,10 +88,10 @@
             android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/icon_logo"/>
 
-<!--       <HorizontalScrollView-->
-<!--           android:layout_width="match_parent"-->
-<!--           android:layout_height="match_parent"-->
-<!--           android:layout_weight="1">-->
+       <HorizontalScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1">
 
 
            <LinearLayout
@@ -137,22 +137,22 @@
                    android:textColor="@color/color_15"
                    android:textSize="@dimen/text_size13" />
 
-<!--               <TextView-->
-<!--                   android:id="@+id/tv_type_4"-->
-<!--                   android:layout_width="wrap_content"-->
-<!--                   android:layout_height="wrap_content"-->
-<!--                   android:layout_weight="1"-->
-<!--                   android:background="@drawable/selector_goods_text_bg"-->
-<!--                   android:gravity="center"-->
-<!--                   android:padding="@dimen/dp_10"-->
-<!--                   android:text="@string/home_tab_3"-->
-<!--                   android:textColor="@color/color_15"-->
-<!--                   android:textSize="@dimen/text_size13" />-->
+               <TextView
+                   android:id="@+id/tv_type_4"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:background="@drawable/selector_goods_text_bg"
+                   android:gravity="center"
+                   android:padding="@dimen/dp_10"
+                   android:text="@string/home_tab_3"
+                   android:textColor="@color/color_15"
+                   android:textSize="@dimen/text_size13" />
 
 
            </LinearLayout>
 
-<!--       </HorizontalScrollView>-->
+       </HorizontalScrollView>
 
 
         <ImageView

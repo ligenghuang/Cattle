@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.CertificationDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.post.CertificationPost;
 
 /**
@@ -20,4 +21,10 @@ public interface CertificationView extends BaseView {
      */
     void certification(CertificationPost certificationPost);
     void certificationSuccess(CertificationDto certificationDto);
+
+    /**
+     * 显示身份认证信息
+     */
+    void showIdCard();
+    void showIdCardSuccess(ShowIdCardDto showIdCardDto);
 }
