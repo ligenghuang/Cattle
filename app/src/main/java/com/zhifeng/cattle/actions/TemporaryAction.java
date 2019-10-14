@@ -9,6 +9,7 @@ import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -53,6 +54,15 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                 service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
                         "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
                         ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
+        ));
+    }
+
+    /**
+     * 显示身份认证信息
+     */
+    public void showIdCsrd(){
+        post(WebUrlUtil.POST_SHOW_IDCARD,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHOW_IDCARD)
         ));
     }
 
@@ -124,6 +134,20 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                       }
                     }
                     view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_SHOW_IDCARD:
+                    if (aBoolean) {
+                        ShowIdCardDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ShowIdCardDto>() {
+                        }.getType());
+                        if (certificationDto.getStatus() == 200){
+                            //todo 身份认证信息
+                            view.showIdCardSuccess(certificationDto);
+                            return;
+                        }
+                        view.onError(certificationDto.getMsg(),action.getErrorType());
+                        return;
+                    }
+                    view.onError(msg,action.getErrorType());
                     break;
             }
         });

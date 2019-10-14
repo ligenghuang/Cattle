@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -21,7 +22,11 @@ public interface TemporaryView extends BaseView {
      */
     void getTemporary();
     void getTemporarySuccess(Temporary temporary);
-
+    /**
+     * 显示身份认证信息
+     */
+    void showIdCard();
+    void showIdCardSuccess(ShowIdCardDto showIdCardDto);
     /**
      * 提交订单
      */

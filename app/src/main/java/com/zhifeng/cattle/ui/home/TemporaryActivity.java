@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.IsFastClick;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
@@ -26,6 +27,7 @@ import com.zhifeng.cattle.actions.TemporaryAction;
 import com.zhifeng.cattle.adapters.GoodsResAdapter;
 import com.zhifeng.cattle.adapters.PayTypeAdapter;
 import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
@@ -59,6 +61,8 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tvCertificate)
+    TextView tvCertificate;
     @BindView(R.id.ivDingWei)
     ImageView ivDingWei;
     @BindView(R.id.tv_user)
@@ -175,13 +179,36 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     public void getTemporary() {
         if (CheckNetwork.checkNetwork2(mContext)) {
+            loadDialog();
             baseAction.getTemporary(cartId);
         }
     }
 
     @Override
     public void getTemporarySuccess(Temporary temporary) {
+        loadDiss();
+        showIdCard();
         bindView(temporary);
+    }
+
+    /**
+     * 显示身份认证信息
+     */
+    @Override
+    public void showIdCard() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.showIdCsrd();
+        }
+    }
+
+    /**
+     * 显示身份认证信息 成功
+     * @param showIdCardDto
+     */
+    @Override
+    public void showIdCardSuccess(ShowIdCardDto showIdCardDto) {
+        ShowIdCardDto.DataBean dataBean = showIdCardDto.getData();
+        tvCertificate.setText(TextUtils.isEmpty(dataBean.getName())?ResUtil.getString(R.string.cart_tab_13_1):dataBean.getName());
     }
 
     /**

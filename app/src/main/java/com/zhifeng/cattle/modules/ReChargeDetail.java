@@ -5,10 +5,11 @@ import java.util.List;
 
 public class ReChargeDetail {
 
+
     /**
      * status : 200
      * msg : success
-     * data : {"list":{"total":3,"per_page":20,"current_page":1,"last_page":1,"data":[{"create_time":"2019.07.17","amount":"0.02","order_status":1},{"create_time":"2019.07.17","amount":"50.00","order_status":0},{"create_time":"2019.07.17","amount":"50.00","order_status":0}]}}
+     * data : {"total":3,"per_page":20,"current_page":1,"last_page":1,"data":[{"note":"余额充值","balance":104,"source_id":"","old_balance":101109896,"log_type":1,"create_time":"2019-10-14 17:46:51"},{"note":"余额充值","balance":99999997,"source_id":"","old_balance":1109899,"log_type":1,"create_time":"2019-10-14 17:43:39"},{"note":"余额充值","balance":10000,"source_id":"","old_balance":1099899,"log_type":1,"create_time":"2019-10-14 16:53:35"}]}
      */
 
     private int status;
@@ -24,11 +25,11 @@ public class ReChargeDetail {
     }
 
     public String getMsg() {
-        return msg == null ? "" : msg;
+        return msg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg == null ? "" : msg;
+        this.msg = msg;
     }
 
     public DataBeanX getData() {
@@ -41,111 +42,134 @@ public class ReChargeDetail {
 
     public static class DataBeanX {
         /**
-         * list : {"total":3,"per_page":20,"current_page":1,"last_page":1,"data":[{"create_time":"2019.07.17","amount":"0.02","order_status":1},{"create_time":"2019.07.17","amount":"50.00","order_status":0},{"create_time":"2019.07.17","amount":"50.00","order_status":0}]}
+         * total : 3
+         * per_page : 20
+         * current_page : 1
+         * last_page : 1
+         * data : [{"note":"余额充值","balance":104,"source_id":"","old_balance":101109896,"log_type":1,"create_time":"2019-10-14 17:46:51"},{"note":"余额充值","balance":99999997,"source_id":"","old_balance":1109899,"log_type":1,"create_time":"2019-10-14 17:43:39"},{"note":"余额充值","balance":10000,"source_id":"","old_balance":1099899,"log_type":1,"create_time":"2019-10-14 16:53:35"}]
          */
 
-        private ListBean list;
+        private int total;
+        private int per_page;
+        private int current_page;
+        private int last_page;
+        private List<DataBean> data;
 
-        public ListBean getList() {
-            return list;
+        public int getTotal() {
+            return total;
         }
 
-        public void setList(ListBean list) {
-            this.list = list;
+        public void setTotal(int total) {
+            this.total = total;
         }
 
-        public static class ListBean {
+        public int getPer_page() {
+            return per_page;
+        }
+
+        public void setPer_page(int per_page) {
+            this.per_page = per_page;
+        }
+
+        public int getCurrent_page() {
+            return current_page;
+        }
+
+        public void setCurrent_page(int current_page) {
+            this.current_page = current_page;
+        }
+
+        public int getLast_page() {
+            return last_page;
+        }
+
+        public void setLast_page(int last_page) {
+            this.last_page = last_page;
+        }
+
+        public List<DataBean> getData() {
+            if (data == null) {
+                return new ArrayList<>();
+            }
+            return data;
+        }
+
+        public void setData(List<DataBean> data) {
+            this.data = data;
+        }
+
+        public static class DataBean {
             /**
-             * total : 3
-             * per_page : 20
-             * current_page : 1
-             * last_page : 1
-             * data : [{"create_time":"2019.07.17","amount":"0.02","order_status":1},{"create_time":"2019.07.17","amount":"50.00","order_status":0},{"create_time":"2019.07.17","amount":"50.00","order_status":0}]
+             * note : 余额充值
+             * balance : 104
+             * source_id :
+             * old_balance : 101109896
+             * log_type : 1
+             * create_time : 2019-10-14 17:46:51
              */
 
-            private int total;
-            private int per_page;
-            private int current_page;
-            private int last_page;
-            private List<DataBean> data;
+            private String note;
+            private double balance;
+            private String source_id;
+            private double old_balance;
+            private int log_type;
+            private String create_time;
+            private int status;
 
-            public int getTotal() {
-                return total;
+            public int getStatus() {
+                return status;
             }
 
-            public void setTotal(int total) {
-                this.total = total;
+            public void setStatus(int status) {
+                this.status = status;
             }
 
-            public int getPer_page() {
-                return per_page;
+            public String getNote() {
+                return note == null ? "" : note;
             }
 
-            public void setPer_page(int per_page) {
-                this.per_page = per_page;
+            public void setNote(String note) {
+                this.note = note == null ? "" : note;
             }
 
-            public int getCurrent_page() {
-                return current_page;
+            public double getBalance() {
+                return balance;
             }
 
-            public void setCurrent_page(int current_page) {
-                this.current_page = current_page;
+            public void setBalance(double balance) {
+                this.balance = balance;
             }
 
-            public int getLast_page() {
-                return last_page;
+            public String getSource_id() {
+                return source_id == null ? "" : source_id;
             }
 
-            public void setLast_page(int last_page) {
-                this.last_page = last_page;
+            public void setSource_id(String source_id) {
+                this.source_id = source_id == null ? "" : source_id;
             }
 
-            public List<DataBean> getData() {
-                if (data == null) {
-                    return new ArrayList<>();
-                }
-                return data;
+            public double getOld_balance() {
+                return old_balance;
             }
 
-            public void setData(List<DataBean> data) {
-                this.data = data;
+            public void setOld_balance(double old_balance) {
+                this.old_balance = old_balance;
             }
 
-            public static class DataBean {
-                /**
-                 * create_time : 2019.07.17
-                 * amount : 0.02
-                 * order_status : 1
-                 */
+            public int getLog_type() {
+                return log_type;
+            }
 
-                private String create_time;
-                private String amount;
-                private int order_status;
+            public void setLog_type(int log_type) {
+                this.log_type = log_type;
+            }
 
-                public String getCreate_time() {
-                    return create_time == null ? "" : create_time;
-                }
+            public String getCreate_time() {
+                return create_time == null ? "" : create_time;
+            }
 
-                public void setCreate_time(String create_time) {
-                    this.create_time = create_time == null ? "" : create_time;
-                }
-
-                public String getAmount() {
-                    return amount == null ? "" : amount;
-                }
-
-                public void setAmount(String amount) {
-                    this.amount = amount == null ? "" : amount;
-                }
-
-                public int getOrder_status() {
-                    return order_status;
-                }
-
-                public void setOrder_status(int order_status) {
-                    this.order_status = order_status;
-                }
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time == null ? "" : create_time;
             }
         }
     }

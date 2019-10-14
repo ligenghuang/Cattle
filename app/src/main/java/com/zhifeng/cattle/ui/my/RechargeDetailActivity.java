@@ -134,14 +134,14 @@ public class RechargeDetailActivity extends UserBaseActivity<ReChargeDetailActio
     public void getChargeDetailSuccess(ReChargeDetail reChargeDetail) {
         refreshLayout.finishRefresh();
         ReChargeDetail.DataBeanX dataBean = reChargeDetail.getData();
-        if (dataBean.getList().getData().size() != 0){
+        if (dataBean.getData().size() != 0){
             recyclerview.setVisibility(View.VISIBLE);
-            isSlect = page < dataBean.getList().getCurrent_page();
+            isSlect = page < dataBean.getLast_page();
             loadSwapTab();
             if (isRefresh){
-                adapter.refresh(dataBean.getList().getData());
+                adapter.refresh(dataBean.getData());
             }else {
-                adapter.loadMore(dataBean.getList().getData());
+                adapter.loadMore(dataBean.getData());
             }
         }else {
             isSlect = false;

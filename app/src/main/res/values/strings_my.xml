@@ -202,6 +202,8 @@
     <string name="team_rechargedetail_tab_2">充值日期</string>
     <string name="team_rechargedetail_tab_3">金额</string>
     <string name="team_rechargedetail_tab_4">充值状态</string>
+    <string name="team_rechargedetail_tab_5">充值成功</string>
+    <string name="team_rechargedetail_tab_6">充值失败</string>
 
     <string name="rankinglist_tab_1">排行榜</string>
     <string name="rankinglist_tab_2">名次</string>

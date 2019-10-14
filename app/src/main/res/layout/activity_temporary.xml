@@ -23,20 +23,7 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/shape_bonus_day_rv_bg">
 
-                <TextView
-                    android:id="@+id/tvCertificate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/icon_more"
-                    android:padding="@dimen/dp_10"
-                    android:text="@string/cart_tab_13_1" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_order_address"
@@ -120,6 +107,35 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_10"
                     android:src="@drawable/icon_more" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:orientation="vertical"
+                android:background="@drawable/shape_bonus_day_rv_bg">
+
+                <TextView
+                    android:id="@+id/tvCertificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/icon_more"
+                    android:drawableLeft="@drawable/icon_id_card"
+                    android:drawablePadding="12dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/cart_tab_13_1" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/icon_id_card_bg"/>
+
             </LinearLayout>
 
             <LinearLayout
