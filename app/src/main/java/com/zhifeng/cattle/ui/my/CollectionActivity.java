@@ -241,7 +241,7 @@ public class CollectionActivity extends UserBaseActivity<CollectionAction> imple
     }
 
     /**
-     * 删除购物车商品
+     * 删除商品
      */
     private void delete() {
         List<CollectionListDto.DataBean> list = collectionListAdapter.getAllData();
@@ -251,7 +251,7 @@ public class CollectionActivity extends UserBaseActivity<CollectionAction> imple
             if (list.get(i).isClick()){
                 num++;
                 //todo 拼接id
-                if (i == 0){
+                if (num == 1){
                     id = list.get(i).getGoods_id()+"";
                 }else {
                     id = id+","+list.get(i).getGoods_id();

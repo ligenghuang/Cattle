@@ -35,15 +35,12 @@ public class OrderCommentAction extends BaseAction<OrderCommentView> {
 
     public void postComment(OrderComment orderComment) {
         String comments = new Gson().toJson(orderComment);
-        L.e("lgh_json", "comments  = " + comments);
-        OrderCommentPost commentPost = new OrderCommentPost(MySp.getAccessToken(MyApp.getContext()), "[" + comments + "]");
         MultipartBody.Builder build = new MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("token", MySp.getAccessToken(MyApp.getContext()))
                 .addFormDataPart("comments","[" + comments + "]");
         RequestBody body = build.build();
         post(WebUrlUtil.POST_ORDER_COMMENT, false,
                 service -> manager.runHttp(service.PostData(
-//                        RequestBody.create(MediaType.parse("application/json; charset=utf-8"), commentPost.toString())
                         body
                         , WebUrlUtil.POST_ORDER_COMMENT)));
     }

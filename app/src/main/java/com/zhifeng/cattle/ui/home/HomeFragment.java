@@ -201,7 +201,7 @@ public class HomeFragment extends UserBaseFragment {
         tvType1.setSelected(false);
         tvType2.setSelected(false);
         tvType3.setSelected(false);
-//        tvType4.setSelected(false);
+        tvType4.setSelected(false);
         //设置状态栏黑色字体与图标
 //        QMUIStatusBarHelper.setStatusBarLightMode(this);
         mImmersionBar.statusBarDarkFont(true);
@@ -227,7 +227,7 @@ public class HomeFragment extends UserBaseFragment {
         tvType1.setText(list.get(0));
         tvType2.setText(list.get(1));
         tvType3.setText(list.get(2));
-//        tvType4.setText(list.get(3));
+        tvType4.setText(list.get(3));
     }
 
     private void setListSetClick(){

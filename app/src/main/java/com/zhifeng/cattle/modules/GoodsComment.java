@@ -122,7 +122,7 @@ public class GoodsComment {
             private int star_rating;
             private Object replies;
             private int praise;
-            private int add_time;
+            private String add_time;
             private int sku_id;
             private String spec;
             private int is_praise;
@@ -192,11 +192,11 @@ public class GoodsComment {
                 this.praise = praise;
             }
 
-            public int getAdd_time() {
+            public String getAdd_time() {
                 return add_time;
             }
 
-            public void setAdd_time(int add_time) {
+            public void setAdd_time(String add_time) {
                 this.add_time = add_time;
             }
 

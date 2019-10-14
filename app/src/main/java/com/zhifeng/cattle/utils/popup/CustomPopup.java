@@ -2,6 +2,7 @@ package com.zhifeng.cattle.utils.popup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,7 +24,7 @@ public class CustomPopup extends PartShadowPopupView {
     OnListClickListener onListClickListener;
 
 
-    public CustomPopup(@NonNull Context context, List<RecommendHomeDto.DataBean.Catenav1Bean> list,OnListClickListener onListClickListener) {
+    public CustomPopup(@NonNull Context context, List<RecommendHomeDto.DataBean.Catenav1Bean> list, OnListClickListener onListClickListener) {
         super(context);
         this.context = context;
         this.list = list;
@@ -35,6 +36,7 @@ public class CustomPopup extends PartShadowPopupView {
     protected int getImplLayoutId() {
         return R.layout.custom_popup;
     }
+
     // 执行初始化操作，比如：findView，设置点击，或者任何你弹窗内的业务逻辑
     @Override
     protected void onCreate() {
@@ -48,22 +50,27 @@ public class CustomPopup extends PartShadowPopupView {
         });
         RecyclerView recyclerView = findViewById(R.id.rv_classify);
         CatenavListAdapter catenavListAdapter = new CatenavListAdapter();
-        recyclerView.setLayoutManager(new GridLayoutManager(context,4));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
         recyclerView.setAdapter(catenavListAdapter);
         catenavListAdapter.refresh(list);
         catenavListAdapter.setOnClickListener(new CatenavListAdapter.OnClickListener() {
             @Override
-            public void onClick(int id,String name,int position) {
+            public void onClick(int id, String name, int position) {
                 //todo 跳转页面
-                for (int i = 0; i <list.size() ; i++) {
+                for (int i = 0; i < list.size(); i++) {
                     list.get(i).setClick(id == list.get(i).getCat_id());
                 }
 //                Intent i = new Intent(context, ListPageActivity.class);
 //                i.putExtra("cat_id", id);
 //                i.putExtra("name", name);
 //                context.startActivity(i);
-                onListClickListener.onClick(position);
                 dismiss();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onListClickListener.onClick(position);
+                    }
+                }, 500);
             }
         });
 
@@ -91,7 +98,7 @@ public class CustomPopup extends PartShadowPopupView {
         return super.getPopupAnimator();
     }
 
-    public interface OnListClickListener{
+    public interface OnListClickListener {
         void onClick(int position);
     }
 
