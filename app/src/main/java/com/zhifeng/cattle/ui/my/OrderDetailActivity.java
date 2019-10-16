@@ -166,9 +166,9 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvOrderConsignee.setText(dataBean.getConsignee());//收货人
         tvOrderPayType.setText(dataBean.getPay_type().getPay_name());//支付方式
         tvOrderMessage.setText(TextUtils.isEmpty(dataBean.getUser_note())?"无":dataBean.getUser_note());//买家留言
-        tvOrderGoodsPrice.setText("￥"+dataBean.getTotal_amount());
-        tvOrderTotalPrice.setText("￥"+dataBean.getTotal_amount());
-        tvOrderFreight.setText("￥"+dataBean.getShipping_price());
+        tvOrderGoodsPrice.setText("AU$"+dataBean.getTotal_amount());
+        tvOrderTotalPrice.setText("AU$"+dataBean.getTotal_amount());
+        tvOrderFreight.setText("AU$"+dataBean.getShipping_price());
         tvOrderIntegral.setText(dataBean.getCoupon_price());
     }
 

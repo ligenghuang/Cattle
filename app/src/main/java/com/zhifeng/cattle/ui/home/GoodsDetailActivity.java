@@ -273,9 +273,9 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     public void getGoodsDetailSuccess(GoodsDetailDto goodsDetailDto) {
         loadDiss();
         dataBean = goodsDetailDto.getData();
-        tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
+        tvGoodsOriginalPrice.setText("AU$" + dataBean.getOriginal_price());//原价
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+        tvGoodsPrice.setText("AU$" + dataBean.getPrice());//价格
         tvGoodsName.setText(dataBean.getGoods_name());//商品名称
         goodsName = dataBean.getGoods_name();
         fTitleTv.setText(goodsName);
@@ -283,7 +283,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
         tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存
         double freight = Double.parseDouble(dataBean.getShipping_price());
-        tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
+        tvGoodsFreight.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "AU$" + dataBean.getShipping_price());//运费
         isCollection = dataBean.getCollection() == 1;
         tvGoodsAttention.setText(ResUtil.getString(isCollection ? R.string.goods_detail_tab_17 : R.string.goods_detail_tab_4));
         tvGoodsAttention.setSelected(isCollection);
@@ -505,7 +505,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 case 1:
 //                    tv_selected.setText("选择的sku组合："+msg.obj.toString());
                     //原价
-                    tvGoodsOriginalPrice.setText("￥"+msg.obj.toString());
+                    tvGoodsOriginalPrice.setText("AU$"+msg.obj.toString());
                     break;
                 case 2:
 //                    tv_stock.setText("组合的库存："+msg.obj.toString());
@@ -516,7 +516,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 case 3:
 //                    tv_price.setText("按钮的价格："+msg.obj.toString());
                     L.d("lgh_sku", "price  = " + msg.obj.toString());
-                    tvGoodsPrice.setText("￥"+msg.obj.toString());
+                    tvGoodsPrice.setText("AU$"+msg.obj.toString());
                     break;
                 case 4:
                     sku_id = Integer.parseInt(msg.obj.toString());
@@ -530,8 +530,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, msg.obj.toString()+""));//销量
                     break;
                 case 7:
-                    tvGoodsOriginalPrice.setText("￥" + dataBean.getOriginal_price());//原价
-                    tvGoodsPrice.setText("￥" + dataBean.getPrice());//价格
+                    tvGoodsOriginalPrice.setText("AU$" + dataBean.getOriginal_price());//原价
+                    tvGoodsPrice.setText("AU$" + dataBean.getPrice());//价格
                     inventory = -1;
                     tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, dataBean.getNumber_sales() + ""));//销量
                     tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, dataBean.getStock() + ""));//库存

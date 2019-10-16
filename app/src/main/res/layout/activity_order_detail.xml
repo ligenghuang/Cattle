@@ -298,7 +298,7 @@
                             android:id="@+id/tv_order_goods_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="￥100.00元"
+                            android:text="AU$100.00元"
                             android:textColor="@color/color_6"
                             android:textSize="@dimen/text_size12" />
 
@@ -326,7 +326,7 @@
                             android:id="@+id/tv_order_freight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="￥0.0元"
+                            android:text="AU$0.0元"
                             android:textColor="@color/color_6"
                             android:textSize="@dimen/text_size12" />
 
@@ -354,7 +354,7 @@
                             android:id="@+id/tv_order_integral"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="￥0.00元"
+                            android:text="AU$0.00元"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:textColor="@color/color_6"
                             android:textSize="@dimen/text_size12" />
@@ -383,7 +383,7 @@
                             android:id="@+id/tv_order_total_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="￥100.00元"
+                            android:text="AU$100.00元"
                             android:textColor="@color/color_6"
                             android:textSize="@dimen/text_size12" />
 

@@ -26,9 +26,9 @@ public class ListPageAdapter extends BaseRecyclerAdapter<ListPage.DataBean> {
         ImageView iv = holder.itemView.findViewById(R.id.iv_item_goods_img);
         GlideUtil.setImage(context, model.getImg(), iv, R.drawable.icon_goods_detail);
         holder.text(R.id.tv_item_goods_name, model.getGoods_name());
-        holder.text(R.id.tv_item_goods_price, "￥"+model.getPrice());
+        holder.text(R.id.tv_item_goods_price, "AU$"+model.getPrice());
         TextView textView = holder.itemView.findViewById(R.id.tv_item_goods_original_price);
-        textView.setText("￥"+model.getOriginal_price());
+        textView.setText("AU$"+model.getOriginal_price());
         textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

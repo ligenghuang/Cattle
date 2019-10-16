@@ -28,7 +28,7 @@ public class OrderGoodsListAdapter extends BaseRecyclerAdapter<OrderListDto.Data
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_order_name,model.getGoods_name());//商品名称
         holder.text(R.id.tv_item_order_spec,model.getSpec_key_name());//商品规格
-        holder.text(R.id.tv_item_order_price,"￥"+model.getGoods_price());//商品价格
+        holder.text(R.id.tv_item_order_price,"AU$"+model.getGoods_price());//商品价格
         ImageView imageView = holder.itemView.findViewById(R.id.iv_item_order_img);
         GlideUtil.setImage(context,model.getImg(),imageView);
     }

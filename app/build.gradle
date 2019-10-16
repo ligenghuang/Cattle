@@ -77,5 +77,4 @@ dependencies {
     implementation project(':imagepickerLib')
     implementation files('libs/tbs_sdk_thirdapp_v4.3.0.1148_43697_sharewithdownloadwithfile_withoutGame_obfs_20190805_175505')
     implementation 'com.pgyersdk:sdk:+'
-
 }

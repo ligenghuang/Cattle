@@ -50,7 +50,7 @@
         android:layout_below="@id/tv_item_goods_name"
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@id/iv_item_goods_img"
-        android:text="￥888.00"
+        android:text="AU$888.00"
         android:textColor="@color/color_fd69a5"
         android:textSize="@dimen/text_size15" />
 

@@ -118,7 +118,7 @@
                         android:id="@+id/tv_goods_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥399"
+                        android:text="AU$399"
                         android:textColor="@color/color_fd69a5"
                         android:textSize="@dimen/text_size18" />
 
@@ -130,7 +130,7 @@
                         android:layout_alignBottom="@id/tv_goods_price"
                         android:layout_marginLeft="12dp"
                         android:layout_toRightOf="@id/tv_goods_price"
-                        android:text="￥799"
+                        android:text="AU$799"
                         android:textColor="@color/color_6"
                         android:textSize="@dimen/text_size12" />
 

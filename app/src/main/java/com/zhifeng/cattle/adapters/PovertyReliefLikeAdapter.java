@@ -31,7 +31,7 @@ public class PovertyReliefLikeAdapter extends BaseRecyclerAdapter<PovertyReliefD
     protected void onBindViewHolder(SmartViewHolder holder, PovertyReliefDto.DataBean.LikeBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_goods_name,model.getGoods_name());//商品名称
-        holder.text(R.id.tv_item_goods_price,"￥"+model.getPrice());//商品价格
+        holder.text(R.id.tv_item_goods_price,"AU$"+model.getPrice());//商品价格
         ImageView img = holder.itemView.findViewById(R.id.iv_item_goods_img);
         GlideUtil.setImage(context,model.getImg(),img,R.drawable.icon_goods);//商品图片
         holder.itemView.setOnClickListener(new View.OnClickListener() {

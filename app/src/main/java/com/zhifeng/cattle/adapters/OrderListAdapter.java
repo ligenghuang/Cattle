@@ -41,7 +41,7 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_order_time, model.getAdd_time());//订单时间
         holder.text(R.id.tv_item_order_goods_num, ResUtil.getFormatString(R.string.order_tab_9, model.getGoods_num() + ""));
-        holder.text(R.id.tv_item_order_price_total, "￥" + model.getTotal_amount());
+        holder.text(R.id.tv_item_order_price_total, "AU$" + model.getTotal_amount());
 
         //设置商品
         RecyclerView recyclerView = holder.itemView.findViewById(R.id.rv_item_order_goods);

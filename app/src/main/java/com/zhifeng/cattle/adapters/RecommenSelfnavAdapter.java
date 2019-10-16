@@ -30,7 +30,7 @@ public class RecommenSelfnavAdapter extends BaseRecyclerAdapter<RecommendHomeDto
     protected void onBindViewHolder(SmartViewHolder holder, RecommendHomeDto.DataBean.BuyNowBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_goods_name,model.getGoods_name());//商品名称
-        holder.text(R.id.tv_goods_price,"￥"+model.getPrice());//商品价格
+        holder.text(R.id.tv_goods_price,"AU$"+model.getPrice());//商品价格
 
         ImageView img = holder.itemView.findViewById(R.id.iv_goods_img);
         GlideUtil.setRoundedImage(context,model.getImg(),img,R.drawable.icon_goods,4);

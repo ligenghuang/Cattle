@@ -51,7 +51,7 @@
             android:id="@+id/tv_dialog_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥100"
+            android:text="AU$100"
             android:textColor="@color/color_fd69a5"
             android:textSize="@dimen/text_size15" />
 

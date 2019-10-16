@@ -4,7 +4,7 @@
     <string name="cart_tab_2">去逛逛~</string>
     <string name="cart_tab_3">全选</string>
     <string name="cart_tab_4">删除</string>
-    <string name="cart_tab_5">总计： ￥%0$s</string>
+    <string name="cart_tab_5">总计： AU$%0$s</string>
     <string name="cart_tab_6">结算</string>
     <string name="cart_tab_7">商品数量不能小于0！</string>
     <string name="cart_tab_8">商品数量不能超过库存！</string>
@@ -17,7 +17,7 @@
     <string name="cart_tab_14">本店自营商品</string>
     <string name="cart_tab_15">颜色：%0$s</string>
     <string name="cart_tab_16">尺码：%0$s</string>
-    <string name="cart_tab_17">￥%0$s</string>
+    <string name="cart_tab_17">AU$%0$s</string>
     <string name="cart_tab_18">x%0$s</string>
     <string name="cart_tab_19">服务</string>
     <string name="cart_tab_20">购买数量</string>

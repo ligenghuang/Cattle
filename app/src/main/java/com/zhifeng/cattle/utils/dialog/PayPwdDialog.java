@@ -149,7 +149,7 @@ public class PayPwdDialog extends Dialog implements DialogInterface.OnDismissLis
 
 
     private void initView() {
-        tvMoney.setText("￥" + money);
+        tvMoney.setText("AU$" + money);
         tvPayType.setText(payTypeName);
         tvList = new TextView[6];
 

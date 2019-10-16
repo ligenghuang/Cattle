@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:text="总计： ￥0"
+                android:text="总计： AU$0"
                 android:textColor="@color/color_15"
                 android:textSize="@dimen/text_size12" />
 

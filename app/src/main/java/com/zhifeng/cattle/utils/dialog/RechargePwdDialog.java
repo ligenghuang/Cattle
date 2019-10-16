@@ -138,7 +138,7 @@ public class RechargePwdDialog extends Dialog implements DialogInterface.OnDismi
 
 
     private void initView() {
-        tvMoney.setText("￥"+money);
+        tvMoney.setText("AU$"+money);
         tvList = new TextView[6];
 
         imgList = new ImageView[6];

@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_item_goods_img"
         android:layout_toRightOf="@id/iv_item_goods_img"
-        android:text="￥888.00"
+        android:text="AU$888.00"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size12" />
 

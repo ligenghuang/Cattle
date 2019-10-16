@@ -48,7 +48,7 @@ public class CollectionListAdapter extends BaseRecyclerAdapter<CollectionListDto
     protected void onBindViewHolder(SmartViewHolder holder, CollectionListDto.DataBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_goods_name,model.getGoods_name());
-        holder.text(R.id.tv_item_goods_price,"￥"+model.getPrice());
+        holder.text(R.id.tv_item_goods_price,"AU$"+model.getPrice());
 
         ImageView img = holder.itemView.findViewById(R.id.iv_item_goods_img);
         GlideUtil.setImage(context,model.getImg(),img);

@@ -16,7 +16,7 @@ public class RechargeDetailAdapter extends BaseRecyclerAdapter<ReChargeDetail.Da
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_rechargeTime, model.getCreate_time());
         DecimalFormat df = new DecimalFormat("#0.00");
-        holder.text(R.id.tv_item_money,"￥"+df.format(model.getBalance()));
+        holder.text(R.id.tv_item_money,"AU$"+df.format(model.getBalance()));
         //todo 0充值成功 1充值失败
         switch (model.getStatus()){
             case 0:

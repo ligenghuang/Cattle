@@ -54,7 +54,7 @@
                     android:id="@+id/tv_item_goods_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥69.00"
+                    android:text="AU$69.00"
                     android:textSize="@dimen/text_size15"
                     android:textColor="@color/color_fd69a5"
                     android:textStyle="bold"
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:text="￥89.00"
+                    android:text="AU$89.00"
                     android:textColor="@color/color_82"
                     android:textStyle="bold"
                     android:textSize="@dimen/text_size12"/>

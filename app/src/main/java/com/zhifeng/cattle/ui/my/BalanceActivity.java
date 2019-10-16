@@ -136,7 +136,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         refreshLayout.finishRefresh();
         double money = Double.parseDouble(balanceDto.getData().getRemainder_money());
         DecimalFormat df = new DecimalFormat("#0.00");
-        tvBalanceMoney.setText("￥"+df.format(money));
+        tvBalanceMoney.setText("AU$"+df.format(money));
         //获取用户是否绑定支付宝
         isAlipay = !TextUtils.isEmpty(balanceDto.getData().getAlipay());
     }
@@ -146,7 +146,7 @@ public class BalanceActivity extends UserBaseActivity<BalanceAction> implements 
         loadDiss();
         refreshLayout.finishRefresh();
         showNormalToast(message);
-        tvBalanceMoney.setText("￥ 0");
+        tvBalanceMoney.setText("AU$ 0");
     }
 
     @Override

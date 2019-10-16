@@ -47,7 +47,7 @@
                 android:id="@+id/tv_goods_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥7000.00"
+                android:text="AU$7000.00"
                 android:textSize="@dimen/text_size12"
                 android:textColor="@color/color_fd69a5"
                 android:textStyle="bold"/>

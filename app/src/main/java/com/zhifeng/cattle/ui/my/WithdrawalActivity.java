@@ -163,7 +163,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
         loadDiss();
         money = Double.parseDouble(balanceDto.getData().getRemainder_money());
         DecimalFormat df = new DecimalFormat("#0.00");
-        tvBalanceMoney.setText("￥" + df.format(money));
+        tvBalanceMoney.setText("AU$" + df.format(money));
         tvAlipayName.setText(balanceDto.getData().getAlipay());
         rate = balanceDto.getData().getRate();
     }

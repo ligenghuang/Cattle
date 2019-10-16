@@ -95,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_recharge_bank"
                             android:layout_alignLeft="@id/tv_recharge_bank"
-                            android:text="单日交易限额￥20000"
+                            android:text="单日交易限额AU$20000"
                             android:textColor="@color/color_c"
                             android:textSize="@dimen/text_size11" />
 
@@ -135,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        android:text="￥"
+                        android:text="AU$"
                         android:textColor="@color/color_15"
                         android:textSize="@dimen/text_size12" />
 

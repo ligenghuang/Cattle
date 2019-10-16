@@ -332,7 +332,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             tvAddress.setText(dataBean.getAddr_res().getAddress());
         }
         double freight = Double.parseDouble(dataBean.getShipping_price());
-        tvShippingPrice.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "￥" + dataBean.getShipping_price());//运费
+        tvShippingPrice.setText(freight == 0 ? ResUtil.getString(R.string.goods_detail_tab_7) : "AU$" + dataBean.getShipping_price());//运费
         adapter.refresh(dataBean.getGoods_res());
         List<Temporary.DataBean.PayTypeBean> payTypeBeans = dataBean.getPay_type();
         payTypeBeans.get(0).setSelect(true);

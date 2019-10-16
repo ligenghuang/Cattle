@@ -31,7 +31,7 @@ public class OrderDetailGoodsAdapter extends BaseRecyclerAdapter<OrderDetailDto.
     protected void onBindViewHolder(SmartViewHolder holder, OrderDetailDto.DataBean.GoodsResBean model, int position) {
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_order_goods_name,model.getGoods_name());//商品名称
-        holder.text(R.id.tv_order_goods_price,"￥"+model.getGoods_price());//商品价格
+        holder.text(R.id.tv_order_goods_price,"AU$"+model.getGoods_price());//商品价格
         holder.text(R.id.tv_order_goods_num,"x"+model.getGoods_num());//商品数量
         ImageView img = holder.itemView.findViewById(R.id.iv_order_goods_img);
         GlideUtil.setImage(context,model.getImg(),img);
