@@ -1,13 +1,18 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.OrderListDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.PayTypeDto;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.OrderDetailView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -42,6 +47,24 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
     public void getOrderDetail(int id){
         post(WebUrlUtil.POST_ORDER_DETAIL,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"order_id",id),WebUrlUtil.POST_ORDER_DETAIL)
+        ));
+    }
+
+    public void getPayType(){
+        post(WebUrlUtil.POST_PAY_TYPE,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_PAY_TYPE)
+        ));
+    }
+
+    /**
+     * 支付
+     * @param submitOrderPost
+     */
+    public void payOrder(SubmitOrderPost submitOrderPost){
+        post(WebUrlUtil.POST_PAY_ORDER,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
+                        "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
+                        ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
         ));
     }
 
@@ -83,6 +106,45 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                             return;
                         }
                         view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_PAY_TYPE:
+                        //todo 获取支付方式
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            PayTypeDto payTypeDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayTypeDto>() {
+                            }.getType());
+                            if (payTypeDto.getStatus() == 200){
+                                //todo 获取支付方式成功
+                                view.getPayTypeSuccess(payTypeDto);
+                                return;
+                            }
+                            view.onError(payTypeDto.getMsg(),action.getErrorType());
+                            return;
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_PAY_ORDER:
+                        //todo 订单支付
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            try{
+                                PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
+                                }.getType());
+                                if (payOrderDto.getStatus() == 200) {
+                                    //todo 订单支付成功
+                                    view.payOrderSuccess(payOrderDto);
+                                    return;
+                                }
+                                view.onError(payOrderDto.getMsg(), action.getErrorType());
+                                return;
+                            }catch (JsonSyntaxException e){
+                                GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                                }.getType());
+                                view.payOrderError(generalDto.getMsg());
+                                return;
+                            }
+                        }
+                        view.payOrderError(msg);
                         break;
                 }
 

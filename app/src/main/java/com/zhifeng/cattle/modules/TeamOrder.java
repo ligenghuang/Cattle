@@ -108,7 +108,7 @@ public class TeamOrder {
             private int order_id;
             private String order_sn;
             private String consignee;
-            private int add_time;
+            private String add_time;
 
             public int getOrder_id() {
                 return order_id;
@@ -134,11 +134,11 @@ public class TeamOrder {
                 this.consignee = consignee == null ? "" : consignee;
             }
 
-            public int getAdd_time() {
+            public String getAdd_time() {
                 return add_time;
             }
 
-            public void setAdd_time(int add_time) {
+            public void setAdd_time(String add_time) {
                 this.add_time = add_time;
             }
         }

@@ -79,7 +79,6 @@ public class GlideUtil {
                         .load(avator)
                         .placeholder(errorPic)
                         .error(errorPic)
-                        .dontAnimate()
                         .centerCrop()
                         .into(main_user_iv);
             } else {

@@ -1,6 +1,8 @@
 package com.zhifeng.cattle.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,9 +16,14 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
+import com.jxccp.im.JXErrorCode;
+import com.jxccp.im.chat.manager.JXImManager;
+import com.jxccp.im.chat.mcs.OnInitMcsRequestCallback;
+import com.jxccp.im.chat.mcs.entity.JXWorkgroup;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.lgh.huanglib.util.cusview.CustomViewPager;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.ui.classify.ClassifyFragment;
@@ -26,9 +33,12 @@ import com.zhifeng.cattle.ui.my.MyFragment;
 import com.zhifeng.cattle.ui.shoppingcart.CartFragment;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
+import com.zhifeng.cattle.utils.jx.JXAccountHelper;
+import com.zhifeng.cattle.utils.jx.JXUiHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnTouch;
@@ -123,6 +133,7 @@ public class MainActivity extends UserBaseActivity {
         initViewPager();
 
     }
+
 
     /**
      * 初始化ViewPager

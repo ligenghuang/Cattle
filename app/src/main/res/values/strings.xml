@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cattle</string>
+    <string name="app_name">AUSHOP</string>
 
     <string name="main_tab_1">首页</string>
     <string name="main_tab_2">分类</string>
@@ -13,4 +13,5 @@
     <string name="error">图片解析出错</string>
 
     <string name="srl_footer_nothing_2">我是有底线哦~~</string>
+
 </resources>

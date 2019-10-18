@@ -109,7 +109,6 @@ public class InvitationActivity extends UserBaseActivity<InvitationAction> imple
     @Override
     public void getSharePosterSuccess(SharePoster sharePoster) {
        path = sharePoster.getData().getQrcode();
-//       path = "http://pic21.nipic.com/20120508/10020937_124825449172_2.jpg";
         GlideUtil.setImage(mContext,sharePoster.getData().getQrcode(),ivQcCode,R.drawable.erweima);
         tvInvitationCode.setText(sharePoster.getData().getInvitation_code()+"");
     }

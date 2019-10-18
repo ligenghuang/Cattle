@@ -23,6 +23,7 @@ import com.zhifeng.cattle.modules.post.ForgetPwdPost;
 import com.zhifeng.cattle.modules.post.SetPayPwdPost;
 import com.zhifeng.cattle.ui.impl.ForgetPwdView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
 
@@ -184,6 +185,7 @@ public class ForgetPwdActivity extends UserBaseActivity<ForgetPwdAction> impleme
     public void setPayPwdSuccess(GeneralDto generalDto) {
         loadDiss();
         showNormalToast(generalDto.getMsg());
+        MySp.setPwd(mContext,1);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

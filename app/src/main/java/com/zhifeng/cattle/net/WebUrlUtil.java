@@ -368,4 +368,9 @@ public class WebUrlUtil {
      * 修改用户名
      */
     public static final String POST_UPDATE_USER_NAME = "user/edit_name";
+
+    /**
+     * 获取支付方式
+     */
+    public static final String POST_PAY_TYPE = "Order/get_pay_type";
 }

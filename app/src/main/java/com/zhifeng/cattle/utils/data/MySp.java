@@ -23,6 +23,7 @@ public class MySp extends MySharedPreferencesUtil {
     public static void clearAllSP(Context context) {
         setAccessToken(context,null);
         setMobile(context,null);
+        setPwd(context,0);
     }
 
     /**
@@ -106,5 +107,27 @@ public class MySp extends MySharedPreferencesUtil {
     public static String getMobile(Context context){
         SharedPreferences sp = getProjectSP(context);
         return sp.getString("mobile", null);
+    }
+
+    /**
+     * 是否设置支付密码
+     * @param context
+     * @param pwd
+     * @return
+     */
+    public static boolean setPwd(Context context,int pwd){
+        SharedPreferences sp = getProjectSP(context);
+        SharedPreferences.Editor editor = sp.edit();
+        return editor.putInt("Pwd", pwd).commit();
+    }
+
+    /**
+     * 是否设置支付密码
+     * @param context
+     * @return
+     */
+    public static int getPwd(Context context){
+        SharedPreferences sp = getProjectSP(context);
+        return sp.getInt("Pwd", 0);
     }
 }

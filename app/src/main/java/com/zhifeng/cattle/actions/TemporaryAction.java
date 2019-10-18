@@ -133,7 +133,7 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                           return;
                       }
                     }
-                    view.onError(msg, action.getErrorType());
+                    view.payOrderError(msg);
                     break;
                 case WebUrlUtil.POST_SHOW_IDCARD:
                     if (aBoolean) {

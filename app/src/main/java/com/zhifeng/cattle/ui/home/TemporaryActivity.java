@@ -351,6 +351,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(num)));
         tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, String.valueOf(totalPrice)));
         pwd = dataBean.getPwd();
+        MySp.setPwd(mContext,pwd);
     }
 
     @Override

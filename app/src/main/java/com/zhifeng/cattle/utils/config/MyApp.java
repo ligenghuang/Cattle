@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
+import com.jxccp.im.chat.manager.JXImManager;
 import com.lgh.huanglib.util.config.MyApplication;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.crash.PgyerCrashObservable;
@@ -17,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.zhifeng.cattle.utils.Constanst;
 import com.zhifeng.cattle.utils.view.ClassicsFooter;
 
 
@@ -71,6 +73,8 @@ public class MyApp extends MyApplication {
         super.attachBaseContext(base);
         MultiDex.install(base);
 
+
+
         PgyCrashManager.register();
         PgyerCrashObservable.get().attach(new PgyerObserver() {
             @Override
@@ -83,6 +87,10 @@ public class MyApp extends MyApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        JXImManager.getInstance().init(getContext(), Constanst.AppKey);
+        JXImManager.getInstance().setDebugMode(true);
+        JXImManager.Login.getInstance().setAutoLogin(false);
+        JXImManager.Config.getInstance().setGetMessageFromLocalDb(false);
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -15,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -29,12 +29,16 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.jxccp.im.JXErrorCode;
+import com.jxccp.im.chat.manager.JXImManager;
+import com.jxccp.im.chat.mcs.entity.JXWorkgroup;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.config.GlideApp;
 import com.lgh.huanglib.util.cusview.richtxtview.ImageLoader;
 import com.lgh.huanglib.util.cusview.richtxtview.XRichText;
+import com.lgh.huanglib.util.data.IsFastClick;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnSelectListener;
@@ -44,6 +48,7 @@ import com.zhifeng.cattle.adapters.BannerGoods;
 import com.zhifeng.cattle.adapters.GoodsDetailCommentListAdapter;
 import com.zhifeng.cattle.modules.DefaultCityDto;
 import com.zhifeng.cattle.modules.GoodsDetailDto;
+import com.zhifeng.cattle.service.JXCustomerService;
 import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.GoodsDetailView;
 import com.zhifeng.cattle.ui.login.LoginActivity;
@@ -51,6 +56,10 @@ import com.zhifeng.cattle.ui.my.AddressListActivity;
 import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
+import com.zhifeng.cattle.utils.jx.JXAccountHelper;
+import com.zhifeng.cattle.utils.jx.view.JXChatView;
+import com.zhifeng.cattle.utils.jx.JXConstants;
+import com.zhifeng.cattle.utils.jx.JXUiHelper;
 import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
 import com.zhifeng.cattle.utils.sku.BaseSkuModel;
 import com.zhifeng.cattle.utils.sku.ItemClickListener;
@@ -172,6 +181,12 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
     GoodsDetailDto.DataBean dataBean;
 
+    int chatType = 0;
+    String chatkey = null;
+    String chatTitlekey = null;
+    String suborgId;
+    String extendData;
+
     @Override
     public int intiLayout() {
         return R.layout.activity_goods_detail;
@@ -213,6 +228,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         mActicity = this;
         mContext = this;
 
+
         goods_id = getIntent().getIntExtra("goods_id", 75);
 
         //轮播图
@@ -228,6 +244,30 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         getDefaultCity();
         loadView();
 
+        chatType = getIntent().getIntExtra(JXChatView.CHAT_TYPE,JXChatView.CHATTYPE_CUSTOMER_SERVICE);
+        chatkey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_KEY);
+        chatTitlekey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_TITLE_KEY);
+        this.suborgId = this.getIntent().getStringExtra(JXConstants.EXTRA_SUBORG_ID_KEY);
+        L.d("lgh_jx","[JXInitActivity.onCreate]extendData : " + extendData+" , suborgId = "+suborgId);
+        if (TextUtils.isEmpty(suborgId)){
+            String appkey = JXImManager.getInstance().getAppKey();
+            int index = appkey.indexOf("#");
+            if (index > -1) {
+                suborgId = appkey.substring(0, index);
+            } else {
+                suborgId = appkey;
+            }
+        }
+        JXUiHelper.getInstance().setSuborgId(suborgId);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            Intent service = new Intent();
+//            service.setClass(getApplicationContext(), JXCustomerService.class);
+//            startForegroundService(service);
+//        }else {
+        Intent service = new Intent();
+        service.setClass(getApplicationContext(), JXCustomerService.class);
+        startService(service);
     }
 
     @Override
@@ -689,6 +729,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
+        hideInput();
+        IsFastClick.lastClickTime = 0;
     }
 
     @Override
@@ -849,13 +891,17 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 break;
             case R.id.tv_goods_service:
                 //todo  客服
-                if (TextUtils.isEmpty(service)) {
-                    showNormalToast("暂未开通客服");
-                } else {
-                    Intent intent1 = new Intent(mContext, ServiceActivity.class);
-                    intent1.putExtra("service", service);
-                    startActivity(intent1);
-                }
+//                if (TextUtils.isEmpty(service)) {
+//                    showNormalToast("暂未开通客服");
+//                } else {
+//                    Intent intent1 = new Intent(mContext, ServiceActivity.class);
+//                    intent1.putExtra("service", service);
+//                    startActivity(intent1);
+//                }
+              if (IsFastClick.isFastClick()){
+                  loadDialog();
+                  initJx();
+              }
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车
@@ -908,4 +954,108 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             nestedScrollView.scrollTo(0, (int) y);
         }
     }
+
+    private void initJx() {
+        JXAccountHelper.getInstance().initMcsRequest(getApplicationContext(), new JXAccountHelper.OnInitMcsRequestCallback() {
+            @Override
+            public void onInitMcsResult(int code) {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        if (code == JXErrorCode.Mcs.MCS_USER_INIT_SUCCESS) {
+                            if (chatType == JXChatView.CHATTYPE_MESSAGE_BOX) {
+                                requestMessagebox(chatTitlekey);
+                            }else {
+                                JXWorkgroup workgroup = JXImManager.McsUser.getInstance().isNeedRequest(JXUiHelper.getInstance().getSuborgId());
+                                if(workgroup == null){
+                                    if(chatkey == null){
+                                        fetchWorkgroupFromServer();
+                                    }else{
+                                        requestCustomerService(chatkey, chatTitlekey);
+                                    }
+                                }else{
+                                    requestCustomerService(workgroup.getMcsId(), workgroup.getDisplayName());
+                                }
+                            }
+                        } else if (code == JXErrorCode.APPKEY_NOT_EXIST) {
+                            showNormalToast(ResUtil.getString(R.string.jx_appkey_not_exist));
+                        } else {
+                            showNormalToast(ResUtil.getString(R.string.jx_request_customerFailed));
+                        }
+
+                    }
+                });
+            }
+        });
+    }
+
+    private void fetchWorkgroupFromServer() {
+        new AsyncTask<Void, Void, List<JXWorkgroup>>() {
+            boolean hasException = false;
+
+            protected void onPreExecute() {
+            }
+
+            ;
+
+            @Override
+            protected List<JXWorkgroup> doInBackground(Void... params) {
+                try {
+                    List<JXWorkgroup> workgroups = JXImManager.McsUser.getInstance()
+                            .getCustomerServices(JXUiHelper.getInstance().getSuborgId());
+                    return workgroups;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    L.e("lgh_jx",e.getMessage());
+                    hasException = true;
+                }
+                return null;
+            }
+
+            protected void onPostExecute(List<JXWorkgroup> result) {
+                loadDiss();
+                if (result != null) {
+                    requestCustomerService(result.get(0).getMcsId(), result.get(0).getDisplayName());
+                } else {
+                    if (hasException) {
+                        showNormalToast(ResUtil.getString(R.string.jx_loadin_groups_failed));
+                    }
+                }
+            }
+        }.execute();
+    }
+
+    /**
+     * 请求客服
+     * @param mcsId
+     * @param displayName
+     */
+    private void requestCustomerService(final String mcsId, final String displayName) {
+
+        loadDiss();
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext,JXChatUIActivity.class);
+                intent.putExtra(JXChatView.CHAT_KEY, mcsId);
+                intent.putExtra(JXChatView.CHAT_SKILLS_DISPLAYNAME, displayName);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void requestMessagebox( final String displayName) {
+        loadDiss();
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, JXChatUIActivity.class);
+                intent.putExtra(JXChatView.CHAT_TYPE, JXChatView.CHATTYPE_MESSAGE_BOX);
+                intent.putExtra(JXChatView.CHAT_SKILLS_DISPLAYNAME, displayName);
+                startActivity(intent);
+            }
+        });
+    }
+
 }

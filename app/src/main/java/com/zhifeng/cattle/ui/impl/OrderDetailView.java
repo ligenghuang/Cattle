@@ -2,6 +2,9 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.OrderDetailDto;
+import com.zhifeng.cattle.modules.PayOrderDto;
+import com.zhifeng.cattle.modules.PayTypeDto;
+import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 
 /**
   *
@@ -18,4 +21,14 @@ public interface OrderDetailView extends BaseView {
      */
     void getOrderDetail();
     void getOrderDetailSuccess(OrderDetailDto orderDetailDto);
+
+    void getPayType();
+    void getPayTypeSuccess(PayTypeDto payTypeDto);
+
+    /**
+     * 支付
+     */
+    void payOrder(SubmitOrderPost submitOrderPost);
+    void payOrderSuccess(PayOrderDto submitOrderDto);
+    void payOrderError(String msg);
 }

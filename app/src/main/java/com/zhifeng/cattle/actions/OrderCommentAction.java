@@ -7,6 +7,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.BaseDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.OrderComment;
 import com.zhifeng.cattle.modules.OrderCommentResult;
@@ -65,7 +66,7 @@ public class OrderCommentAction extends BaseAction<OrderCommentView> {
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
 
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            BaseDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BaseDto>() {
                             }.getType());
                             if (generalDto.getStatus() == 200) {
                                 //todo 提交商品评价 成功

@@ -149,32 +149,35 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Pay(int id,int payType,String money) {
                 //todo 去付款
-                if (payType == 1){
-                    //todo 余额支付
-                    bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, Double.parseDouble(money), "余额支付");
-                    bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
-                        @Override
-                        public void inputFinish(String password) {
-                            SubmitOrderPost post = new SubmitOrderPost();
-                            post.setCart_id(id+"");
-                            post.setPay_type(payType + "");
-                            post.setPwd(password);
-                            submitOrder(post);
-                        }
-
-                        @Override
-                        public void close() {
-                            bugPwdDialog.dismiss();
-                        }
-                    });
-                    bugPwdDialog.show();
-                }else if (payType == 2){
-                    //todo 微信支付
-                    showNormalToast("微信支付");
-                }else if (payType == 3){
-                    //todo 支付宝支付
-                    showNormalToast("支付宝支付");
-                }
+                Intent intent2  = new Intent(mContext,OrderDetailActivity.class);
+                intent2.putExtra("order_id",id);
+                startActivity(intent2);
+//                if (payType == 1){
+//                    //todo 余额支付
+//                    bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, Double.parseDouble(money), "余额支付");
+//                    bugPwdDialog.setOnFinishInput(new PayPwdDialog.OnFinishInput() {
+//                        @Override
+//                        public void inputFinish(String password) {
+//                            SubmitOrderPost post = new SubmitOrderPost();
+//                            post.setCart_id(id+"");
+//                            post.setPay_type(payType + "");
+//                            post.setPwd(password);
+//                            submitOrder(post);
+//                        }
+//
+//                        @Override
+//                        public void close() {
+//                            bugPwdDialog.dismiss();
+//                        }
+//                    });
+//                    bugPwdDialog.show();
+//                }else if (payType == 2){
+//                    //todo 微信支付
+//                    showNormalToast("微信支付");
+//                }else if (payType == 3){
+//                    //todo 支付宝支付
+//                    showNormalToast("支付宝支付");
+//                }
             }
 
             @Override

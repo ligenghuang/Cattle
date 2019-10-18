@@ -7,12 +7,7 @@ package com.zhifeng.cattle.utils;
 */
 public class Constanst {
 
-    /**
-     * 积分
-     */
-    public static int bonus = 0;
-
-    public static int pageSize = 10;
+    public static String AppKey = "ynfyzwd6dgzraa#e292#10003";
 
 
 
