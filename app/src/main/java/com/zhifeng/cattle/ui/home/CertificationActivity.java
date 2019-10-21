@@ -203,6 +203,10 @@ public class CertificationActivity extends UserBaseActivity<CertificationAction>
         etCertificationName.setText(dataBean.getName());
         GlideUtil.setImage(mContext, dataBean.getPic_front(), ivAddPositive, R.drawable.icon_add_idcard_positive);
         GlideUtil.setImage(mContext, dataBean.getPic_back(), ivAddBack, R.drawable.icon_add_idcard_back);
+        if (!TextUtils.isEmpty(dataBean.getName())){
+            llAddPositive.setVisibility(View.GONE);
+            llAddBack.setVisibility(View.GONE);
+        }
     }
 
     /**

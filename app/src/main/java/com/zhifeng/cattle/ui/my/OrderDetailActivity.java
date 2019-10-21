@@ -267,6 +267,9 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void payOrderSuccess(PayOrderDto submitOrderDto) {
         loadDiss();
         showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
+        if (bugPwdDialog!= null){
+            bugPwdDialog.dismiss();
+        }
         getOrderDetail();
     }
 
@@ -328,11 +331,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
 
                         @Override
                         public void close() {
-                            //取消支付  跳转至订单详情页
-                            Intent intent = new Intent(mContext, OrderActivity.class);
-                            intent.putExtra("type", 1);
-                            startActivity(intent);
-                            finish();
+
                         }
                     });
                     bugPwdDialog.show();

@@ -1,11 +1,13 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.BaseDto;
 import com.zhifeng.cattle.modules.CertificationDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.post.CertificationPost;
@@ -41,7 +43,6 @@ public class CertificationAction extends BaseAction<CertificationView> {
      * @param certificationPost
      */
     public void certification(CertificationPost certificationPost){
-        L.e("lgh_post","post   = "+certificationPost.toString());
         post(WebUrlUtil.POST_UPDATA_IDCARD_PIC,false,service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"name",certificationPost.getName(),
                         "idcard",certificationPost.getIdcard(),"pic_front",certificationPost.getPic_front(),"pic_back",certificationPost.getPic_back()),
@@ -86,15 +87,22 @@ public class CertificationAction extends BaseAction<CertificationView> {
                         //todo 身份认证
                         if (aBoolean) {
                             L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                            CertificationDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CertificationDto>() {
-                            }.getType());
-                            if (certificationDto.getStatus() == 1){
-                                //todo 身份认证成功
-                                view.certificationSuccess(certificationDto);
-                                return;
-                            }
-                            view.onError(certificationDto.getMsg(),action.getErrorType());
-                            return;
+                          try {
+                              CertificationDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<CertificationDto>() {
+                              }.getType());
+                              if (certificationDto.getStatus() == 1){
+                                  //todo 身份认证成功
+                                  view.certificationSuccess(certificationDto);
+                                  return;
+                              }
+                              view.onError(certificationDto.getMsg(),action.getErrorType());
+                              return;
+                          }catch (JsonSyntaxException e){
+                              BaseDto baseDto  = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BaseDto>() {
+                              }.getType());
+                              view.onError(baseDto.getMsg(),baseDto.getStatus());
+                              return;
+                          }
                         }
                         view.onError(msg,action.getErrorType());
                         break;
