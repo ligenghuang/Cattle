@@ -17,7 +17,7 @@
 
 
         <LinearLayout
-            android:layout_width="175dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:padding="5dp"
@@ -28,13 +28,15 @@
                 android:id="@+id/iv_item_goods_img"
                 android:layout_width="165dp"
                 android:layout_height="165dp"
+                android:layout_gravity="center_horizontal"
                 android:src="@drawable/icon_goods"
                 android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/tv_item_goods_name"
-                android:layout_width="wrap_content"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/color_15"
                 android:textSize="@dimen/text_size13"
                 android:maxLines="1"
@@ -53,6 +55,7 @@
                 <TextView
                     android:id="@+id/tv_item_goods_price"
                     android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="AU$69.00"
                     android:textSize="@dimen/text_size15"
@@ -62,8 +65,7 @@
 
                 <TextView
                     android:id="@+id/tv_item_goods_original_price"
-                    android:layout_width="match_parent"
-                    android:gravity="right"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="AU$89.00"
                     android:textColor="@color/color_82"

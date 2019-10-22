@@ -76,4 +76,8 @@ dependencies {
     implementation 'com.lxj:xpopup:1.8.10-x'
     implementation project(':imagepickerLib')
     implementation 'com.pgyersdk:sdk:+'
+    compile (name: 'alipaySdk-15.6.5-20190718211148', ext: 'aar')
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.alibaba:fastjson:1.1.56.android'
+    implementation 'com.zhy:okhttputils:2.6.2'
 }

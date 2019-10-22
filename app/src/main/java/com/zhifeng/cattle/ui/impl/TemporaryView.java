@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
+import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
@@ -39,4 +40,10 @@ public interface TemporaryView extends BaseView {
     void payOrder(SubmitOrderPost submitOrderPost);
     void payOrderSuccess(PayOrderDto submitOrderDto);
     void payOrderError(String msg);
+
+    /**
+     * 支付宝支付
+     */
+    void aliPaySuccess(AlipayOrderDto alipayOrderDto);
+    void aliPayErroe();
 }

@@ -7,6 +7,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.OrderListDto;
@@ -65,6 +66,17 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                 service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
                         "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
                         ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
+        ));
+    }
+
+    /**
+     * 支付宝
+     *
+     * @param order_id
+     */
+    public void payAli(String order_id) {
+        post(WebUrlUtil.POST_ALI_PAY, false, service -> manager.runHttp(
+                service.PostDataAli(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ALI_PAY)
         ));
     }
 
@@ -145,6 +157,21 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                             }
                         }
                         view.payOrderError(msg);
+                        break;
+                    case WebUrlUtil.POST_ALI_PAY:
+                        //todo 支付宝 支付
+                        if (aBoolean) {
+                            try{
+                                AlipayOrderDto alipayOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AlipayOrderDto>() {
+                                }.getType());
+                                view.aliPaySuccess(alipayOrderDto);
+                                return;
+                            }catch (JsonSyntaxException e){
+                                view.aliPayErroe();
+                                return;
+                            }
+                        }
+                        view.aliPayErroe();
                         break;
                 }
 

@@ -7,6 +7,7 @@ import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
@@ -35,34 +36,47 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
 
     /**
      * 提交订单
+     *
      * @param submitOrderPost
      */
-    public void submitOrder(SubmitOrderPost submitOrderPost){
-        post(WebUrlUtil.POST_SUBMITORDER,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
-                        "cart_id",submitOrderPost.getCart_id(),"address_id",submitOrderPost.getAddress_id(),"pay_type",submitOrderPost.getPay_type()
-                ,"user_note",submitOrderPost.getUser_note(),"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_SUBMITORDER)
+    public void submitOrder(SubmitOrderPost submitOrderPost) {
+        post(WebUrlUtil.POST_SUBMITORDER, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
+                        "cart_id", submitOrderPost.getCart_id(), "address_id", submitOrderPost.getAddress_id(), "pay_type", submitOrderPost.getPay_type()
+                        , "user_note", submitOrderPost.getUser_note(), "pwd", submitOrderPost.getPwd()), WebUrlUtil.POST_SUBMITORDER)
         ));
     }
 
     /**
      * 支付
+     *
      * @param submitOrderPost
      */
-    public void payOrder(SubmitOrderPost submitOrderPost){
-        post(WebUrlUtil.POST_PAY_ORDER,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token",MySp.getAccessToken(MyApp.getContext()),
-                        "order_id",submitOrderPost.getCart_id(),"pay_type",submitOrderPost.getPay_type()
-                        ,"pwd",submitOrderPost.getPwd()),WebUrlUtil.POST_PAY_ORDER)
+    public void payOrder(SubmitOrderPost submitOrderPost) {
+        post(WebUrlUtil.POST_PAY_ORDER, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),
+                        "order_id", submitOrderPost.getCart_id(), "pay_type", submitOrderPost.getPay_type()
+                        , "pwd", submitOrderPost.getPwd()), WebUrlUtil.POST_PAY_ORDER)
         ));
     }
 
     /**
      * 显示身份认证信息
      */
-    public void showIdCsrd(){
-        post(WebUrlUtil.POST_SHOW_IDCARD,false,service -> manager.runHttp(
+    public void showIdCsrd() {
+        post(WebUrlUtil.POST_SHOW_IDCARD, false, service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())), WebUrlUtil.POST_SHOW_IDCARD)
+        ));
+    }
+
+    /**
+     * 支付宝
+     *
+     * @param order_id
+     */
+    public void payAli(String order_id) {
+        post(WebUrlUtil.POST_ALI_PAY, false, service -> manager.runHttp(
+                service.PostDataAli(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ALI_PAY)
         ));
     }
 
@@ -116,22 +130,22 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                     //todo 订单支付
                     if (aBoolean) {
                         L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                      try{
-                          PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
-                          }.getType());
-                          if (payOrderDto.getStatus() == 200) {
-                              //todo 订单支付成功
-                              view.payOrderSuccess(payOrderDto);
-                              return;
-                          }
-                          view.onError(payOrderDto.getMsg(), action.getErrorType());
-                          return;
-                      }catch (JsonSyntaxException e){
-                          GeneralDto generalDto =  new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
-                          }.getType());
-                          view.payOrderError(generalDto.getMsg());
-                          return;
-                      }
+                        try {
+                            PayOrderDto payOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<PayOrderDto>() {
+                            }.getType());
+                            if (payOrderDto.getStatus() == 200) {
+                                //todo 订单支付成功
+                                view.payOrderSuccess(payOrderDto);
+                                return;
+                            }
+                            view.onError(payOrderDto.getMsg(), action.getErrorType());
+                            return;
+                        } catch (JsonSyntaxException e) {
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+                            view.payOrderError(generalDto.getMsg());
+                            return;
+                        }
                     }
                     view.payOrderError(msg);
                     break;
@@ -139,15 +153,30 @@ public class TemporaryAction extends BaseAction<TemporaryView> {
                     if (aBoolean) {
                         ShowIdCardDto certificationDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<ShowIdCardDto>() {
                         }.getType());
-                        if (certificationDto.getStatus() == 200){
+                        if (certificationDto.getStatus() == 200) {
                             //todo 身份认证信息
                             view.showIdCardSuccess(certificationDto);
                             return;
                         }
-                        view.onError(certificationDto.getMsg(),action.getErrorType());
+                        view.onError(certificationDto.getMsg(), action.getErrorType());
                         return;
                     }
-                    view.onError(msg,action.getErrorType());
+                    view.onError(msg, action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_ALI_PAY:
+                    //todo 支付宝 支付
+                    if (aBoolean) {
+                      try{
+                          AlipayOrderDto alipayOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<AlipayOrderDto>() {
+                          }.getType());
+                          view.aliPaySuccess(alipayOrderDto);
+                          return;
+                      }catch (JsonSyntaxException e){
+                          view.aliPayErroe();
+                          return;
+                      }
+                    }
+                    view.aliPayErroe();
                     break;
             }
         });

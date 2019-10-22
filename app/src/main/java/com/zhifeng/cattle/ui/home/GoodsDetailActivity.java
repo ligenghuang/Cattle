@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -57,9 +58,9 @@ import com.zhifeng.cattle.ui.shoppingcart.ShoppingCartActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.jx.JXAccountHelper;
-import com.zhifeng.cattle.utils.jx.view.JXChatView;
 import com.zhifeng.cattle.utils.jx.JXConstants;
 import com.zhifeng.cattle.utils.jx.JXUiHelper;
+import com.zhifeng.cattle.utils.jx.view.JXChatView;
 import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
 import com.zhifeng.cattle.utils.sku.BaseSkuModel;
 import com.zhifeng.cattle.utils.sku.ItemClickListener;
@@ -147,6 +148,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     RelativeLayout relativeLayout;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.tv_goods_original_price_rmb)
+    TextView tvGoodsOriginalPriceRmb;
 
     int inventory;//库存
     int goods_id;
@@ -244,12 +247,12 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         getDefaultCity();
         loadView();
 
-        chatType = getIntent().getIntExtra(JXChatView.CHAT_TYPE,JXChatView.CHATTYPE_CUSTOMER_SERVICE);
+        chatType = getIntent().getIntExtra(JXChatView.CHAT_TYPE, JXChatView.CHATTYPE_CUSTOMER_SERVICE);
         chatkey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_KEY);
         chatTitlekey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_TITLE_KEY);
         this.suborgId = this.getIntent().getStringExtra(JXConstants.EXTRA_SUBORG_ID_KEY);
-        L.d("lgh_jx","[JXInitActivity.onCreate]extendData : " + extendData+" , suborgId = "+suborgId);
-        if (TextUtils.isEmpty(suborgId)){
+        L.d("lgh_jx", "[JXInitActivity.onCreate]extendData : " + extendData + " , suborgId = " + suborgId);
+        if (TextUtils.isEmpty(suborgId)) {
             String appkey = JXImManager.getInstance().getAppKey();
             int index = appkey.indexOf("#");
             if (index > -1) {
@@ -317,6 +320,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvGoodsPrice.setText("AU$" + dataBean.getPrice());//价格
         tvGoodsName.setText(dataBean.getGoods_name());//商品名称
+        tvGoodsOriginalPriceRmb.setText(ResUtil.getFormatString(R.string.goods_detail_tab_34,dataBean.getRmb_price()));
         goodsName = dataBean.getGoods_name();
         fTitleTv.setText(goodsName);
         setBanner(dataBean.getImg());
@@ -381,8 +385,8 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                         L.d("lgh_sku", "goodsSkuBean.getSku_attr1() = " + goodsSkuBean.getSku_attr1());
                         if (String.valueOf(resBean.getAttr_id()).equals(goodsSkuBean.getSku_attr1())) {
                             L.d("lgh_sku", "sku = " + str);
-                            testData.getProductStocks().put(goodsSkuBean.getSku_attr1(), new BaseSkuModel(Double.parseDouble(goodsSkuBean.getPrice()),Double.parseDouble(goodsSkuBean.getGroupon_price()),
-                                    goodsSkuBean.getInventory(),goodsSkuBean.getVirtual_sales(),
+                            testData.getProductStocks().put(goodsSkuBean.getSku_attr1(), new BaseSkuModel(Double.parseDouble(goodsSkuBean.getPrice()), Double.parseDouble(goodsSkuBean.getGroupon_price()),
+                                    goodsSkuBean.getInventory(), goodsSkuBean.getVirtual_sales(),
                                     goodsSkuBean.getSku_id(), resBean.getAttr_name()));
                             group01.getAttributeMembers().add(j, new ProductModel.AttributesEntity.AttributeMembersEntity(1, goodsSkuBean.getSku_id(), resBean.getAttr_name(), goodsSkuBean.getPrice(), goodsSkuBean.getSku_attr1()));
                         }
@@ -446,16 +450,16 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                   if (inventory == -1){
-                       showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
-                   }else {
-                       if (cart_number >= inventory) {
-                           showNormalToast(ResUtil.getString(R.string.cart_tab_8));
-                       } else {
-                           cart_number = cart_number + 1;
-                           tvGoodsNum.setText(cart_number + "");
-                       }
-                   }
+                    if (inventory == -1) {
+                        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_28));
+                    } else {
+                        if (cart_number >= inventory) {
+                            showNormalToast(ResUtil.getString(R.string.cart_tab_8));
+                        } else {
+                            cart_number = cart_number + 1;
+                            tvGoodsNum.setText(cart_number + "");
+                        }
+                    }
                     L.e("lgh_cart", "add = " + cart_number);
                 }
             });
@@ -463,24 +467,24 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   if (sku_id == -1){
+                    if (sku_id == -1) {
                         showNormalToast(ResUtil.getString(R.string.goods_detail_tab_31));
-                   }else {
-                       switch (IsBuy) {
-                           case 0:
-                               //加入购物车
-                               addCart(sku_id, cart_number);
-                               break;
-                           case 1:
-                               //立即购买
-                               buyNow(sku_id, cart_number);
-                               break;
-                           case 2:
-                               //选择规格
-                               mUiData.getBottomSheetDialog().dismiss();
-                               break;
-                       }
-                   }
+                    } else {
+                        switch (IsBuy) {
+                            case 0:
+                                //加入购物车
+                                addCart(sku_id, cart_number);
+                                break;
+                            case 1:
+                                //立即购买
+                                buyNow(sku_id, cart_number);
+                                break;
+                            case 2:
+                                //选择规格
+                                mUiData.getBottomSheetDialog().dismiss();
+                                break;
+                        }
+                    }
                 }
             });
             //添加list组
@@ -540,23 +544,23 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
     private Handler handler = new Handler() {
         @Override
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
 //                    tv_selected.setText("选择的sku组合："+msg.obj.toString());
                     //原价
-                    tvGoodsOriginalPrice.setText("AU$"+msg.obj.toString());
+                    tvGoodsOriginalPrice.setText("AU$" + msg.obj.toString());
                     break;
                 case 2:
 //                    tv_stock.setText("组合的库存："+msg.obj.toString());
                     L.d("lgh_sku", "inventory  = " + msg.obj.toString());
                     inventory = Integer.parseInt(msg.obj.toString());
-                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, msg.obj.toString()+""));//库存
+                    tvGoodsStock.setText(ResUtil.getFormatString(R.string.goods_detail_tab_16, msg.obj.toString() + ""));//库存
                     break;
                 case 3:
 //                    tv_price.setText("按钮的价格："+msg.obj.toString());
                     L.d("lgh_sku", "price  = " + msg.obj.toString());
-                    tvGoodsPrice.setText("AU$"+msg.obj.toString());
+                    tvGoodsPrice.setText("AU$" + msg.obj.toString());
                     break;
                 case 4:
                     sku_id = Integer.parseInt(msg.obj.toString());
@@ -567,7 +571,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     break;
                 case 6:
                     //todo 销量
-                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, msg.obj.toString()+""));//销量
+                    tvGoodsSales.setText(ResUtil.getFormatString(R.string.goods_detail_tab_15, msg.obj.toString() + ""));//销量
                     break;
                 case 7:
                     tvGoodsOriginalPrice.setText("AU$" + dataBean.getOriginal_price());//原价
@@ -721,7 +725,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     @Override
     public void onError(String message, int code) {
         loadDiss();
-        L.e("lgh_dialog","msg  = "+message);
+        L.e("lgh_dialog", "msg  = " + message);
         showNormalToast(message);
     }
 
@@ -841,7 +845,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
 
     @OnClick({R.id.f_right_iv, R.id.tv_goods_attention, R.id.tv_goods_address, R.id.tv_goods_spec, R.id.tv_goods_comment_all,
-            R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top,R.id.tv_goods_add_cart})
+            R.id.tv_goods_service, R.id.tv_goods_cart, R.id.tv_goods_buy, R.id.iv_to_up_top, R.id.tv_goods_add_cart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.f_right_iv:
@@ -898,10 +902,10 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 //                    intent1.putExtra("service", service);
 //                    startActivity(intent1);
 //                }
-              if (IsFastClick.isFastClick()){
-                  loadDialog();
-                  initJx();
-              }
+                if (IsFastClick.isFastClick()) {
+                    loadDialog();
+                    initJx();
+                }
                 break;
             case R.id.tv_goods_cart:
                 //todo 购物车
@@ -964,15 +968,15 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                         if (code == JXErrorCode.Mcs.MCS_USER_INIT_SUCCESS) {
                             if (chatType == JXChatView.CHATTYPE_MESSAGE_BOX) {
                                 requestMessagebox(chatTitlekey);
-                            }else {
+                            } else {
                                 JXWorkgroup workgroup = JXImManager.McsUser.getInstance().isNeedRequest(JXUiHelper.getInstance().getSuborgId());
-                                if(workgroup == null){
-                                    if(chatkey == null){
+                                if (workgroup == null) {
+                                    if (chatkey == null) {
                                         fetchWorkgroupFromServer();
-                                    }else{
+                                    } else {
                                         requestCustomerService(chatkey, chatTitlekey);
                                     }
-                                }else{
+                                } else {
                                     requestCustomerService(workgroup.getMcsId(), workgroup.getDisplayName());
                                 }
                             }
@@ -1005,7 +1009,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                     return workgroups;
                 } catch (Exception e) {
                     e.printStackTrace();
-                    L.e("lgh_jx",e.getMessage());
+                    L.e("lgh_jx", e.getMessage());
                     hasException = true;
                 }
                 return null;
@@ -1026,6 +1030,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
     /**
      * 请求客服
+     *
      * @param mcsId
      * @param displayName
      */
@@ -1036,7 +1041,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
 
             @Override
             public void run() {
-                Intent intent = new Intent(mContext,JXChatUIActivity.class);
+                Intent intent = new Intent(mContext, JXChatUIActivity.class);
                 intent.putExtra(JXChatView.CHAT_KEY, mcsId);
                 intent.putExtra(JXChatView.CHAT_SKILLS_DISPLAYNAME, displayName);
                 startActivity(intent);
@@ -1044,7 +1049,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         });
     }
 
-    private void requestMessagebox( final String displayName) {
+    private void requestMessagebox(final String displayName) {
         loadDiss();
         runOnUiThread(new Runnable() {
 

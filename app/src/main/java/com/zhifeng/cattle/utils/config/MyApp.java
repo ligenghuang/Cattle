@@ -18,6 +18,8 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zhifeng.cattle.utils.Constanst;
 import com.zhifeng.cattle.utils.view.ClassicsFooter;
 
@@ -67,6 +69,7 @@ public class MyApp extends MyApplication {
 
     }
 
+    public static IWXAPI api;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -92,7 +95,14 @@ public class MyApp extends MyApplication {
         JXImManager.Login.getInstance().setAutoLogin(false);
         JXImManager.Config.getInstance().setGetMessageFromLocalDb(false);
 
-    }
 
+        api = WXAPIFactory.createWXAPI(this, Content.APP_ID, true);
+        // 将该app注册到微信
+        api.registerApp(Content.APP_ID);
+
+    }
+    public static IWXAPI getWxApi() {
+        return api;
+    }
 
 }

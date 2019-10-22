@@ -35,7 +35,7 @@ public class GoodsResAdapter extends BaseRecyclerAdapter<Temporary.DataBean.Good
         holder.text(R.id.tv_goods_price, ResUtil.getFormatString(R.string.cart_tab_17, model.getGoods_price()));
         holder.text(R.id.tv_goods_num, ResUtil.getFormatString(R.string.cart_tab_18, model.getGoods_num()));
         holder.text(R.id.et_item_goods_num, String.valueOf(model.getGoods_num()));
-
+        holder.text(R.id.tv_goods_rmb_price,ResUtil.getFormatString(R.string.goods_detail_tab_34,model.getRmb_price()+""));
 
     }
 

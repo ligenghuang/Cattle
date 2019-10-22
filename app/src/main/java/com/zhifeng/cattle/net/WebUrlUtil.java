@@ -373,4 +373,7 @@ public class WebUrlUtil {
      * 获取支付方式
      */
     public static final String POST_PAY_TYPE = "Order/get_pay_type";
+
+    public static final String POST_ALI_PAY = "pay/alipay";
+
 }

@@ -3,6 +3,7 @@ package com.zhifeng.cattle.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.TemporaryAction;
 import com.zhifeng.cattle.adapters.GoodsResAdapter;
 import com.zhifeng.cattle.adapters.PayTypeAdapter;
+import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
@@ -39,6 +41,7 @@ import com.zhifeng.cattle.ui.my.OrderDetailActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
+import com.zhifeng.cattle.utils.pay.alipay.Alipayer;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -108,6 +111,13 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     PayPwdDialog bugPwdDialog;
     int pwd;
 
+    String OrderId = "0";
+
+    //支付宝 支付
+    private Alipayer mAlipayer;
+
+    boolean isSubmitOrder = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +148,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         rvPayType.setLayoutManager(new LinearLayoutManager(mContext));
         payTypeAdapter = new PayTypeAdapter();
         rvPayType.setAdapter(payTypeAdapter);
+
+
+        mAlipayer = new Alipayer(this, mHandlerCallback);
+
         loadView();
     }
 
@@ -196,19 +210,20 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
      */
     @Override
     public void showIdCard() {
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             baseAction.showIdCsrd();
         }
     }
 
     /**
      * 显示身份认证信息 成功
+     *
      * @param showIdCardDto
      */
     @Override
     public void showIdCardSuccess(ShowIdCardDto showIdCardDto) {
         ShowIdCardDto.DataBean dataBean = showIdCardDto.getData();
-        tvCertificate.setText(TextUtils.isEmpty(dataBean.getName())?ResUtil.getString(R.string.cart_tab_13_1):dataBean.getName());
+        tvCertificate.setText(TextUtils.isEmpty(dataBean.getName()) ? ResUtil.getString(R.string.cart_tab_13_1) : dataBean.getName());
     }
 
     /**
@@ -232,6 +247,11 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     public void submitOrderSuccess(SubmitOrderDto submitOrderDto) {
         loadDiss();
+        OrderId = submitOrderDto.getData();
+        isSubmitOrder = true;
+    }
+
+    private void pay() {
         switch (payType) {
             case 1:
                 //余额支付
@@ -242,7 +262,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                         public void inputFinish(String password) {
                             //支付订单
                             SubmitOrderPost post = new SubmitOrderPost();
-                            post.setCart_id(submitOrderDto.getData());
+                            post.setCart_id(OrderId);
                             post.setPay_type(payType + "");
                             post.setPwd(password);
                             payOrder(post);
@@ -263,14 +283,20 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 }
                 break;
             case 2:
-            case 3:
+                //todo 微信
                 Intent intent = new Intent(mContext, OrderActivity.class);
                 intent.putExtra("type", 1);
                 startActivity(intent);
                 finish();
                 break;
+            case 3:
+                //todo 支付宝
+                if (CheckNetwork.checkNetwork2(mContext)) {
+                    loadDialog();
+                    baseAction.payAli(OrderId);
+                }
+                break;
         }
-
     }
 
     /**
@@ -318,6 +344,57 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         showNormalToast(msg);
     }
 
+    @Override
+    public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
+        loadDiss();
+        if (alipayOrderDto != null) {
+            mAlipayer.payV2(alipayOrderDto.getRequestParams());
+        }
+    }
+
+
+    /**
+     * 支付宝支付结果回调
+     */
+    private Handler.Callback mHandlerCallback = new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            String resultStatus = data.getString(Alipayer.MSG_KEY_RESULT_STATUS);
+            String tips = data.getString(Alipayer.MSG_KEY_TIPS_TEXT);
+            showToast(tips);
+            if (TextUtils.equals(resultStatus, Alipayer.RESULT_STATUS_SUCCESS)) {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                loadFinish();
+            }
+            return false;
+        }
+    };
+
+    /**
+     * 支付成功关闭界面
+     */
+    public void loadFinish() {
+        loadDiss();
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                intent.putExtra("order_id", Integer.parseInt(OrderId));
+                startActivity(intent);
+                finish();
+            }
+        }, 2000);
+    }
+
+
+    @Override
+    public void aliPayErroe() {
+        loadDiss();
+        showNormalToast("调起支付宝支付失败");
+    }
+
     private void bindView(Temporary temporary) {
         Temporary.DataBean dataBean = temporary.getData();
         if (dataBean.getAddr_res().getAddress_id() == 0) {
@@ -351,7 +428,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         tvTotalNum.setText(ResUtil.getFormatString(R.string.cart_tab_32, String.valueOf(num)));
         tvTotalPrice.setText(ResUtil.getFormatString(R.string.cart_tab_17, String.valueOf(totalPrice)));
         pwd = dataBean.getPwd();
-        MySp.setPwd(mContext,pwd);
+        MySp.setPwd(mContext, pwd);
     }
 
     @Override
@@ -423,8 +500,12 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 startActivityForResult(i, 200);
                 break;
             case R.id.btnPay:
-                if (IsFastClick.isFastClick()){
-                    buyNow();
+                if (IsFastClick.isFastClick()) {
+                    if (isSubmitOrder) {
+                        pay();
+                    } else {
+                        buyNow();
+                    }
                 }
                 break;
         }

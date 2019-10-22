@@ -16,4 +16,14 @@
     <string name="invite_code_tab_1">邀请码：</string>
     <string name="invite_code_tab_2">请输入邀请码</string>
 
+
+
+    <string name="wechat_login">请安装微信客户端</string>
+
+    <string name="app_login_user_tip_8">登录成功</string>
+
+    <string name="app_login_user_tip_9">登录取消</string>
+
+    <string name="app_login_user_tip_10">登录失败</string>
+
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.OrderDetailAction;
 import com.zhifeng.cattle.adapters.OrderDetailGoodsAdapter;
 import com.zhifeng.cattle.adapters.PayTypeAdapter;
+import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.PayTypeDto;
@@ -34,6 +36,7 @@ import com.zhifeng.cattle.ui.impl.OrderDetailView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
+import com.zhifeng.cattle.utils.pay.alipay.Alipayer;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -89,6 +92,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     LinearLayout llPayType;
     @BindView(R.id.rvPayType)
     RecyclerView rvPayType;
+    @BindView(R.id.ll_order_pay_type)
+    LinearLayout llOrderPayType;
 
     private PayTypeAdapter payTypeAdapter;
     double money = 0;
@@ -99,6 +104,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     int is_pwd;
 
     OrderDetailGoodsAdapter orderDetailGoodsAdapter;
+    //支付宝 支付
+    private Alipayer mAlipayer;
 
     @Override
     public int intiLayout() {
@@ -150,6 +157,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         rvPayType.setLayoutManager(new LinearLayoutManager(mContext));
         payTypeAdapter = new PayTypeAdapter();
         rvPayType.setAdapter(payTypeAdapter);
+
+        mAlipayer = new Alipayer(this, mHandlerCallback);
 
         loadDialog();
         getOrderDetail();
@@ -213,12 +222,12 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         tvOrderTotalPrice.setText("AU$" + dataBean.getTotal_amount());
         tvOrderFreight.setText("AU$" + dataBean.getShipping_price());
         tvOrderIntegral.setText(dataBean.getCoupon_price());
-        tvOrderPayType.setVisibility(dataBean.getStatus() != 1 ? View.VISIBLE : View.GONE);
+        llOrderPayType.setVisibility(dataBean.getStatus() != 1 ? View.VISIBLE : View.GONE);
         llPay.setVisibility(dataBean.getStatus() == 1 ? View.VISIBLE : View.GONE);
         llPayType.setVisibility(dataBean.getStatus() == 1 ? View.VISIBLE : View.GONE);
         money = Double.parseDouble(dataBean.getOrder_amount());
         is_pwd = dataBean.getIs_pwd();
-        MySp.setPwd(mContext,is_pwd);
+        MySp.setPwd(mContext, is_pwd);
     }
 
     /**
@@ -267,7 +276,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void payOrderSuccess(PayOrderDto submitOrderDto) {
         loadDiss();
         showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
-        if (bugPwdDialog!= null){
+        if (bugPwdDialog != null) {
             bugPwdDialog.dismiss();
         }
         getOrderDetail();
@@ -285,6 +294,49 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
         showNormalToast(msg);
     }
 
+
+    @Override
+    public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
+        loadDiss();
+        if (alipayOrderDto != null) {
+            mAlipayer.payV2(alipayOrderDto.getRequestParams());
+        }
+    }
+
+
+    /**
+     * 支付宝支付结果回调
+     */
+    private Handler.Callback mHandlerCallback = new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Bundle data = msg.getData();
+            String resultStatus = data.getString(Alipayer.MSG_KEY_RESULT_STATUS);
+            String tips = data.getString(Alipayer.MSG_KEY_TIPS_TEXT);
+            showToast(tips);
+            if (TextUtils.equals(resultStatus, Alipayer.RESULT_STATUS_SUCCESS)) {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                loadFinish();
+            }
+            return false;
+        }
+    };
+
+    /**
+     * 支付成功关闭界面
+     */
+    public void loadFinish() {
+        loadDiss();
+        showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
+        getOrderDetail();
+    }
+
+
+    @Override
+    public void aliPayErroe() {
+        loadDiss();
+        showNormalToast("调起支付宝支付失败");
+    }
 
     /**
      * 失败
@@ -323,7 +375,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                         public void inputFinish(String password) {
                             //支付订单
                             SubmitOrderPost post = new SubmitOrderPost();
-                            post.setCart_id(id+"");
+                            post.setCart_id(id + "");
                             post.setPay_type(payType + "");
                             post.setPwd(password);
                             payOrder(post);
@@ -340,8 +392,15 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 }
                 break;
             case 2:
+                //todo 微信
+                showNormalToast("暂无开通微信支付");
+                break;
             case 3:
-                showNormalToast("暂无开通微信支付和支付宝支付");
+               //todo 支付宝
+                if (CheckNetwork.checkNetwork2(mContext)) {
+                    loadDialog();
+                    baseAction.payAli(id+"");
+                }
                 break;
         }
     }

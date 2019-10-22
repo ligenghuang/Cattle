@@ -307,6 +307,15 @@ public class Temporary {
             private String spec_key_name;
             private String img;
             private int single_number;
+            private double rmb_price;
+
+            public double getRmb_price() {
+                return rmb_price;
+            }
+
+            public void setRmb_price(double rmb_price) {
+                this.rmb_price = rmb_price;
+            }
 
             public int getCart_id() {
                 return cart_id;

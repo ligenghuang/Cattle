@@ -164,6 +164,15 @@ public class GoodsDetailDto {
         private List<ProductAttrBean> productAttr;
         private List<ProductSkuBean> productSku;
         private String service;
+        private String rmb_price;
+
+        public String getRmb_price() {
+            return rmb_price == null ? "0" : rmb_price;
+        }
+
+        public void setRmb_price(String rmb_price) {
+            this.rmb_price = rmb_price == null ? "0" : rmb_price;
+        }
 
         public String getService() {
             return service == null ? "" : service;

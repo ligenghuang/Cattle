@@ -134,6 +134,18 @@
                         android:textColor="@color/color_6"
                         android:textSize="@dimen/text_size12" />
 
+                    <!--人民币参考价-->
+                    <TextView
+                        android:id="@+id/tv_goods_original_price_rmb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tv_goods_original_price"
+                        android:layout_marginLeft="12dp"
+                        android:layout_toRightOf="@id/tv_goods_original_price"
+                        android:text="AU$799"
+                        android:textColor="@color/color_6"
+                        android:textSize="@dimen/text_size12" />
+
                     <!--关注-->
                     <TextView
                         android:id="@+id/tv_goods_attention"

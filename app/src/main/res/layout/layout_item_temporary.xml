@@ -54,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
+                    android:textSize="@dimen/sp_14"
                     android:textColor="@color/color_A8ACAC" />
 
                 <TextView
@@ -62,8 +63,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:lines="1"
+                    android:textSize="@dimen/sp_14"
                     android:textColor="@color/color_A8ACAC" />
+
+
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_goods_rmb_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:textSize="@dimen/sp_14"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/color_A8ACAC" />
 
             <LinearLayout
                 android:layout_width="match_parent"
