@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.LoginDto;
+import com.zhifeng.cattle.modules.WxLoginDto;
 
 /**
   *
@@ -23,5 +24,10 @@ public interface LoginView extends BaseView {
      * 登录或注册
      */
     void loginOrRegisteredSuccess(LoginDto loginDto);
+
+    /**
+     * 微信登录成功
+     */
+    void wxLoginSuccess(WxLoginDto wxLoginDto);
 
 }

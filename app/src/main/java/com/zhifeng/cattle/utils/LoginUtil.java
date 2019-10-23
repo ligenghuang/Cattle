@@ -4,33 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.alibaba.fastjson.JSON;
 import com.lgh.huanglib.util.L;
-import com.lgh.huanglib.util.data.ResUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
-import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.RegisterThirdDto;
 import com.zhifeng.cattle.modules.WXAccessTokenEntity;
 import com.zhifeng.cattle.modules.WXUserInfo;
 import com.zhifeng.cattle.utils.config.Content;
-import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * description: 微信
@@ -39,7 +25,7 @@ import java.io.ByteArrayOutputStream;
  * update: 2018/6/28
  * version:
  */
-public class ShareUtil {
+public class LoginUtil {
 
 
     public static final String ACTION_SHARE_RESPONSE = "action_wx_share_response";
@@ -50,12 +36,12 @@ public class ShareUtil {
     private OnLoginResponseListener loginlistener;
     private ResponseReceiver receiver;
 
-    public ShareUtil(Context context) {
+    public LoginUtil(Context context) {
         this.context = context;
     }
 
-    public ShareUtil register() {
-        // 微信分享
+    public LoginUtil register() {
+        // 微信
         L.e("lgh","register");
         receiver = new ResponseReceiver();
         IntentFilter filter = new IntentFilter(ACTION_SHARE_RESPONSE);
@@ -93,12 +79,12 @@ public class ShareUtil {
 
             int sendType = intent.getIntExtra("sendType", 0);
 
-            L.e("lshs", "分享  到這裏了  " + sendType);
+            L.e("lgh_weixin", "登录  到這裏了  " + sendType);
             Response response = intent.getParcelableExtra(EXTRA_RESULT);
-            L.e("type: " + response.getType());
-            L.e("errCode: " + response.errCode);
-            L.e("errCode: " + response.type);
-            L.e("errCode: " + response.respType);
+            L.e("lgh_weixin","type: " + response.getType());
+            L.e("lgh_weixin","errCode: " + response.errCode);
+            L.e("lgh_weixin","errCode: " + response.type);
+            L.e("lgh_weixin","errCode: " + response.respType);
             String result;
             if (listener != null || loginlistener != null) {
                 if (response.errCode == BaseResp.ErrCode.ERR_OK) {
@@ -140,6 +126,10 @@ public class ShareUtil {
         }
     }
 
+    /**
+     * 获取 access_token
+     * @param code
+     */
     public void login(String code) {
         OkHttpUtils.get().url("https://api.weixin.qq.com/sns/oauth2/access_token")
                 .addParams("appid", Content.APP_ID)
@@ -150,19 +140,19 @@ public class ShareUtil {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
-                        L.d("请求错误..");
+                        L.d("lgh_weixin","请求错误..");
                         loginlistener.onFail("请求错误");
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        L.d("response:" + response);
+                        L.d("lgh_weixin","response:" + response);
                         WXAccessTokenEntity accessTokenEntity = JSON.parseObject(response, WXAccessTokenEntity.class);
-                        if (accessTokenEntity != null) {
+                        if (accessTokenEntity.getAccess_token() != null ) {
 //                            loginlistener.onSuccess(accessTokenEntity);
                             getUserInfo(accessTokenEntity);
                         } else {
-                            L.d("获取失败");
+                            L.d("lgh_weixin","获取失败");
                             loginlistener.onFail("获取失败");
                         }
                     }
@@ -184,7 +174,7 @@ public class ShareUtil {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(okhttp3.Call call, Exception e, int id) {
-                        L.d("获取错误..");
+                        L.d("lgh_weixin","获取错误..");
                         loginlistener.onFail("获取失败");
                     }
 

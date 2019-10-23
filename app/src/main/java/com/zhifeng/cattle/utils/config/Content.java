@@ -1,6 +1,6 @@
 package com.zhifeng.cattle.utils.config;
 
 public class Content {
-    public static final String APP_ID = "wx59c400521dfb2fed";
-    public static final String APP_Secret = "19ac688e167313cdec9e13d9c8282e0d";
+    public static final String APP_ID = "wx19ac5b21ebe2b173";
+    public static final String APP_Secret = "4023cf93bb13dbbad1250cad7f1cef4d";
 }

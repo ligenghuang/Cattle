@@ -15,7 +15,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.modules.WXBaseRespEntity;
-import com.zhifeng.cattle.utils.ShareUtil;
+import com.zhifeng.cattle.utils.LoginUtil;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
 import com.zhifeng.cattle.utils.config.Content;
 
@@ -97,8 +97,8 @@ public class WXEntryActivity extends UserBaseActivity implements IWXAPIEventHand
         switch (baseResp.getType()) {
             case ConstantsAPI.COMMAND_SENDAUTH://登录
                 L.e("lgh", "登录.......");
-                intent = new Intent(ShareUtil.ACTION_SHARE_RESPONSE);
-                intent.putExtra(ShareUtil.EXTRA_RESULT, new ShareUtil.Response(baseResp, entity.getCode()));
+                intent = new Intent(LoginUtil.ACTION_SHARE_RESPONSE);
+                intent.putExtra(LoginUtil.EXTRA_RESULT, new LoginUtil.Response(baseResp, entity.getCode()));
                 intent.putExtra("sendType",1);
                 sendBroadcast(intent);
                 finish();
@@ -106,8 +106,8 @@ public class WXEntryActivity extends UserBaseActivity implements IWXAPIEventHand
 
 //            case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX://分享
 //                L.e("xx", "分享.......");
-//                intent = new Intent(ShareUtil.ACTION_SHARE_RESPONSE);
-//                intent.putExtra(ShareUtil.EXTRA_RESULT, new ShareUtil.Response(baseResp, entity.getCode()));
+//                intent = new Intent(LoginUtil.ACTION_SHARE_RESPONSE);
+//                intent.putExtra(LoginUtil.EXTRA_RESULT, new LoginUtil.Response(baseResp, entity.getCode()));
 //                intent.putExtra("sendType",0);
 //                sendBroadcast(intent);
 //                finish();

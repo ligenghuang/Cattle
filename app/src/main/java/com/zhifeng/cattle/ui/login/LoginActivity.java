@@ -16,12 +16,17 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.data.FormatUtils;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.lgh.huanglib.util.data.ValidateUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.LoginAction;
 import com.zhifeng.cattle.modules.LoginDto;
+import com.zhifeng.cattle.modules.RegisterThirdDto;
+import com.zhifeng.cattle.modules.WxLoginDto;
 import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.LoginView;
+import com.zhifeng.cattle.utils.LoginUtil;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
@@ -73,6 +78,9 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
 
     String phone;
 
+    LoginUtil shareUtil;
+    //todo openID
+    String wechat;
 
     @Override
     public int intiLayout() {
@@ -114,8 +122,42 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         phone = getIntent().getStringExtra("phone");
         etLoginPhone.setText(phone);
         timer = new MyCountDownTimer(60000, 1000);
+        shareUtil = new LoginUtil(this);
+        shareUtil.register();
         loadView();
 
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        shareUtil.setLoginListener(new LoginUtil.OnLoginResponseListener() {
+
+            @Override
+            public void onSuccess(RegisterThirdDto dto) {
+                //todo 微信登录
+                L.e("lgh_wechat", "打印 ..onSuccess.." + dto.toString());
+                wechat = dto.getOpenId();
+                if (CheckNetwork.checkNetwork2(getApplicationContext())) {
+
+                    baseAction.wxLogin(wechat, dto.getNickname(), dto.getHeaderImg());
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                L.e("lgh_wechat", "打印 ..onCancel..");
+                showToast(ResUtil.getString(R.string.app_login_user_tip_9));
+                loadDiss();
+            }
+
+            @Override
+            public void onFail(String message) {
+                L.e("lgh_wechat", "打印 ..onFail.." + message);
+                showToast(ResUtil.getString(R.string.app_login_user_tip_10));
+                loadDiss();
+            }
+        });
     }
 
     /**
@@ -124,17 +166,18 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     @Override
     protected void loadView() {
         super.loadView();
-        setEditText(etLoginPhone,ivLoginPhoneClose);
-        setEditText(etLoginCode,ivLoginCodeClose);
+        setEditText(etLoginPhone, ivLoginPhoneClose);
+        setEditText(etLoginCode, ivLoginCodeClose);
 
     }
 
     /**
      * 输入框是否获取焦点
+     *
      * @param e
      * @param imageView
      */
-    private void setEditText(EditText e, final ImageView imageView){
+    private void setEditText(EditText e, final ImageView imageView) {
         //根据是否有焦点更新背景（这里只是演示使用，其实这种更换背景的效果可以通过Selector来实现）
         e.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -153,21 +196,21 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     /**
      * 获取验证码
      */
-    private void getCode(){
+    private void getCode() {
         if (TextUtils.isEmpty(etLoginPhone.getText().toString())) {
             //todo 判断是否手机号码为空
             showNormalToast(ResUtil.getString(R.string.login_tab_1));
             return;
         }
 
-        if (!ValidateUtils.isPhone2(etLoginPhone.getText().toString())){
+        if (!ValidateUtils.isPhone2(etLoginPhone.getText().toString())) {
             //todo 判断手机号格式是否正确
             showNormalToast(ResUtil.getString(R.string.login_tab_8));
             return;
         }
 
         //todo 判断网络后请求接口
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
             baseAction.getCode(etLoginPhone.getText().toString());
         }
@@ -176,35 +219,35 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     /**
      * 登录或注册
      */
-    private void loginOrRegistered(){
+    private void loginOrRegistered() {
         if (TextUtils.isEmpty(etLoginPhone.getText().toString())) {
             //todo 判断是否手机号码为空
             showNormalToast(ResUtil.getString(R.string.login_tab_1));
             return;
         }
 
-        if (!ValidateUtils.isPhone2(etLoginPhone.getText().toString())){
+        if (!ValidateUtils.isPhone2(etLoginPhone.getText().toString())) {
             //todo 判断手机号格式是否正确
             showNormalToast(ResUtil.getString(R.string.login_tab_8));
             return;
         }
 
-        if (TextUtils.isEmpty(etLoginCode.getText().toString())){
+        if (TextUtils.isEmpty(etLoginCode.getText().toString())) {
             //todo 判断验证码是否为空
             showNormalToast(ResUtil.getString(R.string.login_tab_2));
             return;
         }
 
-        if (!isReadAgreement){
+        if (!isReadAgreement) {
             //todo 判断是否勾选用户协议
             showNormalToast(ResUtil.getString(R.string.login_tab_9));
             return;
         }
 
         //todo 判断网络后请求接口
-        if (CheckNetwork.checkNetwork2(mContext)){
+        if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
-            baseAction.loginOrRegistered(etLoginPhone.getText().toString(),etLoginCode.getText().toString());
+            baseAction.loginOrRegistered(etLoginPhone.getText().toString(), etLoginCode.getText().toString());
         }
     }
 
@@ -234,20 +277,49 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         loadDiss();
         //todo 保存登录或注册返回的数据
         L.e("lgh_user", "token  = " + loginDto.getData().getToken());
-      if (loginDto.getData().getIs_first() == 1){
-          //todo 第一次登录 跳转至填写邀请码页面
-          Intent intent = new Intent(mContext, InviteCodeActivity.class);
-          intent.putExtra("token", loginDto.getData().getToken());
-          startActivity(intent);
-          finish();
-      }else {
-          MySp.setAccessToken(mContext, loginDto.getData().getToken());
-          Intent intent = new Intent(mContext, MainActivity.class);
-          intent.putExtra("isLogin", true);
-          startActivity(intent);
+        if (loginDto.getData().getIs_first() == 1) {
+            //todo 第一次登录 跳转至填写邀请码页面
+            Intent intent = new Intent(mContext, InviteCodeActivity.class);
+            intent.putExtra("token", loginDto.getData().getToken());
+            startActivity(intent);
+            finish();
+        } else {
+            MySp.setAccessToken(mContext, loginDto.getData().getToken());
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.putExtra("isLogin", true);
+            startActivity(intent);
 //        jumpActivity(mContext,MainActivity.class);
-          ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
-      }
+            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
+        }
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param wxLoginDto
+     */
+    @Override
+    public void wxLoginSuccess(WxLoginDto wxLoginDto) {
+        loadDiss();
+        //todo 保存登录或注册返回的数据
+        L.e("lgh_user", "token  = " + wxLoginDto.getData().getToken());
+        if (wxLoginDto.getData().getMobile().equals("0")) {
+            //todo 未绑定手机号
+        } else if (wxLoginDto.getData().getIs_first() == 1) {
+            //todo 第一次登录 跳转至填写邀请码页面
+            Intent intent = new Intent(mContext, InviteCodeActivity.class);
+            intent.putExtra("token", wxLoginDto.getData().getToken());
+            startActivity(intent);
+            finish();
+        } else {
+            //todo 登录成功  跳转至首页
+            MySp.setAccessToken(mContext, wxLoginDto.getData().getToken());
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.putExtra("isLogin", true);
+            startActivity(intent);
+//        jumpActivity(mContext,MainActivity.class);
+            ActivityStack.getInstance().exitIsNotHaveMain(MainActivity.class);
+        }
     }
 
     /**
@@ -259,7 +331,7 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
     @Override
     public void onError(String message, int code) {
         loadDiss();
-        L.e("rx","msg = "+message);
+        L.e("rx", "msg = " + message);
         showNormalToast(message);
         if (timer != null) {
             timer.cancel();
@@ -284,14 +356,20 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         baseAction.toUnregister();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        shareUtil.unregister();
+    }
+
     /**
      * 点击事件监听
      *
      * @param view
      */
     @OnClick({R.id.tv_login_get_code, R.id.iv_login_frame
-              ,R.id.tv_login_agreement, R.id.iv_login_weixin
-              ,R.id.iv_login_phone_close, R.id.iv_login_code_close,R.id.tv_to_login})
+            , R.id.tv_login_agreement, R.id.iv_login_weixin
+            , R.id.iv_login_phone_close, R.id.iv_login_code_close, R.id.tv_to_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login_get_code:
@@ -309,20 +387,30 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
                 break;
             case R.id.tv_login_agreement:
                 //todo 阅读用户协议 跳转至用户协议页面
-                jumpActivityNotFinish(mContext,AgreementActivity.class);
+                jumpActivityNotFinish(mContext, AgreementActivity.class);
                 break;
             case R.id.iv_login_weixin:
                 //todo 微信登录
+                if (!MyApp.getWxApi().isWXAppInstalled()) {
+                    showToast(ResUtil.getString(R.string.wechat_login));
+                    return;
+                }
+                loadDialog(ResUtil.getString(R.string.main_process));
+                SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+//                req.scope = "snsapi_login";//提示 scope参数错误，或者没有scope权限
+                req.state = "xzmall_login";
+                MyApp.getWxApi().sendReq(req);
                 break;
             case R.id.iv_login_phone_close:
                 //todo  删除手机号输入框内容
-                if (!TextUtils.isEmpty(etLoginPhone.getText().toString())){
+                if (!TextUtils.isEmpty(etLoginPhone.getText().toString())) {
                     etLoginPhone.setText("");
                 }
                 break;
             case R.id.iv_login_code_close:
                 //todo  删除验证码输入框内容
-                if (!TextUtils.isEmpty(etLoginCode.getText().toString())){
+                if (!TextUtils.isEmpty(etLoginCode.getText().toString())) {
                     etLoginCode.setText("");
                 }
                 break;

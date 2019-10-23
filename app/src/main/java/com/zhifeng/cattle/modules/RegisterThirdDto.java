@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 public class RegisterThirdDto implements Serializable {
     private String headerImg;
-    private String username;
+    private String openId;
     private String nickname;
     private int source;
     private String mobile;
@@ -37,8 +37,8 @@ public class RegisterThirdDto implements Serializable {
         this.mobileCode = mobileCode;
     }
 
-    public RegisterThirdDto(String username, String nickname, int source, String mobile, String invitationCode, String province, String city, String district,String headerImg) {
-        this.username = username;
+    public RegisterThirdDto(String openId, String nickname, int source, String mobile, String invitationCode, String province, String city, String district,String headerImg) {
+        this.openId = openId;
         this.nickname = nickname;
         this.source = source;
         this.mobile = mobile;
@@ -57,12 +57,12 @@ public class RegisterThirdDto implements Serializable {
         this.headerImg = headerImg;
     }
 
-    public String getUsername() {
-        return username;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOpenId(String username) {
+        this.openId = username;
     }
 
     public String getNickname() {
@@ -125,7 +125,7 @@ public class RegisterThirdDto implements Serializable {
     public String toString() {
         return "RegisterThirdDto{" +
                 "headerImg='" + headerImg + '\'' +
-                ", username='" + username + '\'' +
+                ", openId='" + openId + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", source=" + source +
                 ", mobile='" + mobile + '\'' +

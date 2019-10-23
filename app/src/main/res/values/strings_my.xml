@@ -76,7 +76,9 @@
     <string name="order_tab_35">退款失败</string>
     <string name="order_tab_36">待评价</string>
     <string name="order_tab_37">评价成功</string>
-
+    <string name="order_tap_38">支付成功</string>
+    <string name="order_tab_39">支付失败</string>
+    <string name="order_tab_40">用户取消了支付</string>
 
     <string name="sales_return_tab_1">正在退货</string>
     <string name="sales_return_tab_2">退货成功</string>

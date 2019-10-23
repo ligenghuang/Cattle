@@ -39,9 +39,11 @@ import com.zhifeng.cattle.ui.my.ForgetPwdActivity;
 import com.zhifeng.cattle.ui.my.OrderActivity;
 import com.zhifeng.cattle.ui.my.OrderDetailActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
 import com.zhifeng.cattle.utils.pay.alipay.Alipayer;
+import com.zhifeng.cattle.utils.pay.wechatpay.PayUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -115,6 +117,8 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
     //支付宝 支付
     private Alipayer mAlipayer;
+    //微信支付
+    private PayUtil payUtil;
 
     boolean isSubmitOrder = false;
 
@@ -152,7 +156,36 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
 
         mAlipayer = new Alipayer(this, mHandlerCallback);
 
+        payUtil = new PayUtil(this);
+        payUtil.register();
+
+
         loadView();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        payUtil.setListener(new PayUtil.OnResponseListener() {
+            @Override
+            public void onSuccess() {
+                L.e("lgh-wechat", "onSuccess ");
+                showToast(ResUtil.getString(R.string.order_tap_38));
+                loadFinish();
+            }
+
+            @Override
+            public void onCancel() {
+                L.e("lgh-wechat", "onCancel ");
+                showToast(ResUtil.getString(R.string.order_tab_40));
+            }
+
+            @Override
+            public void onFail(String message) {
+                L.e("lgh-wechat", "onFail =  " + message);
+                showToast(message);
+            }
+        });
     }
 
     @Override
@@ -249,6 +282,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         loadDiss();
         OrderId = submitOrderDto.getData();
         isSubmitOrder = true;
+        pay();
     }
 
     private void pay() {
@@ -283,11 +317,19 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 }
                 break;
             case 2:
-                //todo 微信
-                Intent intent = new Intent(mContext, OrderActivity.class);
-                intent.putExtra("type", 1);
-                startActivity(intent);
-                finish();
+                //todo 调起微信支付
+                if (IsFastClick.isFastClick()) {
+                    if (!MyApp.getWxApi().isWXAppInstalled()) {
+                        showToast(ResUtil.getString(R.string.wechat_login));
+                        return;
+                    }
+
+                    if (CheckNetwork.checkNetwork2(mContext)) {
+//                        baseAction.payWechat(id);
+//                        payUtil.pay(dataBean.getResponse().getPartnerId(), Content.APP_ID, dataBean.getResponse().getNonceStr(),
+//                                dataBean.getResponse().getTimeStamp(), dataBean.getResponse().getPrepayId(), dataBean.getResponse().getPaySign());
+                    }
+                }
                 break;
             case 3:
                 //todo 支付宝
@@ -348,7 +390,8 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
         loadDiss();
         if (alipayOrderDto != null) {
-            mAlipayer.payV2(alipayOrderDto.getRequestParams());
+            L.e("msp","payV2  = "+alipayOrderDto.getData().getRequestParams());
+            mAlipayer.payV2(alipayOrderDto.getData().getRequestParams());
         }
     }
 

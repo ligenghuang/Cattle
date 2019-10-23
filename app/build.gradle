@@ -33,6 +33,7 @@ android {
         }
     }
     repositories {
+        repositories  {   flatDir {        dirs 'libs'    }}
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
@@ -76,7 +77,8 @@ dependencies {
     implementation 'com.lxj:xpopup:1.8.10-x'
     implementation project(':imagepickerLib')
     implementation 'com.pgyersdk:sdk:+'
-    compile (name: 'alipaySdk-15.6.5-20190718211148', ext: 'aar')
+    implementation (name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
+//    implementation files('libs/alipaySdk-20180601.jar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation 'com.alibaba:fastjson:1.1.56.android'
     implementation 'com.zhy:okhttputils:2.6.2'

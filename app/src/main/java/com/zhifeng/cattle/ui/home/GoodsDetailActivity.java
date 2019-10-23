@@ -60,6 +60,8 @@ import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.jx.JXAccountHelper;
 import com.zhifeng.cattle.utils.jx.JXConstants;
 import com.zhifeng.cattle.utils.jx.JXUiHelper;
+import com.zhifeng.cattle.utils.jx.entities.JXCommodity;
+import com.zhifeng.cattle.utils.jx.utils.JXPermissionUtil;
 import com.zhifeng.cattle.utils.jx.view.JXChatView;
 import com.zhifeng.cattle.utils.listener.AppBarStateChangeListener;
 import com.zhifeng.cattle.utils.sku.BaseSkuModel;
@@ -189,6 +191,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
     String chatTitlekey = null;
     String suborgId;
     String extendData;
+    JXPermissionUtil mJXPermissionUtil;
 
     @Override
     public int intiLayout() {
@@ -246,7 +249,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         getGoodsDetail();
         getDefaultCity();
         loadView();
-
+        extendData = getIntent().getStringExtra(JXChatView.EXTEND_DATA);
         chatType = getIntent().getIntExtra(JXChatView.CHAT_TYPE, JXChatView.CHATTYPE_CUSTOMER_SERVICE);
         chatkey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_KEY);
         chatTitlekey = getIntent().getStringExtra(JXConstants.EXTRA_CHAT_TITLE_KEY);
@@ -320,7 +323,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         tvGoodsOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvGoodsPrice.setText("AU$" + dataBean.getPrice());//价格
         tvGoodsName.setText(dataBean.getGoods_name());//商品名称
-        tvGoodsOriginalPriceRmb.setText(ResUtil.getFormatString(R.string.goods_detail_tab_34,dataBean.getRmb_price()));
+        tvGoodsOriginalPriceRmb.setText(ResUtil.getFormatString(R.string.goods_detail_tab_34, dataBean.getRmb_price()));
         goodsName = dataBean.getGoods_name();
         fTitleTv.setText(goodsName);
         setBanner(dataBean.getImg());
@@ -342,6 +345,16 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
         //todo 初始化规格
         initUiData(dataBean);
         service = dataBean.getService();
+        //演示发送图文消息  客服所需数据
+        mJXPermissionUtil = new JXPermissionUtil();
+        JXCommodity commodity = new JXCommodity();
+        commodity.setTitle(dataBean.getGoods_name());
+        commodity.setContent(dataBean.getGoods_attr());
+        if (dataBean.getImg().size() != 0) {
+            commodity.setImgUrl(dataBean.getImg().get(0).getPicture());
+        }
+        commodity.setUrl("");
+        JXUiHelper.getInstance().setJxCommodity(commodity);
     }
 
     /**
@@ -1044,6 +1057,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 Intent intent = new Intent(mContext, JXChatUIActivity.class);
                 intent.putExtra(JXChatView.CHAT_KEY, mcsId);
                 intent.putExtra(JXChatView.CHAT_SKILLS_DISPLAYNAME, displayName);
+                intent.putExtra(JXChatView.EXTEND_DATA, extendData);
                 startActivity(intent);
             }
         });
@@ -1058,6 +1072,7 @@ public class GoodsDetailActivity extends UserBaseActivity<GoodsDetailAction> imp
                 Intent intent = new Intent(mContext, JXChatUIActivity.class);
                 intent.putExtra(JXChatView.CHAT_TYPE, JXChatView.CHATTYPE_MESSAGE_BOX);
                 intent.putExtra(JXChatView.CHAT_SKILLS_DISPLAYNAME, displayName);
+                intent.putExtra(JXChatView.EXTEND_DATA, extendData);
                 startActivity(intent);
             }
         });

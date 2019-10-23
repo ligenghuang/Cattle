@@ -374,6 +374,13 @@ public class WebUrlUtil {
      */
     public static final String POST_PAY_TYPE = "Order/get_pay_type";
 
+    /**
+     * 支付宝
+     */
     public static final String POST_ALI_PAY = "pay/alipay";
 
+    /**
+     * 微信登录
+     */
+    public static final String POST_WXLOGIN = "user/wxlogin";
 }

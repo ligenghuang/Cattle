@@ -22,7 +22,7 @@ public class WXUserInfo implements Serializable {
      * city.json : Shenzhen
      * province : Guangdong
      * country : CN
-     * headimgurl : http://wx.qlogo.cn/mmhead/F2pduZmCoicF34vaxy7cnyLyS4T8HA80XYOM8rXDSAug/0
+     * headimgurl : http://thirdwx.qlogo.cn/mmopen/vi_32/GLfaKQqialvlTfeqcicYjjTZicf8trpicFRvVqiahW3HZLcMFaNZeibuyL1wIbfSyxJMsfGnqshkdH5TZBlZx7RnaIbQ/132
      * privilege : []
      * unionid : o5aWQwAa7niCIXhAIRBOwglIJ7UQ
      */

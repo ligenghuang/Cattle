@@ -299,7 +299,7 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
         loadDiss();
         if (alipayOrderDto != null) {
-            mAlipayer.payV2(alipayOrderDto.getRequestParams());
+            mAlipayer.payV2(alipayOrderDto.getData().getRequestParams());
         }
     }
 

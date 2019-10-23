@@ -9,6 +9,7 @@ import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.modules.LoginDto;
+import com.zhifeng.cattle.modules.WxLoginDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.LoginView;
 
@@ -51,6 +52,17 @@ public class LoginAction extends BaseAction<LoginView> {
     public void loginOrRegistered(String phone,String verify_code){
         post(WebUrlUtil.POST_LOGIN,false, service -> manager.runHttp(
                 service.PostData(CollectionsUtils.generateMap("phone",phone,"verify_code",verify_code), WebUrlUtil.POST_LOGIN)));
+    }
+
+    /**
+     * 微信登录
+     * @param openId
+     * @param nickname
+     * @param headimgurl
+     */
+    public void wxLogin(String openId,String nickname,String headimgurl){
+        post(WebUrlUtil.POST_WXLOGIN,false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("openid",openId,"nickname",nickname,"headimgurl",headimgurl), WebUrlUtil.POST_WXLOGIN)));
     }
 
     /**
@@ -112,6 +124,22 @@ public class LoginAction extends BaseAction<LoginView> {
                                view.onError(generalDto.getMsg(),action.getErrorType());
                                return;
                            }
+                        }
+                        view.onError(msg,action.getErrorType());
+                        break;
+                    case WebUrlUtil.POST_WXLOGIN:
+                        //todo 微信登录
+                        if (aBoolean) {
+                            L.e("xx", "输出返回结果 " + action.getUserData().toString());
+                            WxLoginDto wxLoginDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<WxLoginDto>() {
+                            }.getType());
+                            if (wxLoginDto.getStatus() == 200){
+                                //todo 微信登录
+                                view.wxLoginSuccess(wxLoginDto);
+                                return;
+                            }
+                            view.onError(wxLoginDto.getMsg(),wxLoginDto.getStatus());
+                            return;
                         }
                         view.onError(msg,action.getErrorType());
                         break;
