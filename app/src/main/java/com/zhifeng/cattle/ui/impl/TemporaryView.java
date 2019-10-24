@@ -6,6 +6,7 @@ import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
+import com.zhifeng.cattle.modules.WxPayOrderDto;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 
 /**
@@ -46,4 +47,10 @@ public interface TemporaryView extends BaseView {
      */
     void aliPaySuccess(AlipayOrderDto alipayOrderDto);
     void aliPayErroe();
+
+    /**
+     * 微信支付
+     */
+    void wxPaySuccess(WxPayOrderDto wxPayOrderDto);
+    void wxPayErroe();
 }

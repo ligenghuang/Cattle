@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.login.BandMobileActivity">
+
+
+    <include layout="@layout/layout_title_grey_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="27dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="15dp"
+                android:text="@string/modify_mobile_tab_2"
+                android:textColor="@color/color_9"
+                android:textSize="@dimen/text_size12" />
+
+            <View style="@style/line_4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_mobile_tab_3"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_modify_moblie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/icon_more"
+                    android:drawablePadding="5dp"
+                    android:gravity="right"
+                    android:text="@string/modify_mobile_tab_6"
+                    android:textColor="@color/color_9"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+            <View style="@style/line_4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="15dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/bind_mobile_tip_1"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_modify_moblie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:hint="@string/modify_mobile_tab_7"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:textColor="@color/color_15"
+                    android:textColorHint="@color/color_9"
+                    android:textSize="@dimen/text_size12" />
+
+
+            </LinearLayout>
+
+            <View style="@style/line_4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="15dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/modify_mobile_tab_9"
+                    android:textColor="@color/color_15"
+                    android:textSize="@dimen/text_size15"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_moblie_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="@string/modify_mobile_tab_10"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/color_15"
+                    android:textColorHint="@color/color_9"
+                    android:textSize="@dimen/text_size12" />
+
+                <TextView
+                    android:id="@+id/tv_get_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/modify_mobile_tab_11"
+                    android:textColor="@color/color_0048ff"
+                    android:textSize="@dimen/text_size12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_login_btn_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/bind_mobile_tip_2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size15"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

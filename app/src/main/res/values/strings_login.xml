@@ -19,11 +19,12 @@
 
 
     <string name="wechat_login">请安装微信客户端</string>
-
     <string name="app_login_user_tip_8">登录成功</string>
-
     <string name="app_login_user_tip_9">登录取消</string>
-
     <string name="app_login_user_tip_10">登录失败</string>
+
+    <string name="bind_mobile_tip_1">手机号</string>
+    <string name="bind_mobile_tip_2">绑定</string>
+    <string name="bind_mobile_tip_3">绑定手机</string>
 
 </resources>

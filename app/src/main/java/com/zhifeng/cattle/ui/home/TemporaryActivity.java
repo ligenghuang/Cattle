@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.ShowIdCardDto;
 import com.zhifeng.cattle.modules.SubmitOrderDto;
 import com.zhifeng.cattle.modules.Temporary;
+import com.zhifeng.cattle.modules.WxPayOrderDto;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.ui.impl.TemporaryView;
 import com.zhifeng.cattle.ui.my.AddressListActivity;
@@ -39,6 +41,7 @@ import com.zhifeng.cattle.ui.my.ForgetPwdActivity;
 import com.zhifeng.cattle.ui.my.OrderActivity;
 import com.zhifeng.cattle.ui.my.OrderDetailActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.config.Content;
 import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
@@ -169,20 +172,22 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         payUtil.setListener(new PayUtil.OnResponseListener() {
             @Override
             public void onSuccess() {
-                L.e("lgh-wechat", "onSuccess ");
+                Log.e("lgh-wechat", "onSuccess ");
                 showToast(ResUtil.getString(R.string.order_tap_38));
                 loadFinish();
             }
 
             @Override
             public void onCancel() {
-                L.e("lgh-wechat", "onCancel ");
+                Log.e("lgh-wechat", "onCancel ");
+                loadDiss();
                 showToast(ResUtil.getString(R.string.order_tab_40));
             }
 
             @Override
             public void onFail(String message) {
-                L.e("lgh-wechat", "onFail =  " + message);
+                Log.e("lgh-wechat", "onFail =  " + message);
+                loadDiss();
                 showToast(message);
             }
         });
@@ -318,18 +323,15 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 break;
             case 2:
                 //todo 调起微信支付
-                if (IsFastClick.isFastClick()) {
-                    if (!MyApp.getWxApi().isWXAppInstalled()) {
-                        showToast(ResUtil.getString(R.string.wechat_login));
-                        return;
-                    }
-
-                    if (CheckNetwork.checkNetwork2(mContext)) {
-//                        baseAction.payWechat(id);
-//                        payUtil.pay(dataBean.getResponse().getPartnerId(), Content.APP_ID, dataBean.getResponse().getNonceStr(),
-//                                dataBean.getResponse().getTimeStamp(), dataBean.getResponse().getPrepayId(), dataBean.getResponse().getPaySign());
-                    }
+                if (!MyApp.getWxApi().isWXAppInstalled()) {
+                    showToast(ResUtil.getString(R.string.wechat_login));
+                    return;
                 }
+
+                if (CheckNetwork.checkNetwork2(mContext)) {
+                    baseAction.payWx(OrderId);
+                }
+
                 break;
             case 3:
                 //todo 支付宝
@@ -390,7 +392,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
         loadDiss();
         if (alipayOrderDto != null) {
-            L.e("msp","payV2  = "+alipayOrderDto.getData().getRequestParams());
+            L.e("msp", "payV2  = " + alipayOrderDto.getData().getRequestParams());
             mAlipayer.payV2(alipayOrderDto.getData().getRequestParams());
         }
     }
@@ -432,10 +434,35 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     }
 
 
+    /**
+     * 调起支付宝支付失败
+     */
     @Override
     public void aliPayErroe() {
         loadDiss();
         showNormalToast("调起支付宝支付失败");
+    }
+
+    /**
+     * 微信支付
+     *
+     * @param wxPayOrderDto
+     */
+    @Override
+    public void wxPaySuccess(WxPayOrderDto wxPayOrderDto) {
+        WxPayOrderDto.DataBean dataBean = wxPayOrderDto.getData();
+        L.e("lgh-wechat","databean  = "+dataBean.toString());
+        payUtil.pay(dataBean.getPartnerid(), dataBean.getAppid(), dataBean.getNoncestr(),
+                dataBean.getTimestamp(), dataBean.getPrepayid(), dataBean.getSign());
+    }
+
+    /**
+     * 调起微信支付失败
+     */
+    @Override
+    public void wxPayErroe() {
+        loadDiss();
+        showNormalToast("调起微信支付失败");
     }
 
     private void bindView(Temporary temporary) {

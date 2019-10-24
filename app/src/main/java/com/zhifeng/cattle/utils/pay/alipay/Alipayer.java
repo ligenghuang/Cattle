@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.lgh.huanglib.util.L;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -145,8 +146,10 @@ public class Alipayer {
             @Override
             public void run() {
                 PayTask alipay = new PayTask((Activity) mContext);
+                L.e("msp", alipay.getVersion());
                 Map<String, String> result = alipay.payV2(orderInfo, true);
                 Log.i("msp", result.toString());
+
 
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;

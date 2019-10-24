@@ -383,4 +383,14 @@ public class WebUrlUtil {
      * 微信登录
      */
     public static final String POST_WXLOGIN = "user/wxlogin";
+
+    /**
+     * 绑定手机号
+     */
+    public static final String POST_BIND_MOBILE = "user/wxbound_phone";
+
+    /**
+     * 微信支付
+     */
+    public static final String POST_WX_PAY = "pay/wxpay";
 }

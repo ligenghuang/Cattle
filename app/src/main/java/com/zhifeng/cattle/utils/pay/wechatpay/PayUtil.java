@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.lgh.huanglib.util.L;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -56,9 +57,9 @@ public class PayUtil {
     }
 
     /**
-     * 支付
+     * 微信支付
      *
-     * @param partnerId
+     * @param partnerId 商户号
      * @param appId
      * @param nonceStr
      * @param timestamp
@@ -88,13 +89,13 @@ public class PayUtil {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            L.e("lgh-wechat","Response  ");
+            Log.e("lgh-wechat","Response  ");
             Response response = intent.getParcelableExtra(EXTRA_RESULT);
-            L.e("lgh-wechat","Response  = "+ response.toString());
-            L.e("type: " + response.getType());
-            L.e("errCode: " + response.errCode);
-            L.e("errCode: " + response.type);
-            L.e("errCode: " + response.respType);
+            Log.e("lgh-wechat","Response  = "+ response.toString());
+            Log.e("lgh-wechat","type: " + response.getType());
+            Log.e("lgh-wechat","errCode: " + response.errCode);
+            Log.e("lgh-wechat","errCode: " + response.type);
+            Log.e("lgh-wechat","errCode: " + response.respType);
             String result;
             if (listener != null) {
                 if (response.errCode == BaseResp.ErrCode.ERR_OK) {
@@ -112,7 +113,7 @@ public class PayUtil {
                             result = "不支持错误";
                             break;
                         default:
-                            result = "发送返回";
+                            result = "调起微信支付失败";
                             break;
                     }
 

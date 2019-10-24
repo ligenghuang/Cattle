@@ -303,8 +303,12 @@ public class LoginActivity extends UserBaseActivity<LoginAction> implements Logi
         loadDiss();
         //todo 保存登录或注册返回的数据
         L.e("lgh_user", "token  = " + wxLoginDto.getData().getToken());
+        L.e("lgh_user", "mobile  = " + wxLoginDto.getData().getMobile());
         if (wxLoginDto.getData().getMobile().equals("0")) {
             //todo 未绑定手机号
+            Intent intent = new Intent(mContext, BandMobileActivity.class);
+            intent.putExtra("token", wxLoginDto.getData().getToken());
+            startActivity(intent);
         } else if (wxLoginDto.getData().getIs_first() == 1) {
             //todo 第一次登录 跳转至填写邀请码页面
             Intent intent = new Intent(mContext, InviteCodeActivity.class);
