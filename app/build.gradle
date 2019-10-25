@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.pgyersdk:sdk:+'
 //    implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
 //    implementation files('libs/alipaySdk-20180601.jar')
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'com.alibaba:fastjson:1.1.56.android'
     implementation 'com.zhy:okhttputils:2.6.2'
 }

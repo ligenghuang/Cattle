@@ -5,6 +5,7 @@ import com.zhifeng.cattle.modules.AlipayOrderDto;
 import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.PayTypeDto;
+import com.zhifeng.cattle.modules.WxPayOrderDto;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 
 /**
@@ -38,4 +39,10 @@ public interface OrderDetailView extends BaseView {
      */
     void aliPaySuccess(AlipayOrderDto alipayOrderDto);
     void aliPayErroe();
+
+    /**
+     * 微信支付
+     */
+    void wxPaySuccess(WxPayOrderDto wxPayOrderDto);
+    void wxPayErroe();
 }

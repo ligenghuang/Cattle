@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.lgh.huanglib.util.L;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -141,13 +144,16 @@ public class Alipayer {
      * @param orderInfo 组装好的支付信息
      */
     public void payV2(final String orderInfo) {
+        String payStr = StringEscapeUtils.unescapeJava(orderInfo);
+//        String payStr ="_input_charset=\"utf-8\"&body=\"{\"order_id\":3782,\"groupon_id\":0,\"order_sn\":\"20191025164325548317\",\"order_amount\":\"889.00\",\"pay_type\":3,\"pay_status\":0,\"user_id\":28043,\"shipping_price\":\"1.00\",\"goods_price\":\"888.00\",\"order_chongfuzhifu\":2147483647}\"&currency=\"AUD\"&forex_biz=\"FP\"&notify_url=\"http://online.paylinx.cn/payment/paylinx_alipay_gateway/notify\"&out_trade_no=\"20191025164331194525302877\"&partner=\"2088031536995173\"&payment_type=\"1\"&product_code=\"NEW_WAP_OVERSEAS_SELLER\"&refer_url=\"http://cattle.zhifengwangluo.com\"&secondary_merchant_id=\"201900002774\"&secondary_merchant_industry=\"7372\"&secondary_merchant_name=\"MONEY SQUARE GROUP PTY LTD\"&seller_id=\"2088031536995173\"&service=\"mobile.securitypay.pay\"&sign_type=\"RSA\"&subject=\"AUSHOP\"&total_fee=\"1.32\"&trade_information=\"{\"business_type\":4,\"total_quantity\":\"1\",\"goods_info\":\"94^1\"}\"&sign=\"MX5mIUOZJQWA97BZpG%2FLK8iokmhPjGZuM1S5u5jcKt0x6%2BOrIrNN7qNMe66%2F5MJVYxNrBqVAIc9UC3o0oXPOU0wdHTp2PkdR%2F0zRL%2BqA26UoVxErOBZ3ux5QvQH3RoP59BkX26UINB0vfBoyd9gMH8l9FBUOyzNrHWwhcYt0r0s%3D\"";
+        Log.e("msp", "payV2 payStr = " + payStr);
         Runnable payRunnable = new Runnable() {
 
             @Override
             public void run() {
                 PayTask alipay = new PayTask((Activity) mContext);
                 L.e("msp", alipay.getVersion());
-                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Map<String, String> result = alipay.payV2(payStr, true);
                 Log.i("msp", result.toString());
 
 

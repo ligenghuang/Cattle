@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.L;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.data.IsFastClick;
 import com.lgh.huanglib.util.data.ResUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,12 +33,15 @@ import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.PayTypeDto;
 import com.zhifeng.cattle.modules.Temporary;
+import com.zhifeng.cattle.modules.WxPayOrderDto;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.ui.impl.OrderDetailView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 import com.zhifeng.cattle.utils.dialog.PayPwdDialog;
 import com.zhifeng.cattle.utils.pay.alipay.Alipayer;
+import com.zhifeng.cattle.utils.pay.wechatpay.PayUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -106,6 +111,8 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     OrderDetailGoodsAdapter orderDetailGoodsAdapter;
     //支付宝 支付
     private Alipayer mAlipayer;
+     //微信支付
+    private PayUtil payUtil;
 
     @Override
     public int intiLayout() {
@@ -160,10 +167,44 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
 
         mAlipayer = new Alipayer(this, mHandlerCallback);
 
+        payUtil = new PayUtil(this);
+        payUtil.register();
+
+
         loadDialog();
         getOrderDetail();
         getPayType();
         loadView();
+    }
+
+
+    @Override
+    protected void initView() {
+        super.initView();
+        payUtil.setListener(new PayUtil.OnResponseListener() {
+            @Override
+            public void onSuccess() {
+                Log.e("lgh-wechat", "onSuccess ");
+                showToast(ResUtil.getString(R.string.order_tap_38));
+                loadFinish();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("lgh-wechat", "onCancel ");
+                loadDiss();
+                showToast(ResUtil.getString(R.string.order_tab_40));
+                IsFastClick.lastClickTime = 0;
+            }
+
+            @Override
+            public void onFail(String message) {
+                Log.e("lgh-wechat", "onFail =  " + message);
+                loadDiss();
+                showToast(message);
+                IsFastClick.lastClickTime = 0;
+            }
+        });
     }
 
     @Override
@@ -339,6 +380,28 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
     }
 
     /**
+     * 微信支付
+     *
+     * @param wxPayOrderDto
+     */
+    @Override
+    public void wxPaySuccess(WxPayOrderDto wxPayOrderDto) {
+        WxPayOrderDto.DataBean dataBean = wxPayOrderDto.getData();
+        L.e("lgh-wechat","databean  = "+dataBean.toString());
+        payUtil.pay(dataBean.getPartnerid(), dataBean.getAppid(), dataBean.getNoncestr(),
+                dataBean.getTimestamp(), dataBean.getPrepayid(), dataBean.getSign());
+    }
+
+    /**
+     * 调起微信支付失败
+     */
+    @Override
+    public void wxPayErroe() {
+        loadDiss();
+        showNormalToast("调起微信支付失败");
+    }
+
+    /**
      * 失败
      *
      * @param message
@@ -393,7 +456,16 @@ public class OrderDetailActivity extends UserBaseActivity<OrderDetailAction> imp
                 break;
             case 2:
                 //todo 微信
-                showNormalToast("暂无开通微信支付");
+                //todo 调起微信支付
+                if (!MyApp.getWxApi().isWXAppInstalled()) {
+                    showToast(ResUtil.getString(R.string.wechat_login));
+                    return;
+                }
+
+                if (CheckNetwork.checkNetwork2(mContext)) {
+                    loadDialog();
+                    baseAction.payWx(id+"");
+                }
                 break;
             case 3:
                //todo 支付宝

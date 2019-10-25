@@ -9,8 +9,10 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.lgh.huanglib.util.L;
+import com.lgh.huanglib.util.data.MD5Utils;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.zhifeng.cattle.utils.MD5;
 import com.zhifeng.cattle.utils.config.MyApp;
 
 /**
@@ -60,10 +62,10 @@ public class PayUtil {
      * 微信支付
      *
      * @param partnerId 商户号
-     * @param appId
-     * @param nonceStr
-     * @param timestamp
-     * @param prepayId
+     * @param appId  appId
+     * @param nonceStr  随机字符串
+     * @param timestamp  时间戳
+     * @param prepayId 预支付交易会话ID
      * @param sign
      */
     public PayUtil pay(String partnerId, String appId, String nonceStr,
@@ -75,7 +77,12 @@ public class PayUtil {
         req.partnerId = partnerId;
         req.prepayId = prepayId;
         req.timeStamp = timestamp;
+        String str="appid="+appId+"&noncestr="+nonceStr+"&package=Sign=WXPay&partnerid="+partnerId+"&prepayid="+prepayId+"&timestamp="+timestamp+"&key=02dac672c4ad446c81eefe5ef332eb71";
+        String Sign = MD5Utils.getMd5Value(str);
         req.sign = sign;
+        Log.e("lgh-wechat","str =  "+str);
+        Log.e("lgh-wechat","Sign =  "+Sign);
+        Log.e("lgh-wechat","Sign =  "+sign);
         MyApp.getWxApi().sendReq(req);
         return this;
     }
@@ -135,6 +142,19 @@ public class PayUtil {
         private int type;
         private boolean checkResult;
 
+        @Override
+        public String toString() {
+            return "Response{" +
+                    "errCode=" + errCode +
+                    ", errStr='" + errStr + '\'' +
+                    ", transaction='" + transaction + '\'' +
+                    ", openId='" + openId + '\'' +
+                    ", code='" + code + '\'' +
+                    ", respType='" + respType + '\'' +
+                    ", type=" + type +
+                    ", checkResult=" + checkResult +
+                    '}';
+        }
 
         public Response(BaseResp baseResp, String _code) {
 

@@ -13,6 +13,7 @@ import com.zhifeng.cattle.modules.OrderDetailDto;
 import com.zhifeng.cattle.modules.OrderListDto;
 import com.zhifeng.cattle.modules.PayOrderDto;
 import com.zhifeng.cattle.modules.PayTypeDto;
+import com.zhifeng.cattle.modules.WxPayOrderDto;
 import com.zhifeng.cattle.modules.post.SubmitOrderPost;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.OrderDetailView;
@@ -77,6 +78,17 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
     public void payAli(String order_id) {
         post(WebUrlUtil.POST_ALI_PAY, false, service -> manager.runHttp(
                 service.PostDataAli(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_ALI_PAY)
+        ));
+    }
+
+    /**
+     * 微信
+     *
+     * @param order_id
+     */
+    public void payWx(String order_id) {
+        post(WebUrlUtil.POST_WX_PAY, false, service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()), "order_id", order_id), WebUrlUtil.POST_WX_PAY)
         ));
     }
 
@@ -172,6 +184,21 @@ public class OrderDetailAction extends BaseAction<OrderDetailView> {
                             }
                         }
                         view.aliPayErroe();
+                        break;
+                    case WebUrlUtil.POST_WX_PAY:
+                        //todo 微信支付
+                        if (aBoolean) {
+                            try{
+                                WxPayOrderDto wxPayOrderDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<WxPayOrderDto>() {
+                                }.getType());
+                                view.wxPaySuccess(wxPayOrderDto);
+                                return;
+                            }catch (JsonSyntaxException e){
+                                view.wxPayErroe();
+                                return;
+                            }
+                        }
+                        view.wxPayErroe();
                         break;
                 }
 

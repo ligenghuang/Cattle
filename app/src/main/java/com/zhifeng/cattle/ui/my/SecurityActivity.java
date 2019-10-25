@@ -18,6 +18,7 @@ import com.zhifeng.cattle.ui.MainActivity;
 import com.zhifeng.cattle.ui.impl.SecurityView;
 import com.zhifeng.cattle.ui.login.LoginActivity;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
+import com.zhifeng.cattle.utils.config.MyApp;
 import com.zhifeng.cattle.utils.data.MySp;
 
 import java.lang.ref.WeakReference;
@@ -168,6 +169,7 @@ public class SecurityActivity extends UserBaseActivity<SecurityAction> implement
             case R.id.tv_logout:
                 //退出
                 MySp.clearAllSP(mContext);
+//                MyApp.getWxApi().unregisterApp();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
                 MainActivity.Position = 0;

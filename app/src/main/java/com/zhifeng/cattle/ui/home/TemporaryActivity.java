@@ -181,14 +181,18 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             public void onCancel() {
                 Log.e("lgh-wechat", "onCancel ");
                 loadDiss();
+                loadDiss();
                 showToast(ResUtil.getString(R.string.order_tab_40));
+                IsFastClick.lastClickTime = 0;
             }
 
             @Override
             public void onFail(String message) {
                 Log.e("lgh-wechat", "onFail =  " + message);
                 loadDiss();
+                loadDiss();
                 showToast(message);
+                IsFastClick.lastClickTime = 0;
             }
         });
     }
@@ -284,7 +288,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
      */
     @Override
     public void submitOrderSuccess(SubmitOrderDto submitOrderDto) {
-        loadDiss();
+
         OrderId = submitOrderDto.getData();
         isSubmitOrder = true;
         pay();
@@ -293,6 +297,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     private void pay() {
         switch (payType) {
             case 1:
+                loadDiss();
                 //余额支付
                 if (pwd == 1) {
                     bugPwdDialog = new PayPwdDialog(mContext, R.style.MY_AlertDialog, money, payTypeNam);
@@ -331,12 +336,10 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
                 if (CheckNetwork.checkNetwork2(mContext)) {
                     baseAction.payWx(OrderId);
                 }
-
                 break;
             case 3:
                 //todo 支付宝
                 if (CheckNetwork.checkNetwork2(mContext)) {
-                    loadDialog();
                     baseAction.payAli(OrderId);
                 }
                 break;
@@ -391,9 +394,12 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     public void aliPaySuccess(AlipayOrderDto alipayOrderDto) {
         loadDiss();
-        if (alipayOrderDto != null) {
-            L.e("msp", "payV2  = " + alipayOrderDto.getData().getRequestParams());
+        if (alipayOrderDto.getData().getRequestParams() != null) {
+            Log.e("msp", "payV2  = " + alipayOrderDto.getData().getRequestParams());
             mAlipayer.payV2(alipayOrderDto.getData().getRequestParams());
+//            trade_information="{"business_type":"4","goods_info":"Mika's capsule coffee^1","total_quantity":"1"}"
+        }else {
+            showNormalToast("调起支付宝支付失败");
         }
     }
 
@@ -408,6 +414,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             String resultStatus = data.getString(Alipayer.MSG_KEY_RESULT_STATUS);
             String tips = data.getString(Alipayer.MSG_KEY_TIPS_TEXT);
             showToast(tips);
+            IsFastClick.lastClickTime = 0;
             if (TextUtils.equals(resultStatus, Alipayer.RESULT_STATUS_SUCCESS)) {
                 // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                 loadFinish();
@@ -420,6 +427,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
      * 支付成功关闭界面
      */
     public void loadFinish() {
+        loadDiss();
         loadDiss();
         showNormalToast(ResUtil.getString(R.string.goods_detail_tab_29));
         new Handler().postDelayed(new Runnable() {
@@ -510,6 +518,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
     @Override
     protected void onPause() {
         super.onPause();
+        loadDiss();
         baseAction.toUnregister();
     }
 
@@ -572,6 +581,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
             case R.id.btnPay:
                 if (IsFastClick.isFastClick()) {
                     if (isSubmitOrder) {
+                        loadDialog();
                         pay();
                     } else {
                         buyNow();
