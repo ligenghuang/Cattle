@@ -18,6 +18,7 @@ import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.WithdrawalAction;
 import com.zhifeng.cattle.modules.BalanceDto;
+import com.zhifeng.cattle.modules.BaseDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.ui.impl.WithdrawalView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
@@ -187,7 +188,7 @@ public class WithdrawalActivity extends UserBaseActivity<WithdrawalAction> imple
      * @param generalDto
      */
     @Override
-    public void withdrawalSuccess(GeneralDto generalDto) {
+    public void withdrawalSuccess(BaseDto generalDto) {
         loadDiss();
         showNormalToast(generalDto.getMsg());
         new Handler().postDelayed(new Runnable() {

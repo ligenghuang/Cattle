@@ -7,6 +7,7 @@ import com.lgh.huanglib.net.CollectionsUtils;
 import com.lgh.huanglib.util.L;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.modules.BalanceDto;
+import com.zhifeng.cattle.modules.BaseDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.WithdrawalView;
@@ -96,7 +97,7 @@ public class WithdrawalAction extends BaseAction<WithdrawalView> {
                     case WebUrlUtil.POST_WITHDRAWAL:
                         //todo 提现
                         if (aBoolean) {
-                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            BaseDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BaseDto>() {
                             }.getType());
                             if (generalDto.getStatus() == 200) {
                                 //todo 提现成功

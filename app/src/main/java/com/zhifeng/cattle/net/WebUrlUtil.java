@@ -393,4 +393,9 @@ public class WebUrlUtil {
      * 微信支付
      */
     public static final String POST_WX_PAY = "pay/wxpay";
+
+    /**
+     * 查看物流
+     */
+    public static final String POST_ORDER_EXPRESS = "order/express";
 }

@@ -133,6 +133,7 @@ public class TemporaryActivity extends UserBaseActivity<TemporaryAction> impleme
         getTemporary();
     }
 
+
     @Override
     public int intiLayout() {
         return R.layout.activity_temporary;

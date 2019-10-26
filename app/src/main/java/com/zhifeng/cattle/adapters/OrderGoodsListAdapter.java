@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.lgh.huanglib.util.config.GlideUtil;
+import com.lgh.huanglib.util.data.ResUtil;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.modules.OrderListDto;
 /**
@@ -17,10 +18,12 @@ import com.zhifeng.cattle.modules.OrderListDto;
 
 public class OrderGoodsListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean.GoodsBean> {
     Context context;
+    String shippingPrice;
 
-    public OrderGoodsListAdapter(Context context) {
+    public OrderGoodsListAdapter(Context context,String shippingPrice) {
         super(R.layout.layout_item_order_goods);
         this.context = context;
+        this.shippingPrice = shippingPrice;
     }
 
     @Override
@@ -31,5 +34,6 @@ public class OrderGoodsListAdapter extends BaseRecyclerAdapter<OrderListDto.Data
         holder.text(R.id.tv_item_order_price,"AU$"+model.getGoods_price());//商品价格
         ImageView imageView = holder.itemView.findViewById(R.id.iv_item_order_img);
         GlideUtil.setImage(context,model.getImg(),imageView);
+        holder.text(R.id.tv_item_order_shipping_price, ResUtil.getFormatString(R.string.order_tab_41,shippingPrice));
     }
 }

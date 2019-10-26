@@ -45,7 +45,7 @@ public class OrderListAdapter extends BaseRecyclerAdapter<OrderListDto.DataBean>
 
         //设置商品
         RecyclerView recyclerView = holder.itemView.findViewById(R.id.rv_item_order_goods);
-        OrderGoodsListAdapter orderGoodsListAdapter = new OrderGoodsListAdapter(context);
+        OrderGoodsListAdapter orderGoodsListAdapter = new OrderGoodsListAdapter(context,model.getShipping_price());
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(orderGoodsListAdapter);
         orderGoodsListAdapter.refresh(model.getGoods());

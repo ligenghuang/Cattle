@@ -2,6 +2,7 @@ package com.zhifeng.cattle.ui.impl;
 
 import com.lgh.huanglib.util.base.BaseView;
 import com.zhifeng.cattle.modules.BalanceDto;
+import com.zhifeng.cattle.modules.BaseDto;
 import com.zhifeng.cattle.modules.GeneralDto;
 
 /**
@@ -26,5 +27,5 @@ public interface WithdrawalView extends BaseView {
      * @param money
      */
     void withdrawal(double money);
-    void withdrawalSuccess(GeneralDto generalDto);
+    void withdrawalSuccess(BaseDto generalDto);
 }

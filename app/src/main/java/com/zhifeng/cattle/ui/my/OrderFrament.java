@@ -138,6 +138,9 @@ public class OrderFrament extends UserBaseFragment<OrderAction> implements Order
             @Override
             public void Logistics(int id) {
                 //todo 查看物流
+                Intent logistics = new Intent(mContext, LogisticsActivity.class);
+                logistics.putExtra("orderId", id);
+                startActivity(logistics);
             }
 
             @Override

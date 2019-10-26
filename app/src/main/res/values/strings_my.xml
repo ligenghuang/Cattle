@@ -79,6 +79,7 @@
     <string name="order_tap_38">支付成功</string>
     <string name="order_tab_39">支付失败</string>
     <string name="order_tab_40">用户取消了支付</string>
+    <string name="order_tab_41">运费：AU$ %0$s</string>
 
     <string name="sales_return_tab_1">正在退货</string>
     <string name="sales_return_tab_2">退货成功</string>
@@ -280,4 +281,9 @@
     <string name="modify_user_name_tab_1">请输入会员名</string>
     <string name="modify_user_name_tab_2">会员名：</string>
     <string name="modify_user_name_tab_3">会员名不能为空！</string>
+
+    <string name="logistics_tab_1">点击查看更多物流详情</string>
+    <string name="logistics_tab_2">查看物流</string>
+    <string name="logistics_tab_3">运单号：%0$s</string>
+
 </resources>

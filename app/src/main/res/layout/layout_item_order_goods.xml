@@ -58,6 +58,18 @@
             android:textSize="@dimen/text_size12"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_item_order_shipping_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/tv_item_order_price"
+            android:layout_alignParentRight="true"
+            android:text="AU$368 "
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size12"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
 </LinearLayout>
