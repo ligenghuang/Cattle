@@ -2,34 +2,51 @@ package com.zhifeng.cattle.ui.my;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.lgh.huanglib.util.CheckNetwork;
 import com.lgh.huanglib.util.base.ActivityStack;
+import com.lgh.huanglib.util.config.GlideUtil;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.animator.PopupAnimator;
+import com.lxj.xpopup.enums.PopupPosition;
+import com.lxj.xpopup.interfaces.OnSelectListener;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
+import com.lzy.imagepicker.view.CropImageView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.RechargeAction;
-import com.zhifeng.cattle.modules.BankImgListDto;
-import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
+import com.zhifeng.cattle.modules.RateDto;
+import com.zhifeng.cattle.modules.RechargeTypeDto;
 import com.zhifeng.cattle.ui.impl.RechargeView;
 import com.zhifeng.cattle.utils.base.UserBaseActivity;
-import com.zhifeng.cattle.utils.dialog.BankListDialog;
 import com.zhifeng.cattle.utils.dialog.RechargePwdDialog;
+import com.zhifeng.cattle.utils.imageloader.GlideImageLoader;
+import com.zhifeng.cattle.utils.photo.PicUtils;
+import com.zhifeng.cattle.utils.popup.PayTypePopup;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,6 +60,15 @@ import butterknife.OnClick;
  */
 
 public class RechargeActivity extends UserBaseActivity<RechargeAction> implements RechargeView {
+    public static final int REQUEST_CODE_SELECT = 100;
+    public static final int REQUEST_CODE_PREVIEW = 101;
+    public static final int IMAGE_ITEM_ADD = -1;
+    public static final int REQUEST_CODE_TAKE = 102;
+    public static final int REQUEST_CODE_ALBUM = 103;
+    public static int REQUEST_SELECT_TYPE = -1;//选择的类型
+    private ArrayList<ImageItem> selImageList = new ArrayList<>(); //当前选择的所有图片
+    ArrayList<ImageItem> images = null;
+    private int maxImgCount = 1;               //允许选择图片最大数
 
     @BindView(R.id.top_view)
     View topView;
@@ -50,24 +76,43 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     TextView fTitleTv;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_recharge_bank)
-    TextView tvRechargeBank;
-    @BindView(R.id.tv_recharge_limit)
-    TextView tvRechargeLimit;
     @BindView(R.id.et_recharge_money)
     EditText etRechargeMoney;
     @BindView(R.id.cv_next)
     CardView cvNext;
-    @BindView(R.id.tv_no_bank)
-    TextView tvNoBank;
-    @BindView(R.id.rl_bank)
-    RelativeLayout rlBank;
 
-    List<BankListDto.DataBean> list = new ArrayList<>();
-    List<BankImgListDto.DataBean> dataBeanList = new ArrayList<>();
-    String bankCard;
-    boolean isBindBank = false;
-    boolean isNext = false;
+    @BindView(R.id.tv_paytype)
+    TextView tvPaytype;
+    @BindView(R.id.tv_recharge_money_adu)
+    TextView tvRechargeMoneyAdu;
+    @BindView(R.id.iv_pay)
+    ImageView ivPay;
+    @BindView(R.id.iv_pay_credentials)
+    ImageView ivPayCredentials;
+
+    /**
+     * 汇率
+     */
+    double aus_tormb = 0;//1澳元=？人民币
+    double rmb_toaus = 0;//1人民币=？澳元
+    /**
+     * 微信付款码
+     */
+    String weixinImg = "";
+    /**
+     * 支付宝付款码
+     */
+    String aliImg = "";
+    /**
+     * 支付凭证
+     */
+    String payCredentials = "";
+
+    /**
+     * 付款类型
+     */
+    int recharge_type = 0;
+
 
     @Override
     public int intiLayout() {
@@ -109,11 +154,16 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         super.init();
         mActicity = this;
         mContext = this;
+        initImagePicker();
 
+        loadDialog();
+        getRate();
+        getRechargeType();
 
+        loadView();
     }
 
-    private void showEt(){
+    private void showEt() {
         etRechargeMoney.setFocusable(true);
         etRechargeMoney.setFocusableInTouchMode(true);
         etRechargeMoney.requestFocus();
@@ -128,71 +178,93 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         }).start();
     }
 
+
+    @Override
+    protected void loadView() {
+        super.loadView();
+        etRechargeMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //todo 转换
+                if (!TextUtils.isEmpty(etRechargeMoney.getText().toString())){
+                    double money = Double.parseDouble(etRechargeMoney.getText().toString());
+                    if (money > 0){
+                        double AUDMoney = money * rmb_toaus;
+                        DecimalFormat df = new DecimalFormat("#0.000");
+                        tvRechargeMoneyAdu.setText(df.format(AUDMoney));
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     /**
-     * 获取已绑定银行卡列表
+     * 获取付款码
      */
     @Override
-    public void getBankList() {
-        if (CheckNetwork.checkNetwork2(mContext)) {
-            baseAction.getBankList();
+    public void getRechargeType() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getRechargeType();
         }
     }
 
     /**
-     * 获取已绑定银行卡列表 成功
-     *
-     * @param bankListDto
+     * 获取付款码成功
+     * @param rechargeTypeDto
      */
     @Override
-    public void getBankListSuccess(BankListDto bankListDto) {
-        isBindBank = bankListDto.getData().size() != 0;
-        getBankImgList();
-        if (bankListDto.getData().size() != 0) {
-            list = bankListDto.getData();
-            list.get(0).setClick(true);
-            bankCard = list.get(0).getBank_card();
-            String num = list.get(0).getBank_card().substring(bankCard.length() - 4, bankCard.length());
-            String name = list.get(0).getBank_name() + "(" + num + ")";
-            tvRechargeBank.setText(name);
-            rlBank.setVisibility(View.VISIBLE);
-            tvNoBank.setVisibility(View.GONE);
-        } else {
-            rlBank.setVisibility(View.GONE);
-            tvNoBank.setVisibility(View.VISIBLE);
-        }
-        showEt();
-    }
-
-    /**
-     * 获取银行图标
-     */
-    @Override
-    public void getBankImgList() {
-        baseAction.getBankImgList();
-    }
-
-    /**
-     * 获取银行图标 成功
-     *
-     * @param bankListDto
-     */
-    @Override
-    public void getBankImgListSuccess(BankImgListDto bankListDto) {
+    public void getRechargeTypeSuccess(RechargeTypeDto rechargeTypeDto) {
         loadDiss();
-        dataBeanList = bankListDto.getData();
+        RechargeTypeDto.DataBean dataBean = rechargeTypeDto.getData();
+        weixinImg = dataBean.getWechat_qr_code();
+        aliImg = dataBean.getAlipay_qr_code();
+        recharge_type = 0;
+        tvPaytype.setText(ResUtil.getString(R.string.recharge_tab_14));
+        GlideUtil.setImage(mContext,aliImg,ivPay,R.drawable.icon_null_qc);
+    }
+
+    /**
+     * 获取汇率
+     */
+    @Override
+    public void getRate() {
+        if (CheckNetwork.checkNetwork2(mContext)){
+            baseAction.getRate();
+        }
+    }
+
+    /**
+     * 获取汇率成功
+     * @param rateDto
+     */
+    @Override
+    public void getRateSuccess(RateDto rateDto) {
+        RateDto.DataBean dataBean = rateDto.getData();
+        rmb_toaus = dataBean.getRmb_toaus();
+        aus_tormb = dataBean.getAus_tormb();
     }
 
     /**
      * 充值
      *
      * @param num
-     * @param pwd
+     * @param img
      */
     @Override
-    public void recharge(double num, String pwd) {
+    public void recharge(double num, String img) {
         if (CheckNetwork.checkNetwork2(mContext)) {
             loadDialog();
-            baseAction.recharge(num, pwd);
+            baseAction.recharge(num,recharge_type, img);
         }
     }
 
@@ -229,9 +301,7 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
     protected void onResume() {
         super.onResume();
         baseAction.toRegister();
-        if (!isNext){
-            getBankList();
-        }
+
     }
 
     @Override
@@ -240,35 +310,49 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
         baseAction.toUnregister();
     }
 
-    @OnClick({R.id.cv_next, R.id.ll_bank})
+    @OnClick({R.id.cv_next, R.id.tv_paytype,R.id.iv_pay_credentials})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cv_next:
+                //输入密码
                 next();
                 break;
-            case R.id.ll_bank:
-                hideInput();
-                if (isBindBank){
-                //选择银行卡
-                BankListDialog bankListDialog = new BankListDialog(mContext, R.style.MY_AlertDialog, list, dataBeanList);
-                bankListDialog.setOnClickListener(new BankListDialog.OnClickListener() {
-                    @Override
-                    public void OnClick(List<BankListDto.DataBean> BankList, BankListDto.DataBean model) {
-                        bankCard = model.getBank_card();
-                        String num = model.getBank_card().substring(bankCard.length() - 4, bankCard.length());
-                        String name = model.getBank_name() + "(" + num + ")";
-                        tvRechargeBank.setText(name);
-                        rlBank.setVisibility(View.VISIBLE);
-                        tvNoBank.setVisibility(View.GONE);
-                        list = BankList;
-                        showEt();
-                    }
-                });
-                bankListDialog.show();
+            case R.id.tv_paytype:
+                //选择支付方式
+                new XPopup.Builder(mContext)
+                        .hasShadowBg(false)
+                        .atView(tvPaytype)
+                        .popupPosition(PopupPosition.Bottom)
+                        .asCustom(new PayTypePopup(mContext, tvPaytype.getWidth(),new PayTypePopup.OnListClickListener() {
 
+                            @Override
+                            public void onAliPay() {
+                                //todo 支付宝
+                                recharge_type = 0;
+                                tvPaytype.setText(ResUtil.getString(R.string.recharge_tab_14));
+                                GlideUtil.setImage(mContext,aliImg,ivPay,R.drawable.icon_null_qc);
+                            }
+
+                            @Override
+                            public void onWatchPay() {
+                                //todo 微信
+                                recharge_type = 1;
+                                tvPaytype.setText(ResUtil.getString(R.string.recharge_tab_15));
+                                GlideUtil.setImage(mContext,weixinImg,ivPay,R.drawable.icon_null_qc);
+                            }
+                        }))
+                        .show();
+                break;
+            case R.id.iv_pay_credentials:
+                //todo 选择图片
+                if (selImageList.size() != 0){
+                    Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
+                    intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, selImageList);
+                    intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
+                    intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
+                    startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 }else {
-                    //绑定银行卡 跳转至绑定银行卡页面
-                    jumpActivityNotFinish(mContext, BindBankCardActivity.class);
+                    takeUserGally();
                 }
                 break;
         }
@@ -289,16 +373,80 @@ public class RechargeActivity extends UserBaseActivity<RechargeAction> implement
             showNormalToast(ResUtil.getString(R.string.recharge_tab_9));
             return;
         }
-        isNext = true;
-        RechargePwdDialog rechargePwdDialog = new RechargePwdDialog(mContext, R.style.MY_AlertDialog, money);
-        rechargePwdDialog.setOnFinishInput(new RechargePwdDialog.OnFinishInput() {
-            @Override
-            public void inputFinish(String password) {
-                //请求接口
-                recharge(money, password);
-            }
-        });
-        hideInput();
-        rechargePwdDialog.show();
+        //todo 判断是否上传支付凭证
+        if (TextUtils.isEmpty(payCredentials)){
+            showNormalToast(ResUtil.getString(R.string.recharge_tab_16));
+            return;
+        }
+
+        //请求接口
+        recharge(money, payCredentials);
     }
+
+
+    /**
+     * 打开相册
+     */
+    private void takeUserGally() {
+        //打开选择,本次允许选择的数量
+        ImagePicker.getInstance().setSelectLimit(1);
+        Intent intent1 = new Intent(mContext, ImageGridActivity.class);
+        /* 如果需要进入选择的时候显示已经选中的图片，
+         * 详情请查看ImagePickerActivity
+         * */
+//                                intent1.putExtra(ImageGridActivity.EXTRAS_IMAGES,images);
+        startActivityForResult(intent1, REQUEST_CODE_SELECT);
+    }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(false);                      //显示拍照按钮
+        imagePicker.setCrop(false);                           //允许裁剪（单选才有效）
+        imagePicker.setMultiMode(false);
+        imagePicker.setSaveRectangle(true);
+        imagePicker.setSelectLimit(1);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.CIRCLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(400);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(400);                         //保存文件的高度。单位像素
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            //添加图片返回
+            if (data != null && requestCode == REQUEST_CODE_SELECT) {
+                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                selImageList = images;
+                if (images != null && images.size() != 0) {
+                    GlideUtil.setImage(mContext,images.get(0).path,ivPayCredentials);
+                    payCredentials = "data:image/gif;base64," + PicUtils.imageToBase64(images.get(0).path);
+                }else {
+                    payCredentials = "";
+                    ivPayCredentials.setImageResource(R.drawable.addpic);
+                }
+            }
+        } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+            //预览图片返回
+            if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
+                images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+                selImageList = images;
+                if (images != null && images.size() != 0) {
+                    GlideUtil.setImage(mContext,images.get(0).path,ivPayCredentials);
+                    payCredentials = "data:image/gif;base64," + PicUtils.imageToBase64(images.get(0).path);
+                }else {
+                    payCredentials = "";
+                    ivPayCredentials.setImageResource(R.drawable.addpic);
+                }
+            }
+        }
+    }
+
+
+    /**********************************选择图片 end*********************************************/
+
+
 }

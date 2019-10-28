@@ -5,6 +5,8 @@ import com.zhifeng.cattle.modules.BankBto;
 import com.zhifeng.cattle.modules.BankImgListDto;
 import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
+import com.zhifeng.cattle.modules.RateDto;
+import com.zhifeng.cattle.modules.RechargeTypeDto;
 
 /**
   *
@@ -18,16 +20,17 @@ import com.zhifeng.cattle.modules.GeneralDto;
 public interface RechargeView extends BaseView {
 
     /**
-     * 获取已绑定银行卡列表
+     * 获取充值方式
      */
-    void getBankList();
-    void getBankListSuccess(BankListDto bankListDto);
+    void getRechargeType();
+    void getRechargeTypeSuccess(RechargeTypeDto rechargeTypeDto);
 
     /**
-     * 获取银行图标列表
+     * 获取汇率
      */
-    void getBankImgList();
-    void getBankImgListSuccess(BankImgListDto bankListDto);
+    void getRate();
+    void getRateSuccess(RateDto rateDto);
+
 
     /**
      * 充值

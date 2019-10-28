@@ -246,7 +246,7 @@
     <string name="order_comment_tab_8">提交评价</string>
 
     <string name="recharge_tab_1">金额充值</string>
-    <string name="recharge_tab_2">储蓄卡</string>
+    <string name="recharge_tab_2">支付方式</string>
     <string name="recharge_tab_3">充值金额</string>
     <string name="recharge_tab_4">下一步</string>
     <string name="recharge_tab_5">单日交易限额AU$20000</string>
@@ -254,6 +254,13 @@
     <string name="recharge_tab_7">金额</string>
     <string name="recharge_tab_8">请输入充值金额</string>
     <string name="recharge_tab_9">充值金额不能小于0</string>
+    <string name="recharge_tab_10">请先选择支付方式</string>
+    <string name="recharge_tab_11">请扫描收款码支付</string>
+    <string name="recharge_tab_12">支付凭证</string>
+    <string name="recharge_tab_13">转换为AU$</string>
+    <string name="recharge_tab_14">支付宝支付</string>
+    <string name="recharge_tab_15">微信支付</string>
+    <string name="recharge_tab_16">请上传支付凭证</string>
 
     <string name="changeaccount_tab1">切换账户登录</string>
     <string name="changeaccount_tab2">轻触账户以登录</string>

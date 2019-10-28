@@ -1,6 +1,7 @@
 package com.zhifeng.cattle.actions;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lgh.huanglib.actions.Action;
 import com.lgh.huanglib.net.CollectionsUtils;
@@ -10,6 +11,8 @@ import com.zhifeng.cattle.modules.BankBto;
 import com.zhifeng.cattle.modules.BankImgListDto;
 import com.zhifeng.cattle.modules.BankListDto;
 import com.zhifeng.cattle.modules.GeneralDto;
+import com.zhifeng.cattle.modules.RateDto;
+import com.zhifeng.cattle.modules.RechargeTypeDto;
 import com.zhifeng.cattle.net.WebUrlUtil;
 import com.zhifeng.cattle.ui.impl.RechargeView;
 import com.zhifeng.cattle.utils.config.MyApp;
@@ -35,31 +38,33 @@ public class RechargeAction extends BaseAction<RechargeView> {
     }
 
     /**
-     * 充值
-     * @param num
-     * @param pwd
+     * 获取汇率
      */
-    public void recharge(double num,String pwd){
-        post(WebUrlUtil.POST_RECHARGE,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"num",num
-                ,"pwd",pwd),WebUrlUtil.POST_RECHARGE)
-        ));
+    public void getRate(){
+        post(WebUrlUtil.POST_EXCHANGE_RATE,false,service -> manager.runHttp(service.GetData(WebUrlUtil.POST_EXCHANGE_RATE)));
     }
 
     /**
-     * 获取已绑定银行卡列表
+     * 获取付款码
      */
-    public void getBankList(){
-        post(WebUrlUtil.POST_GET_BANKLIST,false,service -> manager.runHttp(
-                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext())),WebUrlUtil.POST_GET_BANKLIST)
+    public void getRechargeType(){
+        post(WebUrlUtil.POST_RACHARGE_TYPE,false,service -> manager.runHttp(service.GetData(WebUrlUtil.POST_RACHARGE_TYPE)));
+    }
+
+
+    /**
+     * 充值
+     * @param num
+     * @param img
+     */
+    public void recharge(double num,int recharge_type,String img){
+        post(WebUrlUtil.POST_RECHARGE,false,service -> manager.runHttp(
+                service.PostData(CollectionsUtils.generateMap("token", MySp.getAccessToken(MyApp.getContext()),"money",num,"recharge_type",recharge_type
+                ,"img",img),WebUrlUtil.POST_RECHARGE)
         ));
     }
 
-    public void getBankImgList() {
-        post(WebUrlUtil.POST_BOUND_BANK,false,service -> manager.runHttp(
-                service.PostData(WebUrlUtil.POST_BOUND_BANK)
-        ));
-    }
+
 
     /**
      * sticky:表明优先接收最高级  threadMode = ThreadMode.MAIN：表明在主线程
@@ -75,6 +80,50 @@ public class RechargeAction extends BaseAction<RechargeView> {
             // 输出返回结果
             L.e("xx", "输出返回结果 " + aBoolean);
             switch (action.getIdentifying()) {
+                case WebUrlUtil.POST_EXCHANGE_RATE:
+                    //todo 获取汇率
+                    if (aBoolean) {
+                        try{
+                            RateDto rateDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RateDto>() {
+                            }.getType());
+                            //todo 获取汇率成功
+                            if (rateDto.getStatus() == 200){
+                                view.getRateSuccess(rateDto);
+                                return;
+                            }
+                            view.onError(rateDto.getMsg(),rateDto.getStatus());
+                            return;
+                        }catch (JsonSyntaxException e){
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+//                            view.onError(generalDto.getMsg(),generalDto.getStatus());
+                            return;
+                        }
+                    }
+                    view.onError(msg,action.getErrorType());
+                    break;
+                case WebUrlUtil.POST_RACHARGE_TYPE:
+                    //todo 获取付款码
+                    if (aBoolean) {
+                        try{
+                            RechargeTypeDto rechargeTypeDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<RechargeTypeDto>() {
+                            }.getType());
+                            //todo 获取付款码成功
+                            if (rechargeTypeDto.getStatus() == 200){
+                                view.getRechargeTypeSuccess(rechargeTypeDto);
+                                return;
+                            }
+                            view.onError(rechargeTypeDto.getMsg(),rechargeTypeDto.getStatus());
+                            return;
+                        }catch (JsonSyntaxException e){
+                            GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
+                            }.getType());
+//                            view.onError(generalDto.getMsg(),generalDto.getStatus());
+                            return;
+                        }
+                    }
+                    view.onError(msg,action.getErrorType());
+                    break;
                 case WebUrlUtil.POST_RECHARGE:
                     //todo 充值
                     if (aBoolean) {
@@ -91,38 +140,7 @@ public class RechargeAction extends BaseAction<RechargeView> {
                     }
                     view.onError(msg,action.getErrorType());
                     break;
-                case WebUrlUtil.POST_GET_BANKLIST:
-                    //todo 获取已绑定银行卡列表
-                    if (aBoolean) {
-                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        BankListDto bankListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BankListDto>() {
-                        }.getType());
-                        if (bankListDto.getStatus() == 200){
-                            //todo 获取已绑定银行卡列表 成功
-                            view.getBankListSuccess(bankListDto);
-                            return;
-                        }
-                        view.onError(bankListDto.getMsg(),action.getErrorType());
-                        return;
-                    }
-                    view.onError(msg,action.getErrorType());
-                    break;
-                case WebUrlUtil.POST_BOUND_BANK:
-                    //todo 获取银行图标列表
-                    if (aBoolean) {
-                        L.e("xx", "输出返回结果 " + action.getUserData().toString());
-                        BankImgListDto bankImgListDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<BankImgListDto>() {
-                        }.getType());
-                        if (bankImgListDto.getStatus() == 200){
-                            //todo 获取银行图标列表 成功
-                            view.getBankImgListSuccess(bankImgListDto);
-                            return;
-                        }
-                        view.onError(bankImgListDto.getMsg(),action.getErrorType());
-                        return;
-                    }
-                    view.onError(msg,action.getErrorType());
-                    break;
+
             }
         });
     }

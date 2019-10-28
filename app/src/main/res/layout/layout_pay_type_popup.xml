@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_pay_ali"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/recharge_tab_14"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:padding="5dp"
+        />
+    <View style="@style/line_4"/>
+
+    <TextView
+        android:id="@+id/tv_pay_watch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/recharge_tab_15"
+        android:textColor="@color/color_15"
+        android:textSize="@dimen/text_size15"
+        android:padding="5dp"
+        />
+    <View style="@style/line_4"/>
+
+
+</LinearLayout>

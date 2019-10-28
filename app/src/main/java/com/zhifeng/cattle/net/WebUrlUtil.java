@@ -229,7 +229,7 @@ public class WebUrlUtil {
     /**
      * 充值
      */
-    public static final String POST_RECHARGE = "user/balance_recharge";
+    public static final String POST_RECHARGE = "user/apply_recharge";
 
     /**
      * 获取银行卡列表
@@ -398,4 +398,14 @@ public class WebUrlUtil {
      * 查看物流
      */
     public static final String POST_ORDER_EXPRESS = "order/express";
+
+    /**
+     * 获取汇率
+     */
+    public static final String POST_EXCHANGE_RATE = "user/set_exchange_rate";
+
+    /**
+     * 获取付款码
+     */
+    public static final String POST_RACHARGE_TYPE = "user/get_racharge_type";
 }
