@@ -57,6 +57,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements
     public String[] needPermissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.GET_TASKS
 //            Manifest.permission.CAMERA
     };
 

@@ -96,7 +96,7 @@ public class RechargeAction extends BaseAction<RechargeView> {
                         }catch (JsonSyntaxException e){
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-//                            view.onError(generalDto.getMsg(),generalDto.getStatus());
+                            view.onError(generalDto.getMsg(),generalDto.getStatus());
                             return;
                         }
                     }
@@ -118,7 +118,7 @@ public class RechargeAction extends BaseAction<RechargeView> {
                         }catch (JsonSyntaxException e){
                             GeneralDto generalDto = new Gson().fromJson(action.getUserData().toString(), new TypeToken<GeneralDto>() {
                             }.getType());
-//                            view.onError(generalDto.getMsg(),generalDto.getStatus());
+                            view.onError(generalDto.getMsg(),generalDto.getStatus());
                             return;
                         }
                     }

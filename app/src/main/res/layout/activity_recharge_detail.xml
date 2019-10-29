@@ -30,7 +30,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/team_rechargedetail_tab_3"
+            android:text="@string/team_rechargedetail_tab_7"
+            android:textColor="@color/color_15"
+            android:textSize="@dimen/text_size15" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/team_rechargedetail_tab_8"
             android:textColor="@color/color_15"
             android:textSize="@dimen/text_size15" />
 

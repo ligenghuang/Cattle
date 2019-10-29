@@ -207,6 +207,9 @@
     <string name="team_rechargedetail_tab_4">充值状态</string>
     <string name="team_rechargedetail_tab_5">充值成功</string>
     <string name="team_rechargedetail_tab_6">充值失败</string>
+    <string name="team_rechargedetail_tab_7">人民币</string>
+    <string name="team_rechargedetail_tab_8">澳元</string>
+    <string name="team_rechargedetail_tab_9">待审核</string>
 
     <string name="rankinglist_tab_1">排行榜</string>
     <string name="rankinglist_tab_2">名次</string>
@@ -248,7 +251,7 @@
     <string name="recharge_tab_1">金额充值</string>
     <string name="recharge_tab_2">支付方式</string>
     <string name="recharge_tab_3">充值金额</string>
-    <string name="recharge_tab_4">下一步</string>
+    <string name="recharge_tab_4">提交</string>
     <string name="recharge_tab_5">单日交易限额AU$20000</string>
     <string name="recharge_tab_6">请输入支付密码</string>
     <string name="recharge_tab_7">金额</string>

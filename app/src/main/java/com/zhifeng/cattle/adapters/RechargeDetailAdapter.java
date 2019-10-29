@@ -16,14 +16,18 @@ public class RechargeDetailAdapter extends BaseRecyclerAdapter<ReChargeDetail.Da
         holder.setIsRecyclable(false);
         holder.text(R.id.tv_item_rechargeTime, model.getCreate_time());
         DecimalFormat df = new DecimalFormat("#0.00");
-        holder.text(R.id.tv_item_money,"AU$"+df.format(model.getBalance()));
-        //todo 0充值成功 1充值失败
+        holder.text(R.id.tv_item_money,"￥"+df.format(model.getBalance()));
+        holder.text(R.id.tv_item_money_aud,"AU$"+df.format(model.getAustralian_dollar()));
+        //todo   0审核拒绝 1待审核 2审核通过
         switch (model.getStatus()){
             case 0:
-                holder.text(R.id.tv_item_rechargeStatus, ResUtil.getString(R.string.team_rechargedetail_tab_5));
+                holder.text(R.id.tv_item_rechargeStatus,ResUtil.getString(R.string.team_rechargedetail_tab_6));
                 break;
             case 1:
-                holder.text(R.id.tv_item_rechargeStatus,ResUtil.getString(R.string.team_rechargedetail_tab_6));
+                holder.text(R.id.tv_item_rechargeStatus, ResUtil.getString(R.string.team_rechargedetail_tab_9));
+                break;
+            case 2:
+                holder.text(R.id.tv_item_rechargeStatus, ResUtil.getString(R.string.team_rechargedetail_tab_5));
                 break;
         }
 //

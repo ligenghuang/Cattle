@@ -75,21 +75,14 @@ public class MyApp extends MyApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
-
-
-
-        PgyCrashManager.register();
-        PgyerCrashObservable.get().attach(new PgyerObserver() {
-            @Override
-            public void receivedCrash(Thread thread, Throwable throwable) {
-
-            }
-        });
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        PgyCrashManager.register(); //推荐使用
+
         JXImManager.getInstance().init(getContext(), Constanst.AppKey);
         JXImManager.getInstance().setDebugMode(true);
         JXImManager.Login.getInstance().setAutoLogin(false);

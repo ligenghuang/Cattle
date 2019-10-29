@@ -21,6 +21,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.RecommendHomeAction;
 import com.zhifeng.cattle.adapters.BannerHome;
+import com.zhifeng.cattle.adapters.BannerHome2;
 import com.zhifeng.cattle.adapters.HomeClassifyAdapter;
 import com.zhifeng.cattle.adapters.RecommenSelfnavAdapter;
 import com.zhifeng.cattle.adapters.HomeSpreeAdapter;
@@ -64,7 +65,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
      * 轮播图所需参数
      */
     BannerHome banner;
-    BannerHome beSelfnav;
+    BannerHome2 beSelfnav;
 
     List<String> imgs = new ArrayList<>();
     List<String> tips = new ArrayList<>();
@@ -107,7 +108,7 @@ public class RecommendHomeFragment extends UserBaseFragment<RecommendHomeAction>
         banner = new BannerHome();
         bannerRecomment.setAdapter(banner);
 
-        beSelfnav = new BannerHome();
+        beSelfnav = new BannerHome2();
         bannerSelfnav.setAdapter(beSelfnav);
 
         homeClassifyAdapter = new HomeClassifyAdapter(mContext);

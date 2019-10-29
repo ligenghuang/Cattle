@@ -24,6 +24,7 @@ import com.lgh.huanglib.util.base.ActivityStack;
 import com.lgh.huanglib.util.base.MyFragmentPagerAdapter;
 import com.lgh.huanglib.util.cusview.CustomViewPager;
 import com.lgh.huanglib.util.data.ResUtil;
+import com.pgyersdk.feedback.PgyerFeedbackManager;
 import com.zhifeng.cattle.R;
 import com.zhifeng.cattle.actions.BaseAction;
 import com.zhifeng.cattle.ui.classify.ClassifyFragment;
@@ -42,6 +43,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnTouch;
+
 
 public class MainActivity extends UserBaseActivity {
 
@@ -247,6 +249,11 @@ public class MainActivity extends UserBaseActivity {
         super.onResume();
         myPager.setCurrentItem(Position, false);
         setSelectedLin(Position);
+//        // 采用摇一摇弹出 Activity 方式
+//        new PgyerFeedbackManager.PgyerFeedbackBuilder()
+//                .setDisplayType(PgyerFeedbackManager.TYPE.DIALOG_TYPE)
+//                .builder()
+//                .register();
     }
 
     public void setSelectedLin() {

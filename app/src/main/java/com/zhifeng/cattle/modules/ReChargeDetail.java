@@ -108,29 +108,10 @@ public class ReChargeDetail {
              * create_time : 2019-10-14 17:46:51
              */
 
-            private String note;
             private double balance;
-            private String source_id;
-            private double old_balance;
-            private int log_type;
+            private double australian_dollar;
             private String create_time;
             private int status;
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public String getNote() {
-                return note == null ? "" : note;
-            }
-
-            public void setNote(String note) {
-                this.note = note == null ? "" : note;
-            }
 
             public double getBalance() {
                 return balance;
@@ -140,28 +121,12 @@ public class ReChargeDetail {
                 this.balance = balance;
             }
 
-            public String getSource_id() {
-                return source_id == null ? "" : source_id;
+            public double getAustralian_dollar() {
+                return australian_dollar;
             }
 
-            public void setSource_id(String source_id) {
-                this.source_id = source_id == null ? "" : source_id;
-            }
-
-            public double getOld_balance() {
-                return old_balance;
-            }
-
-            public void setOld_balance(double old_balance) {
-                this.old_balance = old_balance;
-            }
-
-            public int getLog_type() {
-                return log_type;
-            }
-
-            public void setLog_type(int log_type) {
-                this.log_type = log_type;
+            public void setAustralian_dollar(double australian_dollar) {
+                this.australian_dollar = australian_dollar;
             }
 
             public String getCreate_time() {
@@ -170,6 +135,14 @@ public class ReChargeDetail {
 
             public void setCreate_time(String create_time) {
                 this.create_time = create_time == null ? "" : create_time;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
             }
         }
     }
